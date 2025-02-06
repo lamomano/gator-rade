@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -127,6 +128,47 @@ public class DragHandler : MonoBehaviour
         if (targetTile != null && targetTile != tile)
         {
             tile.SwapPositions(targetTile);
+
+            // check to see if there are matching tiles for both swapped tiles
+            List<Tile> matchingTiles1 = gameGrid.CheckForMatch(tile);
+            List<Tile> matchingTiles2 = gameGrid.CheckForMatch(targetTile);
+
+
+
+            if (matchingTiles1 != null && matchingTiles2 != null)
+            {
+                // combine list of tiles that need to be deleted
+                List<Tile> allMatchingTiles = new List<Tile>();
+                allMatchingTiles = matchingTiles1.Union<Tile>(matchingTiles2).ToList<Tile>();
+
+                if (allMatchingTiles.Count > 1)
+                {
+                    for (int i = 0; i < allMatchingTiles.Count; i++)
+                    {
+                        gameGrid.DeleteTile(allMatchingTiles[i]);
+                    }
+                }
+            }
+            else
+            {
+                if (matchingTiles1 != null && matchingTiles1.Count > 0)
+                {
+                    for (int i = 0; i < matchingTiles1.Count; i++)
+                    {
+                        gameGrid.DeleteTile(matchingTiles1[i]);
+                    }
+                }
+                if (matchingTiles2 != null && matchingTiles2.Count > 0)
+                {
+                    for (int i = 0; i < matchingTiles2.Count; i++)
+                    {
+                        gameGrid.DeleteTile(matchingTiles2[i]);
+                    }
+                }
+            }
+           
+
+            
         }
         else
         {

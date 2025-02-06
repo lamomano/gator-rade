@@ -112,11 +112,13 @@ public class Grid : MonoBehaviour
 
                 GameObject tileObject = Instantiate(tilePrefab, targetPosition, Quaternion.identity);
 
+
                 Tile tile = tileObject.GetComponent<Tile>();
                 tile.type = UnityEngine.Random.Range(1, 5);
                 tile.x = row;
                 tile.y = col;
                 tile.UpdateAppearance();
+
 
                 tiles.Add(tileObject);
             }
@@ -124,6 +126,12 @@ public class Grid : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// given a position, return the tile closest to that position
+    /// </summary>
+    /// <param name="givenPosition"></param>
+    /// <returns></returns>
     public Tile ReturnNearestTileAt(Vector3 givenPosition)
     {
         // roblox flashbacks
@@ -131,7 +139,7 @@ public class Grid : MonoBehaviour
         float closestDistance = Mathf.Infinity;
         for (int i = 0; i < tiles.Count; i++)
         {
-            float distance = (givenPosition - tiles[i].transform.position).magnitude;
+            float distance = (givenPosition - tiles[i].GetComponent<Tile>().GetGridPosition()).magnitude;
             
             if (distance < closestDistance)
             {
@@ -139,6 +147,119 @@ public class Grid : MonoBehaviour
                 closestDistance = distance;
             }
         }
+
         return closestTile.GetComponent<Tile>(); ;
+    }
+
+
+
+
+
+    /// <summary>
+    /// goes through entire list to see if the coordinates of the grid are either 1 away on the x or y axis
+    /// then checks to see if they are on the same axis on the other axis
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <returns></returns>
+    public List<Tile> GetAdjacentTiles(Tile tile)
+    {
+        List<Tile> neighbors = new List<Tile>();
+
+        foreach (GameObject obj in tiles)
+        {
+            Tile otherTile = obj.GetComponent<Tile>();
+
+            if (otherTile != null && otherTile != tile)
+            {
+                // check if they are in same row / col + grid
+                if ((Mathf.Abs(otherTile.x - tile.x) == 1 && otherTile.y == tile.y) || (Mathf.Abs(otherTile.y - tile.y) == 1 && otherTile.x == tile.x))
+                {
+                    neighbors.Add(otherTile);
+                }
+            }
+        }
+        //print(neighbors.Count);
+        return neighbors;
+    }
+
+
+
+
+    /// <summary>
+    /// call it on one tile, and the tile will keep checking for matching neighbors until it cant anymore
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <param name="matchingTiles"></param>
+    /// <returns></returns>
+    public List<Tile> MatchRecursive(Tile tile, List<Tile> matchingTiles)
+    {
+        // first of its kind woohoo
+        if (matchingTiles == null)
+        {
+            matchingTiles = new List<Tile>();
+        }
+            
+
+        if (matchingTiles.Contains(tile))
+        {
+            return matchingTiles;
+        }
+            
+
+        matchingTiles.Add(tile);
+
+        //check neighbors and see if they match
+        List<Tile> neighbors = GetAdjacentTiles(tile);
+
+        foreach (Tile neighbor in neighbors)
+        {
+            if (neighbor.type == tile.type)
+            {
+                MatchRecursive(neighbor, matchingTiles);
+            }
+        }
+
+        return matchingTiles;
+    }
+
+
+    /// <summary>
+    /// i love overloaded functions xddddd
+    /// this is called when a tile's position is swapped and updated, so the system checks to see if a match was made or not
+    /// </summary>
+    /// <param name="givenPosition"></param>
+    public List<Tile> CheckForMatch(Vector3 givenPosition)
+    {
+        List<Tile> matchingTiles = MatchRecursive(ReturnNearestTileAt(givenPosition), null);
+        if (matchingTiles.Count > 2)
+        {
+            return matchingTiles;
+        }
+        return null; 
+    }
+    public List<Tile> CheckForMatch(Tile tile)
+    {
+        List<Tile> matchingTiles = MatchRecursive(tile, null);
+        if (matchingTiles.Count > 2)
+        {
+            return matchingTiles;
+        }
+        return null;
+    }
+
+
+
+    /// <summary>
+    /// deletes tile at given location while also clearing it from tiles list
+    /// </summary>
+    /// <param name="givenTile"></param>
+    public void DeleteTile(Tile givenTile)
+    {
+        if (tiles.Contains(givenTile.gameObject))
+        {
+            tiles.Remove(givenTile.gameObject);
+
+            Destroy(givenTile.gameObject);
+        }
     }
 }
