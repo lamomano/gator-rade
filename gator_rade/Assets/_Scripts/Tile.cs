@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour
 
 
     private GameObject tileObject;
+    private Grid gameGrid;
 
 
     public void Start()
@@ -31,7 +32,11 @@ public class Tile : MonoBehaviour
             tileObject = gameObject;
         }
 
+        gameGrid = (Grid)FindObjectOfType<Grid>();
+
         UpdateAppearance();
+
+        gameObject.AddComponent<DragHandler>();
     }
 
 
@@ -61,5 +66,33 @@ public class Tile : MonoBehaviour
                 print("not a valid type");
                 break;
         }
+    }
+
+    public void SwapPositions(Tile targetTile)
+    {
+        int initialX = targetTile.x;
+        int initialY = targetTile.y;
+        Vector3 initialPos = targetTile.transform.position;
+
+
+        targetTile.x = x;
+        targetTile.y = y;
+        targetTile.ResetPosition();
+
+        x = initialX;
+        y = initialY;
+        ResetPosition();
+
+        //print("swapping tiles");
+    }
+
+    public Vector3 GetGridPosition()
+    {
+        return gameGrid.CalculateGridPosition(x, y);
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = GetGridPosition();
     }
 }
