@@ -180,9 +180,35 @@ public class DragHandler : MonoBehaviour
         else
         {
             // check if tile is empty
-            if (targetTile == null)
+            if (targetTile == null && tile != null)
             {
+                if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                {
+                    //horizontal
+                    //check for left and right
+                    if (direction.x <= 0)
+                    {
+                        //left
+                    }
+                    else
+                    {
+                        //right
+                    }
+                }
+                else
+                {
+                    //vertical
+                    if (direction.y <= 0)
+                    {
+                        //down
 
+                    }
+                    else
+                    {
+                        //up
+
+                    }
+                }
             }
             tile.ResetPosition();
         }
