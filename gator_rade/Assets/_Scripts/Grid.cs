@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -186,6 +188,65 @@ public class Grid : MonoBehaviour
 
 
     /// <summary>
+    /// returns the coordinates of the nearest coordinate given the position
+    /// </summary>
+    /// <param name="givenPosition"></param>
+    public List<int> GetCoordinatesFromPosition(Vector3 givenPosition)
+    {
+        // roblox flashbacks
+        int closestX = -1;
+        int closestY = -1;
+        float closestDistance = Mathf.Infinity;
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            float distance = (givenPosition - tiles[i].GetComponent<Tile>().GetGridPosition()).magnitude;
+
+            if (distance < closestDistance)
+            {
+                closestX = tiles[i].GetComponent<Tile>().x;
+                closestX = tiles[i].GetComponent<Tile>().y;
+                closestDistance = distance;
+            }
+        }
+
+        if (closestX != -1)
+        {
+            List<int> coords = new List<int>();
+            coords[0] = closestX;
+            coords[1] = closestY;
+            return coords;
+        }
+        return null;
+    }
+
+    /*
+    public List<Tile> GetAdjacentTiles(Vector3 givenPosition)
+    {
+        List<Tile> neighbors = new List<Tile>();
+
+        foreach (GameObject obj in tiles)
+        {
+            Tile otherTile = obj.GetComponent<Tile>();
+
+            if (otherTile != null && otherTile != tile)
+            {
+                // check if they are in same row / col + grid
+                if ((Mathf.Abs(otherTile.x - tile.x) == 1 && otherTile.y == tile.y) || (Mathf.Abs(otherTile.y - tile.y) == 1 && otherTile.x == tile.x))
+                {
+                    neighbors.Add(otherTile);
+                }
+            }
+        }
+        //print(neighbors.Count);
+        return neighbors;
+    }
+    */
+
+
+
+
+    /// <summary>
     /// call it on one tile, and the tile will keep checking for matching neighbors until it cant anymore
     /// </summary>
     /// <param name="tile"></param>
@@ -223,12 +284,19 @@ public class Grid : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// i love overloaded functions xddddd
-    /// this is called when a tile's position is swapped and updated, so the system checks to see if a match was made or not
-    /// </summary>
-    /// <param name="givenPosition"></param>
-    public List<Tile> CheckForMatch(Vector3 givenPosition)
+    public List<Tile> MatchRecursiveAtPosition(Tile tile, Vector3 targetPosition, List<Tile> matchingTiles)
+    {
+        return null;
+    }
+
+
+
+        /// <summary>
+        /// i love overloaded functions xddddd
+        /// this is called when a tile's position is swapped and updated, so the system checks to see if a match was made or not
+        /// </summary>
+        /// <param name="givenPosition"></param>
+        public List<Tile> CheckForMatch(Vector3 givenPosition)
     {
         List<Tile> matchingTiles = MatchRecursive(ReturnNearestTileAt(givenPosition), null);
         if (matchingTiles.Count > 2)
@@ -261,5 +329,11 @@ public class Grid : MonoBehaviour
 
             Destroy(givenTile.gameObject);
         }
+    }
+
+
+    public List<Tile> CheckForMatchAtGivenPosition(Vector3 givenPosition)
+    {
+        return null;
     }
 }

@@ -134,6 +134,7 @@ public class DragHandler : MonoBehaviour
             List<Tile> matchingTiles2 = gameGrid.CheckForMatch(targetTile);
 
 
+            
 
             if (matchingTiles1 != null && matchingTiles2 != null)
             {
@@ -158,12 +159,18 @@ public class DragHandler : MonoBehaviour
                         gameGrid.DeleteTile(matchingTiles1[i]);
                     }
                 }
-                if (matchingTiles2 != null && matchingTiles2.Count > 0)
+                else if (matchingTiles2 != null && matchingTiles2.Count > 0)
                 {
                     for (int i = 0; i < matchingTiles2.Count; i++)
                     {
                         gameGrid.DeleteTile(matchingTiles2[i]);
                     }
+                }
+                else
+                {
+                    // no matching tiles, dont delete anything breh
+                    // swap back
+                    tile.SwapPositions(targetTile);
                 }
             }
            
@@ -172,6 +179,11 @@ public class DragHandler : MonoBehaviour
         }
         else
         {
+            // check if tile is empty
+            if (targetTile == null)
+            {
+
+            }
             tile.ResetPosition();
         }
 
