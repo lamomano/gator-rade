@@ -18,7 +18,7 @@ public enum NodeColor
 
 
 
-public class Grid : MonoBehaviour
+public class GameGrid : MonoBehaviour
 {
 
     public int gridSizeX;
@@ -86,6 +86,22 @@ public class Grid : MonoBehaviour
         );
     }
 
+
+    public Tile GetTileFromCoordinates(int row, int col)
+    {
+
+        foreach (GameObject tileGameObject in tiles)
+        {
+            Tile thisTile = tileGameObject.GetComponent<Tile>();
+
+            if (thisTile.x ==  row && thisTile.y == col)
+            {
+                return thisTile;
+            }
+        }
+
+        return null;
+    }
 
     public void GenerateGrid()
     {
@@ -167,14 +183,40 @@ public class Grid : MonoBehaviour
     {
         List<Tile> neighbors = new List<Tile>();
 
-        foreach (GameObject obj in tiles)
+        foreach (GameObject tileGameObject in tiles)
         {
-            Tile otherTile = obj.GetComponent<Tile>();
+            Tile otherTile = tileGameObject.GetComponent<Tile>();
 
             if (otherTile != null && otherTile != tile)
             {
                 // check if they are in same row / col + grid
                 if ((Mathf.Abs(otherTile.x - tile.x) == 1 && otherTile.y == tile.y) || (Mathf.Abs(otherTile.y - tile.y) == 1 && otherTile.x == tile.x))
+                {
+                    neighbors.Add(otherTile);
+                }
+            }
+        }
+        //print(neighbors.Count);
+        return neighbors;
+    }
+    /// <summary>
+    /// this overloaded counterpart handles a theoreticlkjaksdjaa coordinate position instead of the actual tile position
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="col"></param>
+    /// <returns></returns>
+    public List<Tile> GetAdjacentTiles(int row, int col)
+    {
+        List<Tile> neighbors = new List<Tile>();
+
+        foreach (GameObject tileGameObject in tiles)
+        {
+            Tile otherTile = tileGameObject.GetComponent<Tile>();
+
+            if (otherTile != null && (otherTile.x != row && otherTile.y != col))
+            {
+                // check if they are in same row / col + grid
+                if ((Mathf.Abs(otherTile.x - row) == 1 && otherTile.y == col) || (Mathf.Abs(otherTile.y - col) == 1 && otherTile.x == row))
                 {
                     neighbors.Add(otherTile);
                 }
@@ -198,50 +240,44 @@ public class Grid : MonoBehaviour
         int closestY = -1;
         float closestDistance = Mathf.Infinity;
 
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            float distance = (givenPosition - tiles[i].GetComponent<Tile>().GetGridPosition()).magnitude;
 
-            if (distance < closestDistance)
+        for (int col = 0; col < gridSizeY; col++)
+        {
+            for (int row = 0; row < gridSizeX; row++)
             {
-                closestX = tiles[i].GetComponent<Tile>().x;
-                closestX = tiles[i].GetComponent<Tile>().y;
-                closestDistance = distance;
+                Vector3 targetPosition = CalculateGridPosition(row, col);
+                float distance = (givenPosition - targetPosition).magnitude;
+
+                if (distance < closestDistance)
+                {
+                    closestX = row;
+                    closestY = col;
+                    closestDistance = distance;
+                }
             }
         }
 
-        if (closestX != -1)
+
+        if (closestX != -1 && closestY != -1)
         {
             List<int> coords = new List<int>();
-            coords[0] = closestX;
-            coords[1] = closestY;
+            coords.Add(closestX);
+            coords.Add(closestY);
+
+            //checking order of placement
+            //print(closestX);
+            //print(coords[0]);
+            //print(closestY);
+            //print(coords[1]);
+
             return coords;
         }
         return null;
     }
 
-    /*
-    public List<Tile> GetAdjacentTiles(Vector3 givenPosition)
-    {
-        List<Tile> neighbors = new List<Tile>();
-
-        foreach (GameObject obj in tiles)
-        {
-            Tile otherTile = obj.GetComponent<Tile>();
-
-            if (otherTile != null && otherTile != tile)
-            {
-                // check if they are in same row / col + grid
-                if ((Mathf.Abs(otherTile.x - tile.x) == 1 && otherTile.y == tile.y) || (Mathf.Abs(otherTile.y - tile.y) == 1 && otherTile.x == tile.x))
-                {
-                    neighbors.Add(otherTile);
-                }
-            }
-        }
-        //print(neighbors.Count);
-        return neighbors;
-    }
-    */
+    
+    
+    
 
 
 
@@ -284,29 +320,16 @@ public class Grid : MonoBehaviour
     }
 
 
-    public List<Tile> MatchRecursiveAtPosition(Tile tile, Vector3 targetPosition, List<Tile> matchingTiles)
-    {
-        return null;
-    }
 
-
-
-        /// <summary>
-        /// i love overloaded functions xddddd
-        /// this is called when a tile's position is swapped and updated, so the system checks to see if a match was made or not
-        /// </summary>
-        /// <param name="givenPosition"></param>
-        public List<Tile> CheckForMatch(Vector3 givenPosition)
-    {
-        List<Tile> matchingTiles = MatchRecursive(ReturnNearestTileAt(givenPosition), null);
-        if (matchingTiles.Count > 2)
-        {
-            return matchingTiles;
-        }
-        return null; 
-    }
+    /// <summary>
+    /// this is called when a tile's position is swapped and updated, so the system checks to see if a match was made or not
+    /// does not work if the tile is a blank tile though
+    /// </summary>
+    /// <param name="givenPosition"></param>
     public List<Tile> CheckForMatch(Tile tile)
     {
+        if (tile.type == -1)
+            return null;
         List<Tile> matchingTiles = MatchRecursive(tile, null);
         if (matchingTiles.Count > 2)
         {
@@ -318,22 +341,15 @@ public class Grid : MonoBehaviour
 
 
     /// <summary>
-    /// deletes tile at given location while also clearing it from tiles list
+    /// sets type to -1, indicating it is a blank tile and updating its appearance
     /// </summary>
     /// <param name="givenTile"></param>
     public void DeleteTile(Tile givenTile)
     {
         if (tiles.Contains(givenTile.gameObject))
         {
-            tiles.Remove(givenTile.gameObject);
-
-            Destroy(givenTile.gameObject);
+            givenTile.type = -1;
+            givenTile.UpdateAppearance();
         }
-    }
-
-
-    public List<Tile> CheckForMatchAtGivenPosition(Vector3 givenPosition)
-    {
-        return null;
     }
 }

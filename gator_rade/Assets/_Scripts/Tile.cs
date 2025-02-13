@@ -18,6 +18,7 @@ public class Tile : MonoBehaviour
      * yellow = 3
      * green = 4
      * 
+     * blank = -1
      */
 
 
@@ -25,7 +26,8 @@ public class Tile : MonoBehaviour
 
 
     private GameObject tileObject;
-    private Grid gameGrid;
+    private GameGrid gameGrid;
+    private MeshRenderer meshRenderer;
 
 
     public void Start()
@@ -35,13 +37,19 @@ public class Tile : MonoBehaviour
             tileObject = gameObject;
         }
 
-        gameGrid = (Grid)FindObjectOfType<Grid>();
+        gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
+        meshRenderer = gameObject.GetComponent<MeshRenderer>();
 
         UpdateAppearance();
 
         gameObject.AddComponent<DragHandler>();
     }
 
+    public override string ToString() 
+    {
+        return new string("("+x +", "+y+")");
+
+    }
 
     private void ChangeColor(Color color)
     {
@@ -65,12 +73,20 @@ public class Tile : MonoBehaviour
             case 4:
                 ChangeColor(Color.green);
                 break;
+            case -1:
+                meshRenderer.enabled = false;
+                break;
             default:
                 print("not a valid type");
                 break;
         }
     }
 
+
+    /// <summary>
+    /// swaps this tile's x and y coordinates given a targettile
+    /// </summary>
+    /// <param name="targetTile"></param>
     public void SwapPositions(Tile targetTile)
     {
         int initialX = targetTile.x;
@@ -88,6 +104,21 @@ public class Tile : MonoBehaviour
 
         //print("swapping tiles");
     }
+
+
+    /// <summary>
+    /// sets the tile to the given coordinates
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="col"></param>
+    public void SetCoordinates(int row, int col)
+    {
+        x = row;
+        y = col;
+        ResetPosition();
+    }
+
+
 
     public Vector3 GetGridPosition()
     {

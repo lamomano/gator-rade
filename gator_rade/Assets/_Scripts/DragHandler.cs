@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class DragHandler : MonoBehaviour
 
 
     private Tile tile;
-    private Grid gameGrid;
+    private GameGrid gameGrid;
 
 
     private float gridSpacing;
@@ -20,7 +21,7 @@ public class DragHandler : MonoBehaviour
     public void Start()
     {
         tile = GetComponent<Tile>();
-        gameGrid = (Grid)FindObjectOfType<Grid>();
+        gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
 
         //print(gameGrid.gridSizeX);
 
@@ -121,7 +122,21 @@ public class DragHandler : MonoBehaviour
         Vector3 direction = currentPosition - gridPosition;
 
 
-        Tile targetTile = gameGrid.ReturnNearestTileAt(currentPosition);
+        Tile targetTile;
+        List<int> targetCoordinates = gameGrid.GetCoordinatesFromPosition(currentPosition);
+        if (targetCoordinates != null && targetCoordinates.Count > 0)
+        {
+
+            print("INITIAL: xpos " + targetCoordinates[0] + ", ypos " + targetCoordinates[1]);
+            targetTile = gameGrid.GetTileFromCoordinates(targetCoordinates[0], targetCoordinates[1]);
+            print(targetTile);
+        }
+        else
+        {
+            tile.ResetPosition();
+            return;
+        }
+        
         
         //print("swapped tiles");
 
@@ -179,40 +194,8 @@ public class DragHandler : MonoBehaviour
         }
         else
         {
-            // check if tile is empty
-            if (targetTile == null && tile != null)
-            {
-                if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-                {
-                    //horizontal
-                    //check for left and right
-                    if (direction.x <= 0)
-                    {
-                        //left
-                    }
-                    else
-                    {
-                        //right
-                    }
-                }
-                else
-                {
-                    //vertical
-                    if (direction.y <= 0)
-                    {
-                        //down
-
-                    }
-                    else
-                    {
-                        //up
-
-                    }
-                }
-            }
+            print("no match at all");
             tile.ResetPosition();
         }
-
-        
     }
 }
