@@ -1,8 +1,11 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -30,6 +33,7 @@ public class GameGrid : MonoBehaviour
     public GameObject tilePrefab;
 
     public List<GameObject> tiles = new List<GameObject>();
+    public List<Vector2> IMMOVABLE_TILES = new List<Vector2>();
 
 
     // Start is called before the first frame update
@@ -110,13 +114,33 @@ public class GameGrid : MonoBehaviour
         {
             for (int i = 0;i < tiles.Count; i++)
             {
-
                 Destroy(tiles[i]);
             }
             tiles.Clear();
         }
 
         Vector3 center = Vector3.zero;
+
+        // list for blocks taht shouldn't be generated on
+        List<Vector2> nonolist = new List<Vector2>();
+        nonolist = nonolist.Union<Vector2>(IMMOVABLE_TILES).ToList<Vector2>();
+
+
+        // generate immovable tiles
+        foreach (Vector2 thisCoords in IMMOVABLE_TILES)
+        {
+            int thisX = thisCoords.x.ConvertTo<int>();
+            int thisY = thisCoords.y.ConvertTo<int>();
+            Vector3 targetPosition = CalculateGridPosition(thisX, thisY);
+
+            GameObject tileObject = Instantiate(tilePrefab, targetPosition, Quaternion.identity);
+
+            Tile tile = tileObject.GetComponent<Tile>();
+            tile.type = 10;
+            tile.x = thisX;
+            tile.y = thisY;
+            tile.UpdateAppearance();
+        }
 
 
         //print(startingX);
@@ -126,6 +150,12 @@ public class GameGrid : MonoBehaviour
         {
             for (int row = 0; row < gridSizeX; row++)
             {
+                Vector2 thisVector2 = new Vector2(row, col);
+                if (nonolist.Contains(thisVector2))
+                {
+                    continue;
+                }
+
                 Vector3 targetPosition = CalculateGridPosition(row, col);
 
                 GameObject tileObject = Instantiate(tilePrefab, targetPosition, Quaternion.identity);
@@ -199,32 +229,7 @@ public class GameGrid : MonoBehaviour
         //print(neighbors.Count);
         return neighbors;
     }
-    /// <summary>
-    /// this overloaded counterpart handles a theoreticlkjaksdjaa coordinate position instead of the actual tile position
-    /// </summary>
-    /// <param name="row"></param>
-    /// <param name="col"></param>
-    /// <returns></returns>
-    public List<Tile> GetAdjacentTiles(int row, int col)
-    {
-        List<Tile> neighbors = new List<Tile>();
-
-        foreach (GameObject tileGameObject in tiles)
-        {
-            Tile otherTile = tileGameObject.GetComponent<Tile>();
-
-            if (otherTile != null && (otherTile.x != row && otherTile.y != col))
-            {
-                // check if they are in same row / col + grid
-                if ((Mathf.Abs(otherTile.x - row) == 1 && otherTile.y == col) || (Mathf.Abs(otherTile.y - col) == 1 && otherTile.x == row))
-                {
-                    neighbors.Add(otherTile);
-                }
-            }
-        }
-        //print(neighbors.Count);
-        return neighbors;
-    }
+    
 
 
 

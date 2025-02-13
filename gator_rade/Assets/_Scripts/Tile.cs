@@ -19,6 +19,8 @@ public class Tile : MonoBehaviour
      * green = 4
      * 
      * blank = -1
+     * immovable = 10
+     * 
      */
 
 
@@ -27,7 +29,7 @@ public class Tile : MonoBehaviour
 
     private GameObject tileObject;
     private GameGrid gameGrid;
-    private MeshRenderer meshRenderer;
+    private DragHandler dragHandler;
 
 
     public void Start()
@@ -38,27 +40,30 @@ public class Tile : MonoBehaviour
         }
 
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
-        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        
+        if (type != 10)
+        {
+            dragHandler = gameObject.AddComponent<DragHandler>();
+        }
 
         UpdateAppearance();
-
-        gameObject.AddComponent<DragHandler>();
     }
 
     public override string ToString() 
     {
         return new string("("+x +", "+y+")");
-
     }
 
     private void ChangeColor(Color color)
     {
         gameObject.GetComponent<Renderer>().material.color = color;
+        gameObject.GetComponent<Renderer>().enabled = true;
     }
 
 
     public void UpdateAppearance()
     {
+        
         switch (type)
         {
             case 1:
@@ -74,7 +79,11 @@ public class Tile : MonoBehaviour
                 ChangeColor(Color.green);
                 break;
             case -1:
-                meshRenderer.enabled = false;
+                gameObject.GetComponent<Renderer>().enabled = false;
+                break;
+
+            case 10:
+                ChangeColor(Color.grey);
                 break;
             default:
                 print("not a valid type");

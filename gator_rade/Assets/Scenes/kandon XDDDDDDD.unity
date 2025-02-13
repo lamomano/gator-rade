@@ -173,6 +173,10 @@ MonoBehaviour:
   tilePrefab: {fileID: 2220322617299367199, guid: a5fc1b81bb8c36646b3a2571c20268aa,
     type: 3}
   tiles: []
+  IMMOVABLE_TILES:
+  - {x: 5, y: 5}
+  - {x: 4, y: 5}
+  - {x: 3, y: 5}
 --- !u!1 &520412454
 GameObject:
   m_ObjectHideFlags: 0
