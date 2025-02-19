@@ -28,9 +28,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             ""id"": ""bb9c63df-cf12-4c1e-82fb-f2dbd7f8c6fd"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""FingerTouch"",
                     ""type"": ""Button"",
                     ""id"": ""c47fa9b3-d4df-46df-9992-ec660f183e85"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drag"",
+                    ""type"": ""Button"",
+                    ""id"": ""72bfa43a-2849-4726-9e38-d82552cbe5e0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -41,11 +50,22 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ed28d99b-552f-4153-ab24-5d631490f577"",
-                    ""path"": """",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""FingerTouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""932974d2-77b8-4d9f-ba7c-b0a8bee79c8c"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -56,7 +76,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
 }");
         // Controls
         m_Controls = asset.FindActionMap("Controls", throwIfNotFound: true);
-        m_Controls_Newaction = m_Controls.FindAction("New action", throwIfNotFound: true);
+        m_Controls_FingerTouch = m_Controls.FindAction("FingerTouch", throwIfNotFound: true);
+        m_Controls_Drag = m_Controls.FindAction("Drag", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +139,14 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     // Controls
     private readonly InputActionMap m_Controls;
     private List<IControlsActions> m_ControlsActionsCallbackInterfaces = new List<IControlsActions>();
-    private readonly InputAction m_Controls_Newaction;
+    private readonly InputAction m_Controls_FingerTouch;
+    private readonly InputAction m_Controls_Drag;
     public struct ControlsActions
     {
         private @PlayerInputs m_Wrapper;
         public ControlsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Controls_Newaction;
+        public InputAction @FingerTouch => m_Wrapper.m_Controls_FingerTouch;
+        public InputAction @Drag => m_Wrapper.m_Controls_Drag;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -133,16 +156,22 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_ControlsActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_ControlsActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @FingerTouch.started += instance.OnFingerTouch;
+            @FingerTouch.performed += instance.OnFingerTouch;
+            @FingerTouch.canceled += instance.OnFingerTouch;
+            @Drag.started += instance.OnDrag;
+            @Drag.performed += instance.OnDrag;
+            @Drag.canceled += instance.OnDrag;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @FingerTouch.started -= instance.OnFingerTouch;
+            @FingerTouch.performed -= instance.OnFingerTouch;
+            @FingerTouch.canceled -= instance.OnFingerTouch;
+            @Drag.started -= instance.OnDrag;
+            @Drag.performed -= instance.OnDrag;
+            @Drag.canceled -= instance.OnDrag;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -162,6 +191,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     public ControlsActions @Controls => new ControlsActions(this);
     public interface IControlsActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnFingerTouch(InputAction.CallbackContext context);
+        void OnDrag(InputAction.CallbackContext context);
     }
 }
