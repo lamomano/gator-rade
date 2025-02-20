@@ -46,7 +46,7 @@ public class Tile : MonoBehaviour
     public GameObject currentToken = null;
 
 
-    public void Start()
+    public void Awake()
     {
 
         if (tileObject == null)
@@ -87,8 +87,11 @@ public class Tile : MonoBehaviour
 
         currentToken.transform.position = transform.position - new Vector3(0,0,.1f);
         currentToken.transform.parent = transform;
-        
-        
+
+        if (type != 10)
+        {
+            currentToken.transform.localScale = new Vector3(gameGrid.tileSizePercentage, currentToken.transform.localScale.y, gameGrid.tileSizePercentage);
+        }
     }
 
 

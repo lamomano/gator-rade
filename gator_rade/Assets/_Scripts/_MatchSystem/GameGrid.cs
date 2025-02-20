@@ -18,6 +18,7 @@ public class GameGrid : MonoBehaviour
     public int gridSizeX;
     public int gridSizeY;
 
+    public float tileSizePercentage = .9f;
     public float gridSpacing = 1.5f;
     private int minimumTilesForMatch = 3;
 
@@ -151,7 +152,7 @@ public class GameGrid : MonoBehaviour
                 Vector3 targetPosition = CalculateGridPosition(row, col);
 
                 GameObject tileObject = Instantiate(tilePrefab, targetPosition, Quaternion.identity);
-
+                
 
                 Tile tile = tileObject.GetComponent<Tile>();
                 tile.x = row;
@@ -181,7 +182,7 @@ public class GameGrid : MonoBehaviour
 
                     
                     int totalMatches = leftMatch.Count + rightMatch.Count + upMatch.Count + downMatch.Count;
-                    print(totalMatches);
+                    //print(totalMatches);
                     if (totalMatches >= minimumTilesForMatch - 1)
                     {
                         currentAttempts += 1;
@@ -194,6 +195,7 @@ public class GameGrid : MonoBehaviour
 
                 
                 tile.UpdateAppearance();
+
                 tiles.Add(tileObject);
             }
         }
