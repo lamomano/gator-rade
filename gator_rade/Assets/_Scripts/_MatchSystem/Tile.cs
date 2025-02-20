@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 
@@ -10,6 +13,7 @@ public class Tile : MonoBehaviour
     // positions
     public int x;
     public int y;
+
 
 
     /*
@@ -23,6 +27,14 @@ public class Tile : MonoBehaviour
      * 
      */
 
+    public GameObject blueToken;
+    public GameObject greenToken;
+    public GameObject yellowToken;
+    public GameObject redToken;
+    public GameObject deadToken;
+
+    
+
 
     public int type = 1;
 
@@ -31,9 +43,12 @@ public class Tile : MonoBehaviour
     private GameGrid gameGrid;
     private DragHandler dragHandler;
 
+    public GameObject currentToken = null;
+
 
     public void Start()
     {
+
         if (tileObject == null)
         {
             tileObject = gameObject;
@@ -44,7 +59,8 @@ public class Tile : MonoBehaviour
         if (type != 10)
         {
             dragHandler = gameObject.AddComponent<DragHandler>();
-        }
+        }  
+
 
         UpdateAppearance();
     }
@@ -58,32 +74,71 @@ public class Tile : MonoBehaviour
     {
         gameObject.GetComponent<Renderer>().material.color = color;
         gameObject.GetComponent<Renderer>().enabled = true;
+
     }
+
+
+    /// <summary>
+    /// sets a token prefab to show for the given tile
+    /// </summary>
+    private void SetToken(GameObject givenToken)
+    {
+        currentToken = Instantiate(givenToken);
+
+        currentToken.transform.position = transform.position - new Vector3(0,0,.1f);
+        currentToken.transform.parent = transform;
+        
+        
+    }
+
 
 
     public void UpdateAppearance()
     {
-        
+        // remove any tokens beforehand if it is not null
+        if (currentToken != null)
+        {
+            Destroy(currentToken);
+            currentToken = null;
+        }
+
         switch (type)
         {
             case 1:
+
                 ChangeColor(Color.red);
+                SetToken(redToken);
+
                 break;
             case 2:
+
                 ChangeColor(Color.blue);
+                SetToken(blueToken);
+
                 break;
             case 3:
+
                 ChangeColor(Color.yellow);
+                SetToken(yellowToken);
+
+
                 break;
             case 4:
+
                 ChangeColor(Color.green);
+                SetToken(greenToken);
+
                 break;
             case -1:
+
                 gameObject.GetComponent<Renderer>().enabled = false;
                 break;
 
             case 10:
+
                 ChangeColor(Color.grey);
+                SetToken(deadToken);
+
                 break;
             default:
                 print("not a valid type");
@@ -136,6 +191,12 @@ public class Tile : MonoBehaviour
 
     public void ResetPosition()
     {
-        transform.position = GetGridPosition();
+        Vector3 targetPosition = GetGridPosition();
+        transform.position = targetPosition;
+        if (currentToken != null) 
+        {
+            currentToken.transform.position = targetPosition;
+        }
     }
+
 }

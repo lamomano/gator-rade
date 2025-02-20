@@ -11,6 +11,8 @@ public class DragHandler : MonoBehaviour
 {
     Vector3 mousePosition;
 
+    private float zFighting = .5f;
+    private float dragMultiplier = 1f;
 
     private Tile tile;
     private GameGrid gameGrid;
@@ -43,7 +45,6 @@ public class DragHandler : MonoBehaviour
     {
 
         Vector3 gridPosition = tile.GetGridPosition();
-        float multiplier = .9f; // testing to see what feels good
 
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
 
@@ -60,8 +61,8 @@ public class DragHandler : MonoBehaviour
             // horizontal movement only
             float xClamp = Mathf.Clamp(
                 targetPosition.x,
-                gridPosition.x - multiplier * gridSpacing,
-                gridPosition.x + multiplier * gridSpacing);
+                gridPosition.x - dragMultiplier * gridSpacing,
+                gridPosition.x + dragMultiplier * gridSpacing);
 
             float maxX = gameGrid.GetMaxPosX();
             //print(maxX);
@@ -72,7 +73,8 @@ public class DragHandler : MonoBehaviour
                 maxX
                 );
 
-            transform.position = new Vector3(boundedX, gridPosition.y, gridPosition.z - 0.1f); // z fighting HAH AHAHXD?D??
+
+            transform.position = new Vector3(boundedX, gridPosition.y, gridPosition.z - zFighting); // z fighting HAH AHAHXD?D??
         }
         else
         {
@@ -81,8 +83,8 @@ public class DragHandler : MonoBehaviour
             // vertical movement only
             float yClamp = Mathf.Clamp(
                 targetPosition.y,
-                gridPosition.y - multiplier * gridSpacing,
-                gridPosition.y + multiplier * gridSpacing);
+                gridPosition.y - dragMultiplier * gridSpacing,
+                gridPosition.y + dragMultiplier * gridSpacing);
 
             float maxY = gameGrid.GetMaxPosY();
             //print(maxY);
@@ -93,7 +95,7 @@ public class DragHandler : MonoBehaviour
                 maxY
                 );
 
-            transform.position = new Vector3(gridPosition.x, boundedY, gridPosition.z - 0.1f); // z fighting xddddd
+            transform.position = new Vector3(gridPosition.x, boundedY, gridPosition.z - zFighting); // z fighting xddddd
         }
     }
 
@@ -127,9 +129,9 @@ public class DragHandler : MonoBehaviour
         if (targetCoordinates != null && targetCoordinates.Count > 0)
         {
 
-            print("INITIAL: xpos " + targetCoordinates[0] + ", ypos " + targetCoordinates[1]);
+            //print("INITIAL: xpos " + targetCoordinates[0] + ", ypos " + targetCoordinates[1]);
             targetTile = gameGrid.GetTileFromCoordinates(targetCoordinates[0], targetCoordinates[1]);
-            print(targetTile);
+            //print(targetTile);
         }
         else
         {

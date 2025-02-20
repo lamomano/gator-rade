@@ -10,15 +10,6 @@ using UnityEngine;
 
 
 
-public enum NodeColor
-{
-    Red,
-    Blue,
-    Green,
-    Yellow,
-}
-
-
 
 
 public class GameGrid : MonoBehaviour
@@ -28,6 +19,7 @@ public class GameGrid : MonoBehaviour
     public int gridSizeY;
 
     public float gridSpacing = 1.5f;
+    private int minimumTilesForMatch = 3;
 
 
     public GameObject tilePrefab;
@@ -143,8 +135,8 @@ public class GameGrid : MonoBehaviour
         }
 
 
-        //print(startingX);
-        //print(startingY);
+
+
 
         for (int col = 0; col < gridSizeY; col++)
         {
@@ -162,12 +154,46 @@ public class GameGrid : MonoBehaviour
 
 
                 Tile tile = tileObject.GetComponent<Tile>();
-                tile.type = UnityEngine.Random.Range(1, 5);
                 tile.x = row;
                 tile.y = col;
+                // make sure there are no 3 matches
+
+
+                int maxAttempts = 25;
+                int currentAttempts = 0;
+
+                while (true)
+                {
+                    if (currentAttempts >= maxAttempts)
+                    {
+                        print("maxed out rip");
+                        break;
+                    }
+                        
+                    tile.type = UnityEngine.Random.Range(1, 5);
+
+                    //print("new loop");
+
+                    List<Tile> leftMatch = GetMatchesInDirection(tile, -1, 0);
+                    List<Tile> rightMatch = GetMatchesInDirection(tile, 1, 0);
+                    List<Tile> upMatch = GetMatchesInDirection(tile, 0, 1);
+                    List<Tile> downMatch = GetMatchesInDirection(tile, 0, -1);
+
+                    
+                    int totalMatches = leftMatch.Count + rightMatch.Count + upMatch.Count + downMatch.Count;
+                    print(totalMatches);
+                    if (totalMatches >= minimumTilesForMatch - 1)
+                    {
+                        currentAttempts += 1;
+                        continue;
+                    }
+                        
+
+                    break;
+                }
+
+                
                 tile.UpdateAppearance();
-
-
                 tiles.Add(tileObject);
             }
         }
@@ -199,37 +225,6 @@ public class GameGrid : MonoBehaviour
         return closestTile.GetComponent<Tile>(); ;
     }
 
-
-
-
-
-    /// <summary>
-    /// goes through entire list to see if the coordinates of the grid are either 1 away on the x or y axis
-    /// then checks to see if they are on the same axis on the other axis
-    /// </summary>
-    /// <param name="tile"></param>
-    /// <returns></returns>
-    public List<Tile> GetAdjacentTiles(Tile tile)
-    {
-        List<Tile> neighbors = new List<Tile>();
-
-        foreach (GameObject tileGameObject in tiles)
-        {
-            Tile otherTile = tileGameObject.GetComponent<Tile>();
-
-            if (otherTile != null && otherTile != tile)
-            {
-                // check if they are in same row / col + grid
-                if ((Mathf.Abs(otherTile.x - tile.x) == 1 && otherTile.y == tile.y) || (Mathf.Abs(otherTile.y - tile.y) == 1 && otherTile.x == tile.x))
-                {
-                    neighbors.Add(otherTile);
-                }
-            }
-        }
-        //print(neighbors.Count);
-        return neighbors;
-    }
-    
 
 
 
@@ -281,18 +276,131 @@ public class GameGrid : MonoBehaviour
     }
 
     
-    
-    
+
+
+
+    /// <summary>
+    /// basically spams one direction to see how many matches are in the chain, given the x and y direction
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <param name="xDirection"></param>
+    /// <param name="yDirection"></param>
+    /// <returns></returns>
+    private List<Tile> GetMatchesInDirection(Tile tile, int xDirection, int yDirection)
+    {
+        List<Tile> matchingTiles = new List<Tile>();
+        int currentX = tile.x;
+        int currentY = tile.y;
+
+        // keep going in the same direction until no more matches
+        while (true)
+        {
+            currentX += xDirection;
+            currentY += yDirection;
+            Tile targetTile = GetTileFromCoordinates(currentX, currentY);
+
+            if (targetTile == null || targetTile.type != tile.type)
+                break;
+
+            matchingTiles.Add(targetTile);
+        }
+        //print(matchingTiles.Count);
+        return matchingTiles;
+    }
+
+
+    /// <summary>
+    /// this is called when a tile's position is swapped and updated, so the system checks to see if a match was made or not
+    /// only accepts vertically and horizontally matching tiles
+    /// does not work if the tile is a blank tile though
+    /// </summary>
+    /// <param name="givenPosition"></param>
+    public List<Tile> CheckForMatch(Tile tile)
+    {
+        if (tile.type == -1)
+            return null;
+
+        //List<Tile> matchingTiles = MatchRecursive(tile, null);
+
+        // the ones that need to walk the plank
+        List<Tile> targetTiles = new List<Tile>();
+
+        // horizontal checks
+        // have to do both left and right cause of T shape matches
+
+        List<Tile> leftMatches = GetMatchesInDirection(tile, -1, 0);
+        List<Tile> rightMatches = GetMatchesInDirection(tile, 1, 0);
+        if (leftMatches.Count + rightMatches.Count >= minimumTilesForMatch - 1)
+        {
+            // add left and right matches + the included tile
+
+            targetTiles.AddRange(leftMatches);
+            targetTiles.AddRange(rightMatches);
+            targetTiles.Add(tile);
+        }
+
+        // vertical matches XDDDDDDDDDDDD?
+
+        List<Tile> upMatches = GetMatchesInDirection(tile, 0, 1);
+        List<Tile> downMatches = GetMatchesInDirection(tile, 0, -1);
+        if (upMatches.Count + downMatches.Count >= minimumTilesForMatch - 1)
+        {
+            // add left and right matches + the included tile
+
+            targetTiles.AddRange(upMatches);
+            targetTiles.AddRange(downMatches);
+            targetTiles.Add(tile);
+        }
+
+        // remove any possible duplicates and send all the target tiles that need to be slaughtered
+        // fancy technology :D
+        targetTiles = targetTiles.Distinct().ToList();
+
+        if (targetTiles.Count != 0)
+        {
+            print("found matches");
+            return targetTiles;
+        }
+
+        return null;
+    }
+
+
+
+    /// <summary>
+    /// sets type to -1, indicating it is a blank tile and updating its appearance
+    /// </summary>
+    /// <param name="givenTile"></param>
+    public void DeleteTile(Tile givenTile)
+    {
+        if (tiles.Contains(givenTile.gameObject))
+        {
+            givenTile.type = -1;
+            givenTile.UpdateAppearance();
+        }
+    }
+
+    public void DeleteTiles(List<Tile> tiles)
+    {
+        foreach (Tile tile in tiles)
+        {
+            DeleteTile(tile);
+        }
+    }
+
+
 
 
 
 
     /// <summary>
     /// call it on one tile, and the tile will keep checking for matching neighbors until it cant anymore
+    /// it is now obsolete cause i need to detect horizontal / vertical matching only ;-;
     /// </summary>
     /// <param name="tile"></param>
     /// <param name="matchingTiles"></param>
     /// <returns></returns>
+    /*
     public List<Tile> MatchRecursive(Tile tile, List<Tile> matchingTiles)
     {
         // first of its kind woohoo
@@ -323,38 +431,36 @@ public class GameGrid : MonoBehaviour
 
         return matchingTiles;
     }
-
-
-
-    /// <summary>
-    /// this is called when a tile's position is swapped and updated, so the system checks to see if a match was made or not
-    /// does not work if the tile is a blank tile though
-    /// </summary>
-    /// <param name="givenPosition"></param>
-    public List<Tile> CheckForMatch(Tile tile)
-    {
-        if (tile.type == -1)
-            return null;
-        List<Tile> matchingTiles = MatchRecursive(tile, null);
-        if (matchingTiles.Count > 2)
-        {
-            return matchingTiles;
-        }
-        return null;
-    }
-
+    */
 
 
     /// <summary>
-    /// sets type to -1, indicating it is a blank tile and updating its appearance
+    /// goes through entire list to see if the coordinates of the grid are either 1 away on the x or y axis
+    /// then checks to see if they are on the same axis on the other axis
+    /// also obsolete cause matchrecursive is not used anymore...
     /// </summary>
-    /// <param name="givenTile"></param>
-    public void DeleteTile(Tile givenTile)
+    /// <param name="tile"></param>
+    /// <returns></returns>
+    /*
+    public List<Tile> GetAdjacentTiles(Tile tile)
     {
-        if (tiles.Contains(givenTile.gameObject))
+        List<Tile> neighbors = new List<Tile>();
+
+        foreach (GameObject tileGameObject in tiles)
         {
-            givenTile.type = -1;
-            givenTile.UpdateAppearance();
+            Tile otherTile = tileGameObject.GetComponent<Tile>();
+
+            if (otherTile != null && otherTile != tile)
+            {
+                // check if they are in same row / col + grid
+                if ((Mathf.Abs(otherTile.x - tile.x) == 1 && otherTile.y == tile.y) || (Mathf.Abs(otherTile.y - tile.y) == 1 && otherTile.x == tile.x))
+                {
+                    neighbors.Add(otherTile);
+                }
+            }
         }
+        //print(neighbors.Count);
+        return neighbors;
     }
+    */
 }
