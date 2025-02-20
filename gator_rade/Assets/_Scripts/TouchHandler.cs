@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class TouchHandler : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class TouchHandler : MonoBehaviour
     private void Awake()
     {
         playerInputs = new PlayerInputs();
+        EnhancedTouchSupport.Enable();
 
        // PlayerInput.SwitchCurrentControlScheme(InputSystem.devices.First(Mouse => Mouse.button == Touchscreen.current));
     }
@@ -25,9 +27,14 @@ public class TouchHandler : MonoBehaviour
     }
     private void Start()
     {
-        playerInputs.Controls.TouchPress.started += ctx => StartTouch(ctx);
+       
         playerInputs.Controls.TouchPress.canceled -= ctx => EndTouch(ctx);
 
+    }
+
+    private void Update()
+    {
+        playerInputs.Controls.TouchPress.started += ctx => StartTouch(ctx);
     }
     private void StartTouch(InputAction.CallbackContext context)
     {
