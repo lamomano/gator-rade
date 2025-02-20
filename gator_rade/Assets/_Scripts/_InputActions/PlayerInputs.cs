@@ -37,9 +37,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Drag"",
-                    ""type"": ""Button"",
+                    ""name"": ""TouchPress"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""72bfa43a-2849-4726-9e38-d82552cbe5e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TouchPosition"",
+                    ""type"": ""Button"",
+                    ""id"": ""e66c6b18-0556-4935-8e70-0026c7c3275d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -50,7 +59,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ed28d99b-552f-4153-ab24-5d631490f577"",
-                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -62,10 +71,21 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""932974d2-77b8-4d9f-ba7c-b0a8bee79c8c"",
                     ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01317a39-593f-4ef0-ba7c-a8c6cd02a1e7"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drag"",
+                    ""action"": ""TouchPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -77,7 +97,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         // Controls
         m_Controls = asset.FindActionMap("Controls", throwIfNotFound: true);
         m_Controls_FingerTouch = m_Controls.FindAction("FingerTouch", throwIfNotFound: true);
-        m_Controls_Drag = m_Controls.FindAction("Drag", throwIfNotFound: true);
+        m_Controls_TouchPress = m_Controls.FindAction("TouchPress", throwIfNotFound: true);
+        m_Controls_TouchPosition = m_Controls.FindAction("TouchPosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -140,13 +161,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Controls;
     private List<IControlsActions> m_ControlsActionsCallbackInterfaces = new List<IControlsActions>();
     private readonly InputAction m_Controls_FingerTouch;
-    private readonly InputAction m_Controls_Drag;
+    private readonly InputAction m_Controls_TouchPress;
+    private readonly InputAction m_Controls_TouchPosition;
     public struct ControlsActions
     {
         private @PlayerInputs m_Wrapper;
         public ControlsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @FingerTouch => m_Wrapper.m_Controls_FingerTouch;
-        public InputAction @Drag => m_Wrapper.m_Controls_Drag;
+        public InputAction @TouchPress => m_Wrapper.m_Controls_TouchPress;
+        public InputAction @TouchPosition => m_Wrapper.m_Controls_TouchPosition;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -159,9 +182,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @FingerTouch.started += instance.OnFingerTouch;
             @FingerTouch.performed += instance.OnFingerTouch;
             @FingerTouch.canceled += instance.OnFingerTouch;
-            @Drag.started += instance.OnDrag;
-            @Drag.performed += instance.OnDrag;
-            @Drag.canceled += instance.OnDrag;
+            @TouchPress.started += instance.OnTouchPress;
+            @TouchPress.performed += instance.OnTouchPress;
+            @TouchPress.canceled += instance.OnTouchPress;
+            @TouchPosition.started += instance.OnTouchPosition;
+            @TouchPosition.performed += instance.OnTouchPosition;
+            @TouchPosition.canceled += instance.OnTouchPosition;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -169,9 +195,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @FingerTouch.started -= instance.OnFingerTouch;
             @FingerTouch.performed -= instance.OnFingerTouch;
             @FingerTouch.canceled -= instance.OnFingerTouch;
-            @Drag.started -= instance.OnDrag;
-            @Drag.performed -= instance.OnDrag;
-            @Drag.canceled -= instance.OnDrag;
+            @TouchPress.started -= instance.OnTouchPress;
+            @TouchPress.performed -= instance.OnTouchPress;
+            @TouchPress.canceled -= instance.OnTouchPress;
+            @TouchPosition.started -= instance.OnTouchPosition;
+            @TouchPosition.performed -= instance.OnTouchPosition;
+            @TouchPosition.canceled -= instance.OnTouchPosition;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -192,6 +221,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     public interface IControlsActions
     {
         void OnFingerTouch(InputAction.CallbackContext context);
-        void OnDrag(InputAction.CallbackContext context);
+        void OnTouchPress(InputAction.CallbackContext context);
+        void OnTouchPosition(InputAction.CallbackContext context);
     }
 }
