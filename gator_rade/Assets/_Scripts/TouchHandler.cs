@@ -1,4 +1,5 @@
-
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -6,53 +7,45 @@ using UnityEngine.InputSystem.EnhancedTouch;
 public class TouchHandler : MonoBehaviour
 {
     private PlayerInputs playerInputs;
+    public bool isTouching;
+
+    private InputAction TouchPosition;
+    private InputAction touchPressAction; 
+
 
     private void Awake()
     {
-        playerInputs = new PlayerInputs();
-        EnhancedTouchSupport.Enable();
+        //playerInputs = new PlayerInputs();
+        playerInputs = GetComponent<PlayerInputs>();
+        touchPressAction = playerInputs.FindAction("TouchPress");
+        TouchPosition = playerInputs.FindAction("TouchPosition");
 
-       // PlayerInput.SwitchCurrentControlScheme(InputSystem.devices.First(Mouse => Mouse.button == Touchscreen.current));
     }
+
     private void OnEnable()
     {
-        playerInputs.Enable();
-
-        
-
+        TouchPosition.performed += TouchPress;
     }
+
     private void OnDisable()
     {
-        playerInputs.Disable();
+        TouchPosition.performed -= TouchPress;
+
     }
-    private void Start()
+
+    private void TouchPress(InputAction.CallbackContext context)
     {
-       
-        playerInputs.Controls.TouchPress.canceled -= ctx => EndTouch(ctx);
+        Vector2 value = context.ReadValue<Vector2>();
+        Debug.Log(value);
 
     }
 
     private void Update()
-    {
-        playerInputs.Controls.TouchPress.started += ctx => StartTouch(ctx);
-    }
-    private void StartTouch(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Debug.Log("Touch started: " + playerInputs.Controls.TouchPress.ReadValue<Vector2>());
-
+    { 
+        if (!isTouching) { 
+        
         }
-
     }
 
-    private void EndTouch(InputAction.CallbackContext context) 
-    {
-        if (context.performed)
-        {
-            Debug.Log("Touch has stopped");
 
-        }
-
-    }
 }
