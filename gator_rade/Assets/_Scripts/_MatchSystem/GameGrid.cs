@@ -26,7 +26,7 @@ public class GameGrid : MonoBehaviour
     public GameObject tilePrefab;
 
     public List<GameObject> tiles = new List<GameObject>();
-    public List<Vector2> IMMOVABLE_TILES = new List<Vector2>();
+    public List<Vector3> DESIGNATED_TILES = new List<Vector3>();
 
 
     // Start is called before the first frame update
@@ -105,7 +105,7 @@ public class GameGrid : MonoBehaviour
         // wipe arraylist if any tiles remain
         if (tiles.Count != 0)
         {
-            for (int i = 0;i < tiles.Count; i++)
+            for (int i = 0; i < tiles.Count; i++)
             {
                 Destroy(tiles[i]);
             }
@@ -115,24 +115,41 @@ public class GameGrid : MonoBehaviour
         Vector3 center = Vector3.zero;
 
         // list for blocks taht shouldn't be generated on
-        List<Vector2> nonolist = new List<Vector2>();
-        nonolist = nonolist.Union<Vector2>(IMMOVABLE_TILES).ToList<Vector2>();
+        List<Vector2> nonoList = new List<Vector2>();
 
 
         // generate immovable tiles
-        foreach (Vector2 thisCoords in IMMOVABLE_TILES)
+        // or designated tiles
+        foreach (Vector3 thisCoords in DESIGNATED_TILES)
         {
             int thisX = thisCoords.x.ConvertTo<int>();
             int thisY = thisCoords.y.ConvertTo<int>();
+
+            // make sure its not bigger than grid
+
+            if (thisX > gridSizeX || thisY > gridSizeY)
+            {
+                print("("+thisX + ", "+thisY+") does not fit within the grid of "+gridSizeX+"x"+gridSizeY);
+                continue;
+            }
+            int thisTileType = thisCoords.z.ConvertTo<int>();
+
             Vector3 targetPosition = CalculateGridPosition(thisX, thisY);
 
             GameObject tileObject = Instantiate(tilePrefab, targetPosition, Quaternion.identity);
 
+            nonoList.Add(new Vector2(thisX, thisY));
+
             Tile tile = tileObject.GetComponent<Tile>();
-            tile.type = 10;
+            tile.type = thisTileType;
             tile.x = thisX;
             tile.y = thisY;
             tile.UpdateAppearance();
+            
+            if (tile.type != (int)TileType.immovable)
+            {
+                tiles.Add(tileObject);
+            }
         }
 
 
@@ -143,8 +160,21 @@ public class GameGrid : MonoBehaviour
         {
             for (int row = 0; row < gridSizeX; row++)
             {
-                Vector2 thisVector2 = new Vector2(row, col);
-                if (nonolist.Contains(thisVector2))
+                /*
+                Vector3 nonoPosition = new Vector3(row, col, 0);
+                foreach (Vector3 thisCoords in DESIGNATED_TILES)
+                {
+                    if (
+                        thisCoords.x.ConvertTo<int>() == row &&
+                        thisCoords.y.ConvertTo<int>() == col
+                        )
+                    {
+                        continue;
+                    }
+                }
+                */
+                Vector2 nonoPosition = new Vector2(row, col);
+                if (nonoList.Contains(nonoPosition))
                 {
                     continue;
                 }

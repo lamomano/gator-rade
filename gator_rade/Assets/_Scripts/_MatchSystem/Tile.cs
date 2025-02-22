@@ -8,6 +8,16 @@ using UnityEngine.Rendering;
 
 
 
+public enum TileType
+{
+    red = 1,
+    blue = 2,
+    yellow = 3,
+    green = 4,
+    blank = -1,
+    immovable = 10
+}
+
 public class Tile : MonoBehaviour
 {
     // positions
@@ -59,6 +69,7 @@ public class Tile : MonoBehaviour
         if (type != 10)
         {
             dragHandler = gameObject.AddComponent<DragHandler>();
+            //print("setup draghandler");
         }  
 
 
