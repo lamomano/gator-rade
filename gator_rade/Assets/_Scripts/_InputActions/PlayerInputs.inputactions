@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "TouchPosition",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "e66c6b18-0556-4935-8e70-0026c7c3275d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -39,7 +39,7 @@
                 {
                     "name": "",
                     "id": "01317a39-593f-4ef0-ba7c-a8c6cd02a1e7",
-                    "path": "",
+                    "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -50,5 +50,17 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Touch",
+            "bindingGroup": "Touch",
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }
