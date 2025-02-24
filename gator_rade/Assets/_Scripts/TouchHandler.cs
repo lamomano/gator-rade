@@ -2,50 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.EnhancedTouch;
+
 
 public class TouchHandler : MonoBehaviour
 {
-    private PlayerInputs playerInputs;
-    public bool isTouching;
+    private PlayerInput playerInputs;
 
-    private InputAction TouchPosition;
-    private InputAction touchPressAction; 
+    
+    private InputAction touchPositionAction;
+    private InputAction touchPressAction;
 
 
     private void Awake()
     {
-        //playerInputs = new PlayerInputs();
-        playerInputs = GetComponent<PlayerInputs>();
-        touchPressAction = playerInputs.FindAction("TouchPress");
-        TouchPosition = playerInputs.FindAction("TouchPosition");
-
+        playerInputs = GetComponent<PlayerInput>();
+        touchPressAction = playerInputs.actions.FindAction("TouchPress");
+        touchPositionAction = playerInputs.actions.FindAction("TouchPosition");
     }
 
     private void OnEnable()
     {
-        TouchPosition.performed += TouchPress;
+        touchPressAction.performed += TouchPressed;
     }
 
     private void OnDisable()
     {
-        TouchPosition.performed -= TouchPress;
+        touchPressAction.performed -= TouchPressed;
 
     }
 
-    private void TouchPress(InputAction.CallbackContext context)
+    private void TouchPressed(InputAction.CallbackContext context)
     {
-        Vector2 value = context.ReadValue<Vector2>();
+        float value = context.ReadValue<float>();
         Debug.Log(value);
-
     }
-
-    private void Update()
-    { 
-        if (!isTouching) { 
-        
-        }
-    }
-
-
 }

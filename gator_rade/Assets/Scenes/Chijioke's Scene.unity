@@ -523,7 +523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f49adc3d3156e4d9eadcd9b95f5e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTouching: 0
 --- !u!114 &233274393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,31 +548,9 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 233274390}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 72bfa43a-2849-4726-9e38-d82552cbe5e0
-    m_ActionName: Controls/TouchPress[/Device Simulator Touchscreen/press,/Simulated
-      Touchscreen/press]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e66c6b18-0556-4935-8e70-0026c7c3275d
-    m_ActionName: Controls/TouchPosition[/Device Simulator Touchscreen/position,/Simulated
-      Touchscreen/position]
+  m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Touch
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Controls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

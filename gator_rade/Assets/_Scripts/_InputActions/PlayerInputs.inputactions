@@ -6,15 +6,6 @@
             "id": "bb9c63df-cf12-4c1e-82fb-f2dbd7f8c6fd",
             "actions": [
                 {
-                    "name": "TouchPress",
-                    "type": "Button",
-                    "id": "72bfa43a-2849-4726-9e38-d82552cbe5e0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "TouchPosition",
                     "type": "Value",
                     "id": "e66c6b18-0556-4935-8e70-0026c7c3275d",
@@ -22,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TouchPress",
+                    "type": "Button",
+                    "id": "72bfa43a-2849-4726-9e38-d82552cbe5e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -29,7 +29,7 @@
                     "name": "",
                     "id": "932974d2-77b8-4d9f-ba7c-b0a8bee79c8c",
                     "path": "<Touchscreen>/Press",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "TouchPress",
