@@ -125,6 +125,12 @@ public class GameGrid : MonoBehaviour
             int thisX = thisCoords.x.ConvertTo<int>();
             int thisY = thisCoords.y.ConvertTo<int>();
 
+            Vector2 nonoPosition = new Vector2(thisX, thisY);
+            if (nonoList.Contains(nonoPosition))
+            {
+                continue;
+            }
+
             // make sure its not bigger than grid
 
             if (thisX > gridSizeX || thisY > gridSizeY)
@@ -160,19 +166,7 @@ public class GameGrid : MonoBehaviour
         {
             for (int row = 0; row < gridSizeX; row++)
             {
-                /*
-                Vector3 nonoPosition = new Vector3(row, col, 0);
-                foreach (Vector3 thisCoords in DESIGNATED_TILES)
-                {
-                    if (
-                        thisCoords.x.ConvertTo<int>() == row &&
-                        thisCoords.y.ConvertTo<int>() == col
-                        )
-                    {
-                        continue;
-                    }
-                }
-                */
+
                 Vector2 nonoPosition = new Vector2(row, col);
                 if (nonoList.Contains(nonoPosition))
                 {

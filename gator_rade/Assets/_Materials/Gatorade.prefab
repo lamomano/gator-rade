@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1793391638063999444}
   m_Layer: 0
   m_Name: Gatorade
-  m_TagString: Untagged
+  m_TagString: Gatorade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,7 +92,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3221251552390813859}
-  m_Material: {fileID: 13400000, guid: 3e3d4d352732090419b5a315798eb11a, type: 2}
+  m_Material: {fileID: 13400000, guid: 2d13140389c9df94b8be3078ff5b34b1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -131,5 +131,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 108
+  m_Constraints: 8
   m_CollisionDetection: 0

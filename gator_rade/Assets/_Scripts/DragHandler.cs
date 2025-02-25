@@ -5,11 +5,13 @@ using System.Net;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.Controls.AxisControl;
 
 public class DragHandler : MonoBehaviour
 {
     Vector3 mousePosition;
+    Vector3 touchPosition;
 
     private float zFighting = .5f;
     private float dragMultiplier = 1f;
@@ -30,11 +32,18 @@ public class DragHandler : MonoBehaviour
         gridSpacing = gameGrid.gridSpacing;
     }
 
+
+
+
+
+
+
+
+    /*
     private Vector3 GetMousePos()
     {
         return Camera.main.WorldToScreenPoint(transform.position);
     }
-
 
     private void OnMouseDown()
     {
@@ -200,4 +209,5 @@ public class DragHandler : MonoBehaviour
             tile.ResetPosition();
         }
     }
+    */
 }

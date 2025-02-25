@@ -68,7 +68,7 @@ public class Tile : MonoBehaviour
         
         if (type != 10)
         {
-            dragHandler = gameObject.AddComponent<DragHandler>();
+            //dragHandler = gameObject.AddComponent<DragHandler>();
             //print("setup draghandler");
         }  
 
