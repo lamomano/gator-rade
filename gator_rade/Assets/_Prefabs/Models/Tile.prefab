@@ -92,7 +92,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2220322617299367199}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3e3d4d352732090419b5a315798eb11a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
+  tokenZOffset: 0.1
   blueToken: {fileID: 7922111813846697520, guid: 5f0adf7fa6aac834190853f16b07dad6,
     type: 3}
   greenToken: {fileID: 8148354689564871561, guid: a1587ff5bdcae5646bfecb102a1ce6ca,
