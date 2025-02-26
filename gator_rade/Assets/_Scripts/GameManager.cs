@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -196,6 +197,7 @@ public class GameManager : MonoBehaviour
         if (gatoradeCollected > gatoradeNeeded)
         {
             print("You win! you had " + gatoradeCollected);
+            SceneManager.LoadScene(3);
         }
         else
         {
