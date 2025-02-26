@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TestCanvas : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
 
     
@@ -17,8 +17,9 @@ public class TestCanvas : MonoBehaviour
         gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void UpdateUI()
     {
         scoreText.text = "Score: " + gameManager.gatoradeCollected + "/" + gameManager.gatoradeAmount;
     }

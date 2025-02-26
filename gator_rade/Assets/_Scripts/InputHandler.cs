@@ -21,7 +21,7 @@ public class InputHandler : MonoBehaviour
     private float dragMultiplier = 1f;
 
 
-    Camera camera;
+    Camera mainCamera;
     private GameGrid gameGrid;
 
     private Vector3 currentScreenPos;
@@ -47,7 +47,7 @@ public class InputHandler : MonoBehaviour
 
         gridSpacing = gameGrid.gridSpacing;
 
-        camera = Camera.main;
+        mainCamera = Camera.main;
 
         press = inputActions.FindAction("Press");
         screenPos = inputActions.FindAction("ScreenPos");
@@ -76,7 +76,13 @@ public class InputHandler : MonoBehaviour
         get
         {
             //float thisZ = camera.WorldToScreenPoint(currentTransform.position).z;
-            return camera.ScreenToWorldPoint(currentScreenPos + new Vector3(0, 0, 0));
+
+            float clampedX = Mathf.Clamp(currentScreenPos.x, 0, Screen.width);
+            float clampedY = Mathf.Clamp(currentScreenPos.y, 0, Screen.height);
+            Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(clampedX, clampedY, mainCamera.nearClipPlane));
+            return new Vector3(worldPoint.x, worldPoint.y, worldPoint.z);
+
+            //return mainCamera.ScreenToWorldPoint(currentScreenPos + new Vector3(0, 0, 0));
         }
     }
 
@@ -87,7 +93,7 @@ public class InputHandler : MonoBehaviour
     {
         get
         {
-            Ray ray = camera.ScreenPointToRay(currentScreenPos);
+            Ray ray = mainCamera.ScreenPointToRay(currentScreenPos);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
@@ -114,6 +120,8 @@ public class InputHandler : MonoBehaviour
         print("input started");
         isDragging = true;
         Vector3 offset = currentTransform.position - currentWorldPos;
+
+        Transform tokenTransform = currentTile.currentToken.transform;
         
 
         while (isDragging)
@@ -122,9 +130,11 @@ public class InputHandler : MonoBehaviour
             //currentTransform.position = currentWorldPos + offset;
 
             Vector3 targetPosition = currentWorldPos + offset;
+            Vector3 gridPosition = currentTile.GetGridPosition();
+            Vector3 localTargetPosition = currentTransform.InverseTransformPoint(targetPosition);
 
             // check to see which of the 4 directions the block has moved furthest in
-            if (Mathf.Abs((targetPosition - currentTile.GetGridPosition()).x) > Mathf.Abs((targetPosition - currentTile.GetGridPosition()).y))
+            if (Mathf.Abs(targetPosition.x - gridPosition.x) > Mathf.Abs(targetPosition.y - gridPosition.y))
             {
                 // horizontal movement only
                 float xClamp = Mathf.Clamp(
@@ -171,9 +181,16 @@ public class InputHandler : MonoBehaviour
         // input ended
         dragThread = null;
 
+        OnTileSwap();
+    }
+
+
+
+    private void OnTileSwap()
+    {
         Vector3 gridPosition = currentTile.GetGridPosition();
         Vector3 currentPosition = currentTransform.position;
-        float totalDistance = (currentPosition - gridPosition).magnitude;
+        float totalDistance = Vector3.Distance(currentPosition, gridPosition);
 
         // if it didn't move much at all, go back breh
         //print(totalDistance);
@@ -182,7 +199,7 @@ public class InputHandler : MonoBehaviour
 
         if (totalDistance <= gridSpacing / 1.5)
         {
-            yield break;
+            return;
         }
 
 
@@ -201,7 +218,7 @@ public class InputHandler : MonoBehaviour
         else
         {
             currentTile.ResetPosition();
-            yield break;
+            return;
         }
 
 
@@ -262,6 +279,7 @@ public class InputHandler : MonoBehaviour
             currentTile.ResetPosition();
         }
         //print("let go");
-        
     }
+
+
 }

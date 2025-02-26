@@ -24,6 +24,7 @@ public class Tile : MonoBehaviour
     public int x;
     public int y;
 
+    public float tokenZOffset = 0.1f;
 
 
     /*
@@ -51,7 +52,7 @@ public class Tile : MonoBehaviour
 
     private GameObject tileObject;
     private GameGrid gameGrid;
-    private DragHandler dragHandler;
+    private BoxCollider boxCollider;
 
     public GameObject currentToken = null;
 
@@ -64,6 +65,7 @@ public class Tile : MonoBehaviour
             tileObject = gameObject;
         }
 
+        boxCollider = gameObject.GetComponent<BoxCollider>();
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
         
         if (type != 10)
@@ -96,7 +98,7 @@ public class Tile : MonoBehaviour
     {
         currentToken = Instantiate(givenToken);
 
-        currentToken.transform.position = transform.position - new Vector3(0,0,.1f);
+        currentToken.transform.position = transform.position - new Vector3(0,0, tokenZOffset);
         currentToken.transform.parent = transform;
 
         if (type != 10)
@@ -116,6 +118,7 @@ public class Tile : MonoBehaviour
             currentToken = null;
         }
 
+        boxCollider.enabled = true;
         switch (type)
         {
             case 1:
@@ -145,6 +148,7 @@ public class Tile : MonoBehaviour
                 break;
             case -1:
 
+                boxCollider.enabled = false;
                 gameObject.GetComponent<Renderer>().enabled = false;
                 break;
 

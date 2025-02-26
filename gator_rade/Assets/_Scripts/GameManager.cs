@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameGrid gameGrid;
     public PlayerData playerData;
     public GatoradeSpewer spewer;
+    public PlayerUI playerUI;
 
     private List<GameObject> gatoradeOrbs = new List<GameObject>();
     private List<GameObject> successfulOrbs = new List<GameObject>();
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
         gameGrid = gameObject.GetComponent<GameGrid>();
         playerData = gameObject.GetComponent<PlayerData>();
         spewer = (GatoradeSpewer)FindObjectOfType<GatoradeSpewer>();
-
+        playerUI = (PlayerUI)FindObjectOfType<PlayerUI>();
 
         spewer.StartSpawning();
 
@@ -100,7 +101,9 @@ public class GameManager : MonoBehaviour
         {
             print("registered new ball");
             successfulOrbs.Add(obj);
+            playerUI.UpdateUI();
         }
+        
     }
 
 
@@ -135,6 +138,7 @@ public class GameManager : MonoBehaviour
             StopCoroutine(gameLoopThread);
 
         gameLoopThread = StartCoroutine(Init());
+        playerUI.UpdateUI();
     }
 
 
