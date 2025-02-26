@@ -39,6 +39,15 @@ public class GatoradeSpewer : MonoBehaviour
         InvokeRepeating("SpawnGatorade", gameManager.delay, gameManager.spawnRate);
     }
 
+
+    /// <summary>
+    /// called when the spawning needs to stop due to losing or restart
+    /// </summary>
+    public void CancelSpawning()
+    {
+        CancelInvoke();
+    }
+
     private void SpawnGatorade()
     {
         if (currentAmount > 0)
@@ -58,7 +67,6 @@ public class GatoradeSpewer : MonoBehaviour
         { 
             CancelInvoke();
         }
-            
     }
 
 

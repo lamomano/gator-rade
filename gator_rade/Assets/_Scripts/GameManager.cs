@@ -132,17 +132,21 @@ public class GameManager : MonoBehaviour
         }
         gatoradeOrbs.Clear();
         successfulOrbs.Clear();
+        
 
         // now just start periodically checking for orb moving status
 
         if (gameLoopThread != null)
             StopCoroutine(gameLoopThread);
 
+        gameGrid.GenerateGrid();
+
         //gameLoopThread = StartCoroutine(Init());
         playerUI.UpdateUI();
 
         if (spewer != null)
         {
+            spewer.CancelInvoke();
             spewer.StartSpawning();
         }
     }
@@ -253,10 +257,12 @@ public class GameManager : MonoBehaviour
         {
             EndRound();
         }
+        /*
         if (GUILayout.Button("New Game"))
         {
             NewRound();
         }
+        */
         if (GUILayout.Button("Generate Grid"))
         {
             gameGrid.GenerateGrid();

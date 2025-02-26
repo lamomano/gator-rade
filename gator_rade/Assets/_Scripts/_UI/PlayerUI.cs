@@ -23,4 +23,10 @@ public class PlayerUI : MonoBehaviour
     {
         scoreText.text = "Score: " + gameManager.gatoradeCollected + "/" + gameManager.gatoradeAmount;
     }
+
+
+    public void RestartLevel()
+    {
+        gameManager.NewRound();
+    }
 }

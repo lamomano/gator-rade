@@ -130,7 +130,7 @@ public class InputHandler : MonoBehaviour
         // input started / pressed
         // getting position
 
-        print("input started");
+        //print("input started");
         isDragging = true;
         Vector3 offset = currentTransform.position - currentWorldPos;
 
