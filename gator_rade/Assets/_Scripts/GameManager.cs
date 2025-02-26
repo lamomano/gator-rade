@@ -39,13 +39,13 @@ public class GameManager : MonoBehaviour
     {
         TouchSimulation.Enable();
 
-        gameGrid = gameObject.GetComponent<GameGrid>();
+        gameGrid = (GameGrid)FindObjectOfType(typeof(GameGrid));
         playerData = gameObject.GetComponent<PlayerData>();
         spewer = (GatoradeSpewer)FindObjectOfType<GatoradeSpewer>();
         playerUI = (PlayerUI)FindObjectOfType<PlayerUI>();
 
-        spewer.StartSpawning();
-        playerUI.UpdateUI();
+        //spewer.StartSpawning();
+        //playerUI.UpdateUI();
 
         bool success = true;
         if (gameGrid == null)
@@ -138,8 +138,9 @@ public class GameManager : MonoBehaviour
         if (gameLoopThread != null)
             StopCoroutine(gameLoopThread);
 
-        gameLoopThread = StartCoroutine(Init());
+        //gameLoopThread = StartCoroutine(Init());
         playerUI.UpdateUI();
+        spewer.StartSpawning();
     }
 
 
@@ -194,6 +195,11 @@ public class GameManager : MonoBehaviour
 
 
 
+    // for maintaining velocity when unfrozen
+    // i love roblox dictionaries god bless them
+    private Dictionary<GameObject, Vector3> objectVelocities = new Dictionary<GameObject, Vector3>();
+    private Dictionary<GameObject, Vector3> angularVelocities = new Dictionary<GameObject, Vector3>();
+
     /// <summary>
     /// these functions freeze / unfreeze the orbs whenever called, very cool batman
     /// </summary>
@@ -202,8 +208,13 @@ public class GameManager : MonoBehaviour
         foreach (GameObject obj in gatoradeOrbs)
         {
             Rigidbody thisRb = obj.GetComponent<Rigidbody>();
+
+            objectVelocities[obj] = thisRb.velocity;
+            angularVelocities[obj] = thisRb.angularVelocity;
             thisRb.constraints = RigidbodyConstraints.FreezeAll;
+            thisRb.velocity = Vector3.zero;
         }
+        Time.timeScale = 0;
     }
 
     public void UnfreezeLiquids()
@@ -211,12 +222,24 @@ public class GameManager : MonoBehaviour
         foreach (GameObject obj in gatoradeOrbs)
         {
             Rigidbody thisRb = obj.GetComponent<Rigidbody>();
+
             thisRb.constraints = RigidbodyConstraints.None;
             thisRb.constraints = RigidbodyConstraints.FreezePositionZ;
 
             thisRb.constraints = RigidbodyConstraints.FreezeRotationX;
             thisRb.constraints = RigidbodyConstraints.FreezeRotationY;
+
+            // new dictionary tech, wow!
+            if (objectVelocities.TryGetValue(obj, out Vector3 regularVelocity))
+            {
+                thisRb.velocity = regularVelocity;
+            }
+            if (angularVelocities.TryGetValue(obj, out Vector3 angularVelocity))
+            {
+                thisRb.angularVelocity = angularVelocity;
+            }
         }
+        Time.timeScale = 1;
     }
 
 
@@ -225,6 +248,14 @@ public class GameManager : MonoBehaviour
         if (GUILayout.Button("Check win"))
         {
             EndRound();
+        }
+        if (GUILayout.Button("New Game"))
+        {
+            NewRound();
+        }
+        if (GUILayout.Button("Generate Grid"))
+        {
+            gameGrid.GenerateGrid();
         }
     }
 }

@@ -35,14 +35,6 @@ public class GameGrid : MonoBehaviour
         GenerateGrid();
     }
 
-    private void OnGUI()
-    {
-        if (GUILayout.Button("Generate Grid"))
-        {
-            GenerateGrid();
-        }
-    }
-
 
     /// <summary>
     /// returns the bounding box for the x position

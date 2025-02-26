@@ -22,6 +22,7 @@ public class InputHandler : MonoBehaviour
 
 
     Camera mainCamera;
+    private GameManager gameManager;
     private GameGrid gameGrid;
 
     private Vector3 currentScreenPos;
@@ -42,6 +43,7 @@ public class InputHandler : MonoBehaviour
     private void Awake()
     {
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
+        gameManager = (GameManager)FindObjectOfType<GameManager>();
 
         //print(gameGrid.gridSizeX);
 
@@ -133,7 +135,7 @@ public class InputHandler : MonoBehaviour
         Vector3 offset = currentTransform.position - currentWorldPos;
 
         Transform tokenTransform = currentTile.currentToken.transform;
-        
+        gameManager.FreezeAllLiquids();
 
         while (isDragging)
         {
@@ -154,7 +156,7 @@ public class InputHandler : MonoBehaviour
                     -dragMultiplier * gridSpacing, 
                     dragMultiplier * gridSpacing);
 
-                tokenTransform.localPosition = new Vector3(xClamp, tokenTransform.localPosition.y, currentTile.GetGridPosition().z - zFighting);
+                tokenTransform.localPosition = new Vector3(xClamp, 0, currentTile.GetGridPosition().z - zFighting);
             }
             else
             {
@@ -163,7 +165,7 @@ public class InputHandler : MonoBehaviour
                     -dragMultiplier * gridSpacing, 
                     dragMultiplier * gridSpacing);
 
-                tokenTransform.localPosition = new Vector3(tokenTransform.localPosition.x, yClamp, currentTile.GetGridPosition().z - zFighting);
+                tokenTransform.localPosition = new Vector3(0, yClamp, currentTile.GetGridPosition().z - zFighting);
             }
 
 
@@ -172,6 +174,8 @@ public class InputHandler : MonoBehaviour
 
         // input ended
         dragThread = null;
+
+        gameManager.UnfreezeLiquids();
 
         OnTileSwap();
     }
@@ -216,60 +220,32 @@ public class InputHandler : MonoBehaviour
 
         //print("swapped tiles");
 
-        if (targetTile != null && targetTile != currentTile)
+        // check to see if there are matching tiles for either of the swapped tiles
+        currentTile.SwapPositions(targetTile);
+        List<Tile> matchingTiles1 = gameGrid.CheckForMatch(currentTile);
+        List<Tile> matchingTiles2 = gameGrid.CheckForMatch(targetTile);
+
+        HashSet<Tile> allMatchingTiles = new HashSet<Tile>();
+        if (matchingTiles1 != null) allMatchingTiles.UnionWith(matchingTiles1);
+        if (matchingTiles2 != null) allMatchingTiles.UnionWith(matchingTiles2);
+
+        if (allMatchingTiles.Count > 1)
         {
-            currentTile.SwapPositions(targetTile);
-
-            // check to see if there are matching tiles for both swapped tiles
-            List<Tile> matchingTiles1 = gameGrid.CheckForMatch(currentTile);
-            List<Tile> matchingTiles2 = gameGrid.CheckForMatch(targetTile);
-
-
-
-
-            if (matchingTiles1 != null && matchingTiles2 != null)
+            // if any matches, get rid of the ones that need to go
+            foreach (Tile tile in allMatchingTiles)
             {
-                // combine list of tiles that need to be deleted
-                List<Tile> allMatchingTiles = new List<Tile>();
-                allMatchingTiles = matchingTiles1.Union<Tile>(matchingTiles2).ToList<Tile>();
-
-                if (allMatchingTiles.Count > 1)
-                {
-                    for (int i = 0; i < allMatchingTiles.Count; i++)
-                    {
-                        gameGrid.DeleteTile(allMatchingTiles[i]);
-                    }
-                }
-            }
-            else
-            {
-                if (matchingTiles1 != null && matchingTiles1.Count > 0)
-                {
-                    for (int i = 0; i < matchingTiles1.Count; i++)
-                    {
-                        gameGrid.DeleteTile(matchingTiles1[i]);
-                    }
-                }
-                else if (matchingTiles2 != null && matchingTiles2.Count > 0)
-                {
-                    for (int i = 0; i < matchingTiles2.Count; i++)
-                    {
-                        gameGrid.DeleteTile(matchingTiles2[i]);
-                    }
-                }
-                else
-                {
-                    // no matching tiles, dont delete anything breh
-                    // swap back
-                    currentTile.SwapPositions(targetTile);
-                }
+                gameGrid.DeleteTile(tile);
             }
         }
         else
         {
-            //print("no match at all");
-            currentTile.ResetPosition();
+            // no matching tiles, dont delete anything breh
+            // swap back
+            currentTile.SwapPositions(targetTile);
         }
+
+
+        
         //print("let go");
     }
 
