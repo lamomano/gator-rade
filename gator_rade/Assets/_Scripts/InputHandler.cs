@@ -86,6 +86,17 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+
+    private Transform tokenTransform
+    {
+        get
+        {
+            return currentTile.currentToken.transform;
+        }
+    }
+
+
+
     /// <summary>
     /// searches for tile when click is pressed and returns whatever is pressed on
     /// </summary>
@@ -131,48 +142,29 @@ public class InputHandler : MonoBehaviour
 
             Vector3 targetPosition = currentWorldPos + offset;
             Vector3 gridPosition = currentTile.GetGridPosition();
+            // switch to location position cause the token is the child of the actual tile object
             Vector3 localTargetPosition = currentTransform.InverseTransformPoint(targetPosition);
+
 
             // check to see which of the 4 directions the block has moved furthest in
             if (Mathf.Abs(targetPosition.x - gridPosition.x) > Mathf.Abs(targetPosition.y - gridPosition.y))
             {
                 // horizontal movement only
-                float xClamp = Mathf.Clamp(
-                    targetPosition.x,
-                    currentTile.GetGridPosition().x - dragMultiplier * gridSpacing,
-                    currentTile.GetGridPosition().x + dragMultiplier * gridSpacing);
+                float xClamp = Mathf.Clamp(localTargetPosition.x, 
+                    -dragMultiplier * gridSpacing, 
+                    dragMultiplier * gridSpacing);
 
-                float maxX = gameGrid.GetMaxPosX();
-                //print(maxX);
-
-                float boundedX = Mathf.Clamp(
-                    xClamp,
-                    -maxX,
-                    maxX
-                    );
-
-                currentTransform.position = new Vector3(boundedX, currentTile.GetGridPosition().y, currentTile.GetGridPosition().z - zFighting); // z fighting HAH AHAHXD?D??
+                tokenTransform.localPosition = new Vector3(xClamp, tokenTransform.localPosition.y, currentTile.GetGridPosition().z - zFighting);
             }
             else
             {
                 // vertical movement only
-                float yClamp = Mathf.Clamp(
-                    targetPosition.y,
-                    currentTile.GetGridPosition().y - dragMultiplier * gridSpacing,
-                    currentTile.GetGridPosition().y + dragMultiplier * gridSpacing);
+                float yClamp = Mathf.Clamp(localTargetPosition.y, 
+                    -dragMultiplier * gridSpacing, 
+                    dragMultiplier * gridSpacing);
 
-                float maxY = gameGrid.GetMaxPosY();
-                //print(maxY);
-
-                float boundedY = Mathf.Clamp(
-                    yClamp,
-                    -maxY,
-                    maxY
-                    );
-
-                currentTransform.position = new Vector3(currentTile.GetGridPosition().x, boundedY, currentTile.GetGridPosition().z - zFighting); // z fighting xddddd
+                tokenTransform.localPosition = new Vector3(tokenTransform.localPosition.x, yClamp, currentTile.GetGridPosition().z - zFighting);
             }
-
 
 
             yield return null;
@@ -189,7 +181,7 @@ public class InputHandler : MonoBehaviour
     private void OnTileSwap()
     {
         Vector3 gridPosition = currentTile.GetGridPosition();
-        Vector3 currentPosition = currentTransform.position;
+        Vector3 currentPosition = tokenTransform.position;
         float totalDistance = Vector3.Distance(currentPosition, gridPosition);
 
         // if it didn't move much at all, go back breh
