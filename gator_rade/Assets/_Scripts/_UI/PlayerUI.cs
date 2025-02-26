@@ -21,7 +21,7 @@ public class PlayerUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        scoreText.text = "Score: " + gameManager.gatoradeCollected + "/" + gameManager.totalGatorade;
+        scoreText.text = "Score: " + gameManager.gatoradeCollected + "/" + gameManager.gatoradeNeeded;
     }
 
 

@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour
         get { return gatoradeOrbs.Count; }
     }
 
+    public int gatoradeNeeded
+    {
+        get { return (int)Mathf.RoundToInt(PERCENTAGE_TO_WIN * totalGatorade); }
+    }
 
 
 
@@ -98,6 +102,7 @@ public class GameManager : MonoBehaviour
             //print("registered orb");
 
             gatoradeOrbs.Add(obj);
+            playerUI.UpdateUI();
         }
     }
 
@@ -187,9 +192,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void CheckForWin()
     {
-        float collectedPercentage = gatoradeCollected / totalGatorade;
-        print(collectedPercentage);
-        if (collectedPercentage > PERCENTAGE_TO_WIN)
+        
+        if (gatoradeCollected > gatoradeNeeded)
         {
             print("You win! you had " + gatoradeCollected);
         }
