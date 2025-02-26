@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         playerUI = (PlayerUI)FindObjectOfType<PlayerUI>();
 
         spewer.StartSpawning();
+        playerUI.UpdateUI();
 
         bool success = true;
         if (gameGrid == null)
