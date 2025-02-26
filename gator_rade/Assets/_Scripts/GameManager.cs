@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     private Coroutine gameLoopThread;
 
 
+    private Dictionary<GameObject, Vector3> initialBallPositions = new Dictionary<GameObject, Vector3>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,16 @@ public class GameManager : MonoBehaviour
 
         //spewer.StartSpawning();
         //playerUI.UpdateUI();
+
+        // get all balls in the scene and register them
+        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Gatorade");
+        foreach (GameObject obj in objectsWithTag)
+        {
+            RegisterGatorade(obj);
+            initialBallPositions[obj] = obj.transform.position;
+        }
+
+        NewRound();
 
         bool success = true;
         if (gameGrid == null)
@@ -128,9 +140,18 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject obj in gatoradeOrbs)
         {
-            Destroy(obj);
+            if (!initialBallPositions.TryGetValue(obj, out Vector3 thisPos))
+            {
+                gatoradeOrbs.Remove(obj);
+                Destroy(obj);
+            }
+            else
+            {
+                obj.transform.position = thisPos;
+            }
+                
         }
-        gatoradeOrbs.Clear();
+        //gatoradeOrbs.Clear();
         successfulOrbs.Clear();
         
 
@@ -146,8 +167,8 @@ public class GameManager : MonoBehaviour
 
         if (spewer != null)
         {
-            spewer.CancelInvoke();
-            spewer.StartSpawning();
+            //spewer.CancelInvoke();
+            //spewer.StartSpawning();
         }
     }
 
