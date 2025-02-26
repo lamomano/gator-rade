@@ -14,9 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/kandon XDDDDDDD.unity
     guid: 4d74e3c5736de8343945390e6dc158a8
-  - enabled: 1
-    path: Assets/Scenes/Victor's Scene.unity
-    guid: ee618008ba7caca448d2329e0cb41c54
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: fffb6af255721414ea78474ae01a16b5,
       type: 2}
