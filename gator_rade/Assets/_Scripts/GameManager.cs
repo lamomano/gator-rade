@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 
@@ -23,9 +24,14 @@ public class GameManager : MonoBehaviour
     private List<GameObject> gatoradeOrbs = new List<GameObject>();
     private List<GameObject> successfulOrbs = new List<GameObject>();
 
-    public int gatoradeCollected
+    public float gatoradeCollected
     {
         get { return successfulOrbs.Count; }
+    }
+
+    public float totalGatorade
+    {
+        get { return gatoradeOrbs.Count; }
     }
 
 
@@ -112,11 +118,12 @@ public class GameManager : MonoBehaviour
     {
         if (!successfulOrbs.Contains(obj) && gatoradeOrbs.Contains(obj))
         {
-            print("registered new ball");
+            //print("registered new ball");
             successfulOrbs.Add(obj);
             playerUI.UpdateUI();
         }
-        
+        CheckForWin();
+
     }
 
 
@@ -132,7 +139,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         gameLoopThread = null;
-        EndRound();
+        CheckForWin();
     }
 
 
@@ -178,19 +185,17 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// calculates the total orbs collected and figures out if the player won or not
     /// </summary>
-    public void EndRound()
+    public void CheckForWin()
     {
-        float collectedPercentage = gatoradeCollected / gatoradeAmount;
-
+        float collectedPercentage = gatoradeCollected / totalGatorade;
+        print(collectedPercentage);
         if (collectedPercentage > PERCENTAGE_TO_WIN)
         {
-
             print("You win! you had " + gatoradeCollected);
         }
         else
         {
-
-            print("you lose! you had " + gatoradeCollected);
+            //print("you lose! you had " + gatoradeCollected);
         }
     }
 
@@ -273,7 +278,7 @@ public class GameManager : MonoBehaviour
     {
         if (GUILayout.Button("Check win"))
         {
-            EndRound();
+            CheckForWin();
         }
         /*
         if (GUILayout.Button("New Game"))

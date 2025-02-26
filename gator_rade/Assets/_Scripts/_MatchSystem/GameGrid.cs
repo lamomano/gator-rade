@@ -376,7 +376,7 @@ public class GameGrid : MonoBehaviour
 
         if (targetTiles.Count != 0)
         {
-            print("found matches");
+            //print("found matches");
             return targetTiles;
         }
 

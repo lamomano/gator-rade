@@ -10,7 +10,7 @@ public class PlayerUI : MonoBehaviour
     public TMP_Text scoreText;
     public GameManager gameManager;
 
-    void Start()
+    void Awake()
     {
         scoreText = gameObject.transform.Find("Score").GetComponent<TMP_Text>();
 
@@ -21,7 +21,7 @@ public class PlayerUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        scoreText.text = "Score: " + gameManager.gatoradeCollected + "/" + gameManager.gatoradeAmount;
+        scoreText.text = "Score: " + gameManager.gatoradeCollected + "/" + gameManager.totalGatorade;
     }
 
 
