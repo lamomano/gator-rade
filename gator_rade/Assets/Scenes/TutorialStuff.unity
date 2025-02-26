@@ -307,18 +307,18 @@ PrefabInstance:
     - target: {fileID: 5341405751699772523, guid: 684b9049f8fdb8641865e0ea6f0617ed,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1089
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 5341405751699772523, guid: 684b9049f8fdb8641865e0ea6f0617ed,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 434
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 6877513399999031862, guid: 684b9049f8fdb8641865e0ea6f0617ed,
         type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 2800000, guid: c40d164ea99a4c648bc9ea332c228436, type: 3}
+      objectReference: {fileID: 2800000, guid: 02b36445d60f38545a97d055b07eb229, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
