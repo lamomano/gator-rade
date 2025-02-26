@@ -252,11 +252,8 @@ public class GameManager : MonoBehaviour
         {
             Rigidbody thisRb = obj.GetComponent<Rigidbody>();
 
-            thisRb.constraints = RigidbodyConstraints.None;
             thisRb.constraints = RigidbodyConstraints.FreezePositionZ;
 
-            thisRb.constraints = RigidbodyConstraints.FreezeRotationX;
-            thisRb.constraints = RigidbodyConstraints.FreezeRotationY;
 
             // new dictionary tech, wow!
             if (objectVelocities.TryGetValue(obj, out Vector3 regularVelocity))
