@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6956887113999681022}
   - component: {fileID: 5803917919736763266}
+  - component: {fileID: 8568331542352353488}
+  - component: {fileID: 4706204629066914986}
   m_Layer: 0
   m_Name: GameSystemContainer
   m_TagString: Untagged
@@ -51,9 +53,41 @@ MonoBehaviour:
   tilePrefab: {fileID: 2220322617299367199, guid: a5fc1b81bb8c36646b3a2571c20268aa,
     type: 3}
   tiles: []
-  DESIGNATED_TILES:
-  - {x: 4, y: 4, z: 10}
-  - {x: 5, y: 6, z: 2}
-  - {x: 6, y: 6, z: 2}
-  - {x: 3, y: 6, z: 2}
-  - {x: 9, y: 9, z: 3}
+  DESIGNATED_TILES: []
+--- !u!114 &8568331542352353488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707287792917686889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e35433c7cdda64682f2a93ccda44fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PERCENTAGE_TO_WIN: 0.5
+  spawnRate: 1
+  gatoradeAmount: 10
+  delay: 3
+  shootingPower: 1
+  gameGrid: {fileID: 0}
+  playerData: {fileID: 0}
+  spewer: {fileID: 0}
+  playerUI: {fileID: 0}
+--- !u!114 &4706204629066914986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707287792917686889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01437caa75f69b4293d54d76bbc2610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 18a5e5627777da649be49a7ab9276b20,
+    type: 3}
+  currentTile: {fileID: 0}
+  currentTransform: {fileID: 0}

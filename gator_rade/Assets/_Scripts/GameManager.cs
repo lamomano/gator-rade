@@ -140,7 +140,11 @@ public class GameManager : MonoBehaviour
 
         //gameLoopThread = StartCoroutine(Init());
         playerUI.UpdateUI();
-        spewer.StartSpawning();
+
+        if (spewer != null)
+        {
+            spewer.StartSpawning();
+        }
     }
 
 

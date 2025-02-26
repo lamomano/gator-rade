@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 100091180}
   - component: {fileID: 100091182}
   m_Layer: 0
-  m_Name: testTub
+  m_Name: Bathtub
   m_TagString: Bathtub
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -572,76 +572,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &564829022
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 564829024}
-  - component: {fileID: 564829023}
-  - component: {fileID: 564829025}
-  m_Layer: 0
-  m_Name: TestGameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &564829023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564829022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42e35433c7cdda64682f2a93ccda44fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PERCENTAGE_TO_WIN: 0.5
-  spawnRate: 1
-  gatoradeAmount: 10
-  delay: 3
-  shootingPower: 1
-  gameGrid: {fileID: 0}
-  playerData: {fileID: 0}
-  spewer: {fileID: 0}
-  playerUI: {fileID: 0}
---- !u!4 &564829024
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564829022}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0931767, y: 6.911257, z: -12.391085}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &564829025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564829022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e01437caa75f69b4293d54d76bbc2610, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 18a5e5627777da649be49a7ab9276b20,
-    type: 3}
-  currentTile: {fileID: 0}
-  currentTransform: {fileID: 0}
 --- !u!1 &901987234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1034,7 @@ GameObject:
   - component: {fileID: 1603849793}
   - component: {fileID: 1603849791}
   m_Layer: 0
-  m_Name: testSpewer
+  m_Name: GatoradeSpewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1288,7 +1218,7 @@ GameObject:
   - component: {fileID: 1956811973}
   - component: {fileID: 1956811972}
   m_Layer: 5
-  m_Name: TestingCanvas
+  m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1402,11 +1332,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
-      propertyPath: gridSizeY
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
-        type: 3}
       propertyPath: DESIGNATED_TILES.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -1465,11 +1390,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSystemContainer
       objectReference: {fileID: 0}
-    - target: {fileID: 7707287792917686889, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1483,7 +1403,6 @@ SceneRoots:
   - {fileID: 520412456}
   - {fileID: 1312970159}
   - {fileID: 3719595556652993603}
-  - {fileID: 564829024}
   - {fileID: 1603849795}
   - {fileID: 100091181}
   - {fileID: 1956811976}
