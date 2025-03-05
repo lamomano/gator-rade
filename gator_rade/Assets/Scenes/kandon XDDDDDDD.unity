@@ -490,11 +490,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
-        type: 3}
-      propertyPath: DESIGNATED_TILES.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6956887113999681022, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
       propertyPath: m_LocalPosition.x

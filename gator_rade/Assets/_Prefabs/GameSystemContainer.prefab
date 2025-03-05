@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5803917919736763266}
   - component: {fileID: 8568331542352353488}
   - component: {fileID: 4706204629066914986}
+  - component: {fileID: 7621111747997325381}
   m_Layer: 0
   m_Name: GameSystemContainer
   m_TagString: Untagged
@@ -69,8 +70,10 @@ MonoBehaviour:
   PERCENTAGE_TO_WIN: 0.5
   spawnRate: 1
   gatoradeAmount: 10
+  amountOfMoves: 10
   delay: 3
   shootingPower: 1
+  MOVES_LEFT: 0
   gameGrid: {fileID: 0}
   playerData: {fileID: 0}
   spewer: {fileID: 0}
@@ -91,3 +94,15 @@ MonoBehaviour:
     type: 3}
   currentTile: {fileID: 0}
   currentTransform: {fileID: 0}
+--- !u!114 &7621111747997325381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707287792917686889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddadfca9560a589438fe3c56c30d0045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

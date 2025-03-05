@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour
 
     public float spawnRate = 1f;
     public int gatoradeAmount = 10;
+    public int amountOfMoves = 10;
     public float delay = 3f;
     public float shootingPower = 1f;
+
+
+    public int MOVES_LEFT = 0;
 
 
     public GameGrid gameGrid;

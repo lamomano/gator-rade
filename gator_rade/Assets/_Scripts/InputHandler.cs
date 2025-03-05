@@ -21,9 +21,14 @@ public class InputHandler : MonoBehaviour
     private float dragMultiplier = 1f;
 
 
+    // for how far a tile has to be dragged before checking if it is on another tile or not
+    private const float dragHoverDistance = 0.05f;
+
+
     Camera mainCamera;
     private GameManager gameManager;
     private GameGrid gameGrid;
+    private MoveTracker moveTracker;
 
     private Vector3 currentScreenPos;
     private float gridSpacing;
@@ -44,6 +49,7 @@ public class InputHandler : MonoBehaviour
     {
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
         gameManager = (GameManager)FindObjectOfType<GameManager>();
+        moveTracker = (MoveTracker)FindObjectOfType<MoveTracker>();
 
         //print(gameGrid.gridSizeX);
 
@@ -125,6 +131,49 @@ public class InputHandler : MonoBehaviour
     }
     
 
+
+    /// <summary>
+    /// returns a vector2 when the currentToken's position is currently dragged towards
+    /// for x, -1 represents left and 1 represents right
+    /// for y, -1 represents down and 1 represents up
+    /// 0 means it hasn't moved on that axis
+    /// im keeping this just in case i have to optimize the onTileSwap in the future
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 GetTokenDragDirection()
+    {
+        Transform tokenTransform = currentTile.currentToken.transform;
+
+        Vector3 gridPosition = currentTile.GetGridPosition();
+        Vector3 localPosition = tokenTransform.localPosition;
+
+        // neat trick to get -1, 1, and 0 without having to do monkey coding
+        float xDirection = Mathf.Sign(localPosition.x);
+        float yDirection = Mathf.Sign(localPosition.y);
+
+        if (Mathf.Abs(localPosition.x) > Mathf.Abs(localPosition.y))
+        {
+            return new Vector2(xDirection, 0);
+        }
+        else if (Mathf.Abs(localPosition.y) > Mathf.Abs(localPosition.x))
+        {
+            return new Vector2(0, yDirection);
+        }
+
+        return Vector2.zero;
+    }
+
+
+
+
+    // placeholder values
+    private Vector3 lastLoggedPosition = Vector3.zero;
+    private Tile lastHoveredTile = null;
+
+    /// <summary>
+    /// drag handler logic
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Drag()
     {
         // input started / pressed
@@ -137,13 +186,15 @@ public class InputHandler : MonoBehaviour
         Transform tokenTransform = currentTile.currentToken.transform;
         gameManager.FreezeAllLiquids();
 
+        Vector3 gridPosition = currentTile.GetGridPosition();
+
         while (isDragging)
         {
             // on drag logic
             //currentTransform.position = currentWorldPos + offset;
 
             Vector3 targetPosition = currentWorldPos + offset;
-            Vector3 gridPosition = currentTile.GetGridPosition();
+            
             // switch to location position cause the token is the child of the actual tile object
             Vector3 localTargetPosition = currentTransform.InverseTransformPoint(targetPosition);
 
@@ -168,6 +219,41 @@ public class InputHandler : MonoBehaviour
                 tokenTransform.localPosition = new Vector3(0, yClamp, currentTile.GetGridPosition().z - zFighting);
             }
 
+            //print(GetTokenDragDirection());
+
+            // visual swap logic
+            // check to see if dragged tile has moved a significant amount, but only if the tile is above it or towards it direciton
+            float totalDistance = Vector3.Distance(tokenTransform.position, gridPosition);
+            if (totalDistance <= gridSpacing * 0.5)
+            {
+                print(totalDistance);
+                if (Vector3.Distance(targetPosition, lastLoggedPosition) > dragHoverDistance)
+                {
+                    lastLoggedPosition = targetPosition;
+                    Tile hoveredTile = gameGrid.ReturnNearestTileAt(currentTransform.position);
+
+                    if (hoveredTile != null && hoveredTile != currentTile && lastHoveredTile != hoveredTile)
+                    {
+                        if (lastHoveredTile != null)
+                        {
+                            lastHoveredTile.ResetPosition();
+                        }
+
+                        hoveredTile.SetTemporaryPosition(currentTile.GetGridPosition());
+                        lastHoveredTile = hoveredTile;
+                    }
+                }
+            }
+            else
+            {
+                if (lastHoveredTile != null)
+                {
+                    lastHoveredTile.ResetPosition();
+                    lastHoveredTile = null;
+                }
+                lastLoggedPosition = Vector3.zero;
+            }
+            
 
             yield return null;
         }
@@ -184,6 +270,13 @@ public class InputHandler : MonoBehaviour
 
     private void OnTileSwap()
     {
+        if (lastHoveredTile != null)
+        {
+            lastHoveredTile.ResetPosition();
+            lastHoveredTile = null;
+        }
+        lastLoggedPosition = Vector3.zero;
+
         Vector3 gridPosition = currentTile.GetGridPosition();
         Vector3 currentPosition = tokenTransform.position;
         float totalDistance = Vector3.Distance(currentPosition, gridPosition);
@@ -193,7 +286,7 @@ public class InputHandler : MonoBehaviour
 
         currentTile.ResetPosition();
 
-        if (totalDistance <= gridSpacing / 1.5)
+        if (totalDistance <= gridSpacing * 0.5)
         {
             return;
         }
@@ -236,6 +329,10 @@ public class InputHandler : MonoBehaviour
             {
                 gameGrid.DeleteTile(tile);
             }
+
+            // successful tile swap
+
+            moveTracker.OnMove();
         }
         else
         {

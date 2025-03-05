@@ -202,6 +202,21 @@ public class Tile : MonoBehaviour
 
 
 
+    /// <summary>
+    /// swaps the tiles over to the given position without resetting the values on the gamegrid
+    /// </summary>
+    public void SetTemporaryPosition(Vector3 givenPosition)
+    {
+        if (currentToken != null)
+        {
+            // have to transform it to a local position value
+            currentToken.transform.position = transform.InverseTransformPoint(givenPosition);
+        }
+    }
+
+
+
+
     public Vector3 GetGridPosition()
     {
         return gameGrid.CalculateGridPosition(x, y);
