@@ -179,6 +179,8 @@ public class GameManager : MonoBehaviour
 
         gameGrid.GenerateGrid();
 
+        MOVES_LEFT = amountOfMoves;
+
         //gameLoopThread = StartCoroutine(Init());
         playerUI.UpdateUI();
 
