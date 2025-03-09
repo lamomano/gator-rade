@@ -22,7 +22,7 @@ public class InputHandler : MonoBehaviour
 
 
     // for how far a tile has to be dragged before checking if it is on another tile or not
-    private const float dragHoverDistance = 0.05f;
+    private const float dragDistanceIncrement = 0.05f;
 
 
     Camera mainCamera;
@@ -224,13 +224,19 @@ public class InputHandler : MonoBehaviour
             // visual swap logic
             // check to see if dragged tile has moved a significant amount, but only if the tile is above it or towards it direciton
             float totalDistance = Vector3.Distance(tokenTransform.position, gridPosition);
-            if (totalDistance <= gridSpacing * 0.5)
+            if (totalDistance >= gridSpacing)
             {
-                print(totalDistance);
-                if (Vector3.Distance(targetPosition, lastLoggedPosition) > dragHoverDistance)
+                //print(totalDistance);
+
+                
+
+                if (Vector3.Distance(tokenTransform.position, lastLoggedPosition) > dragDistanceIncrement)
                 {
                     lastLoggedPosition = targetPosition;
-                    Tile hoveredTile = gameGrid.ReturnNearestTileAt(currentTransform.position);
+
+                    List<int> targetCoordinates = gameGrid.GetCoordinatesFromPosition(tokenTransform.position);
+
+                    Tile hoveredTile = gameGrid.GetTileFromCoordinates(targetCoordinates[0], targetCoordinates[1]);
 
                     if (hoveredTile != null && hoveredTile != currentTile && lastHoveredTile != hoveredTile)
                     {
@@ -239,7 +245,7 @@ public class InputHandler : MonoBehaviour
                             lastHoveredTile.ResetPosition();
                         }
 
-                        hoveredTile.SetTemporaryPosition(currentTile.GetGridPosition());
+                        hoveredTile.SetTemporaryPosition(gridPosition);
                         lastHoveredTile = hoveredTile;
                     }
                 }
@@ -251,7 +257,7 @@ public class InputHandler : MonoBehaviour
                     lastHoveredTile.ResetPosition();
                     lastHoveredTile = null;
                 }
-                lastLoggedPosition = Vector3.zero;
+                lastLoggedPosition = gridPosition;
             }
             
 

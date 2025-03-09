@@ -210,7 +210,8 @@ public class Tile : MonoBehaviour
         if (currentToken != null)
         {
             // have to transform it to a local position value
-            currentToken.transform.position = transform.InverseTransformPoint(givenPosition);
+            //currentToken.transform.position = transform.InverseTransformPoint(givenPosition);
+            currentToken.transform.position = givenPosition;
         }
     }
 
