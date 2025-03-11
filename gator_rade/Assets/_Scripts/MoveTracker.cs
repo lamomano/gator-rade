@@ -10,11 +10,13 @@ public class MoveTracker : MonoBehaviour
 
     private GameGrid gameGrid;
     private GameManager gameManager;
+    //private PlayerUI playerUI;
 
     public bool tokenDestroyed;
-
+    
     public TMP_Text currentMovesLeft;
-    public int MOVES_LEFT = 0;
+    public int MOVES_LEFT = 10;
+    public int StartMoves = 10;
 
 
 
@@ -24,17 +26,29 @@ public class MoveTracker : MonoBehaviour
         gameManager = (GameManager)FindObjectOfType<GameManager>();
         currentMovesLeft.text = MOVES_LEFT.ToString();
         tokenDestroyed = true;
+        
+        
     }
 
-  
+   
 
+
+    public void ResetMoves()
+    {
+        MOVES_LEFT = StartMoves;
+        currentMovesLeft.text = "Moves Left: " + MOVES_LEFT.ToString();
+        
+    }
 
     /// <summary>
-    /// called when the input does a successfull move
+    /// called when the input does a successfull move 
     /// </summary>
     public void OnMove()
     {
-        if(tokenDestroyed == true)
+
+       
+
+        if (tokenDestroyed == true)
         {
             MOVES_LEFT--;         
             currentMovesLeft.text = "Moves Left: " + MOVES_LEFT.ToString();
@@ -43,9 +57,17 @@ public class MoveTracker : MonoBehaviour
             {
                 Debug.Log("You lose");
             } 
-        }
-    }
-  
 
-    
+
+        }
+
+
+
+    }
+
+  
+   
+
+
+
 }

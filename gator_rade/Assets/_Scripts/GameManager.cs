@@ -189,6 +189,7 @@ public class GameManager : MonoBehaviour
 
         //gameLoopThread = StartCoroutine(Init());
         playerUI.UpdateUI();
+        moveTracker.ResetMoves();
 
         if (spewer != null)
         {
