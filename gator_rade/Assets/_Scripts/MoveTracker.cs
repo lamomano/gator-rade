@@ -14,11 +14,14 @@ public class MoveTracker : MonoBehaviour
     public bool tokenDestroyed;
 
     public TextMeshProUGUI currentMovesLeft;
+    public int MOVES_LEFT = 0;
+
+
     private void Awake()
     {
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
         gameManager = (GameManager)FindObjectOfType<GameManager>();
-        currentMovesLeft.text = gameManager.MOVES_LEFT.ToString();
+        currentMovesLeft.text = MOVES_LEFT.ToString();
     }
 
 
@@ -29,11 +32,11 @@ public class MoveTracker : MonoBehaviour
     {
         if(tokenDestroyed == true)
         {
-            gameManager.MOVES_LEFT--;
-            gameManager.amountOfMoves = gameManager.MOVES_LEFT;
-            currentMovesLeft.text = gameManager.MOVES_LEFT.ToString();
+            MOVES_LEFT--;
+            gameManager.amountOfMoves = MOVES_LEFT;
+            currentMovesLeft.text = MOVES_LEFT.ToString();
 
-            if(gameManager.MOVES_LEFT == 0)
+            if(MOVES_LEFT == 0)
             {
                 Debug.Log("You lose");
             }
