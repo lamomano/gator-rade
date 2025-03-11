@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public PlayerData playerData;
     public GatoradeSpewer spewer;
     public PlayerUI playerUI;
+    public MoveTracker moveTracker;
+
 
     private List<GameObject> gatoradeOrbs = new List<GameObject>();
     private List<GameObject> successfulOrbs = new List<GameObject>();
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
         playerData = gameObject.GetComponent<PlayerData>();
         spewer = (GatoradeSpewer)FindObjectOfType<GatoradeSpewer>();
         playerUI = (PlayerUI)FindObjectOfType<PlayerUI>();
+        moveTracker = (MoveTracker)FindObjectOfType<MoveTracker>();
 
         //spewer.StartSpawning();
         //playerUI.UpdateUI();
@@ -73,6 +76,9 @@ public class GameManager : MonoBehaviour
         }
 
         NewRound();
+
+
+        
 
         bool success = true;
         if (gameGrid == null)
@@ -179,7 +185,7 @@ public class GameManager : MonoBehaviour
 
         gameGrid.GenerateGrid();
 
-        MOVES_LEFT = amountOfMoves;
+        //MOVES_LEFT = amountOfMoves;
 
         //gameLoopThread = StartCoroutine(Init());
         playerUI.UpdateUI();
