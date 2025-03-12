@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4249948694500017436}
   - component: {fileID: 3959407163888835389}
   - component: {fileID: 1793391638063999444}
+  - component: {fileID: -8389750089338557406}
   m_Layer: 0
   m_Name: Test Liquid
   m_TagString: Gatorade
@@ -131,5 +132,19 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &-8389750089338557406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221251552390813859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77ed46b567bbdd745ab110996e85f4d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: -876546973899608171, guid: 2b201a8c969cca848af938a7a9a59d53,
+    type: 3}
