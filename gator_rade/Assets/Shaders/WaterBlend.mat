@@ -38,18 +38,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthBlend: 6.11
-    - _Dissolve: 60.3
-    - _Distortion: 0.49
-    - _FadeDistance: 61.19
-    - _FresnelPower: 1.79
+    - _DepthBlend: 4.5
+    - _Dissolve: 60.5
+    - _Distortion: -0.9
+    - _FadeDistance: 59.3
+    - _FresnelPower: 17.1
     - _QueueControl: 1
     - _QueueOffset: 0
-    - _RefractionStrength: 322.1
-    - _Smoothness: 43.04
+    - _RefractionStrength: 314.5
+    - _Smoothness: 5.27
     - _vertex_displacement: 0.08
     m_Colors:
-    - _WaterColor: {r: 0.495283, g: 1, b: 0.7880095, a: 0}
+    - _WaterColor: {r: 1, g: 0.99412715, b: 0.3176471, a: 0}
     - _tiling: {r: 20, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7783616443261631168
