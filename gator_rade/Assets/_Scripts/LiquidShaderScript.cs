@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiquidScript : MonoBehaviour
+public class LiquidShaderScript : MonoBehaviour
 {
         public Material material; 
         private Rigidbody rb;      

@@ -67,9 +67,20 @@ public class GameManager : MonoBehaviour
         //spewer.StartSpawning();
         //playerUI.UpdateUI();
 
+
+
         // get all balls in the scene and register them
-        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Gatorade");
-        foreach (GameObject obj in objectsWithTag)
+        HashSet<GameObject> liquidObjects = new HashSet<GameObject>(GameObject.FindGameObjectsWithTag("Gatorade"));
+        Liquid[] liquidScripts = FindObjectsOfType<Liquid>();
+
+        foreach (Liquid script in liquidScripts)
+        {
+            if (liquidObjects.Contains(script.gameObject))
+                continue;
+            liquidObjects.Add(script.gameObject);
+        }
+
+        foreach (GameObject obj in liquidObjects)
         {
             RegisterGatorade(obj);
             initialBallPositions[obj] = obj.transform.position;
