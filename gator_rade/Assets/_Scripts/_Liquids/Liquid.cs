@@ -92,9 +92,16 @@ public class Liquid : MonoBehaviour
     {
         if (collision.gameObject.tag == "Gatorade")
         {
-            if (type == LiquidType.Peak)
+            if (type != LiquidType.Gatorade)
             {
-
+                if (type == LiquidType.Peak)
+                {
+                    collision.gameObject.GetComponent<Liquid>().Peak();
+                }
+                if (type == LiquidType.Powerade)
+                {
+                    collision.gameObject.GetComponent<Liquid>().Powerade();
+                }
             }
         }
     }
