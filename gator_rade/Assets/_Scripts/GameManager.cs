@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
 
 
     private Dictionary<GameObject, Vector3> initialBallPositions = new Dictionary<GameObject, Vector3>();
+    private Dictionary<GameObject, LiquidType> initialLiquidStates = new Dictionary<GameObject, LiquidType>();
 
     // Start is called before the first frame update
     void Start()
@@ -70,20 +72,17 @@ public class GameManager : MonoBehaviour
 
 
         // get all balls in the scene and register them
-        HashSet<GameObject> liquidObjects = new HashSet<GameObject>(GameObject.FindGameObjectsWithTag("Gatorade"));
-        Liquid[] liquidScripts = FindObjectsOfType<Liquid>();
-
-        foreach (Liquid script in liquidScripts)
-        {
-            if (liquidObjects.Contains(script.gameObject))
-                continue;
-            liquidObjects.Add(script.gameObject);
-        }
+        List<GameObject> liquidObjects = GetAllLiquidObjects();
 
         foreach (GameObject obj in liquidObjects)
         {
-            RegisterGatorade(obj);
+            Liquid liquid = obj.GetComponent<Liquid>();
+            if (liquid.type == LiquidType.Gatorade)
+            {
+                RegisterGatorade(obj);
+            }
             initialBallPositions[obj] = obj.transform.position;
+            initialLiquidStates[obj] = liquid.type;
         }
 
         NewRound();
@@ -137,6 +136,25 @@ public class GameManager : MonoBehaviour
 
 
 
+
+    /// <summary>
+    /// returns a list of all the liquid gameobjects in the game
+    /// </summary>
+    /// <returns></returns>
+    public List<GameObject> GetAllLiquidObjects()
+    {
+        Liquid[] liquidList = FindObjectsOfType<Liquid>();
+
+        List<GameObject> gameObjectList = new List<GameObject>();
+
+        foreach (Liquid liquid in liquidList)
+        {
+            gameObjectList.Add(liquid.gameObject);
+        }
+        return gameObjectList;
+    }
+
+
     /// <summary>
     /// called when gatorade is collected : )
     /// goes towards calculating for the win condition
@@ -172,20 +190,44 @@ public class GameManager : MonoBehaviour
 
     public void NewRound()
     {
-        foreach (GameObject obj in gatoradeOrbs)
+        foreach (GameObject obj in GetAllLiquidObjects())
         {
             if (!initialBallPositions.TryGetValue(obj, out Vector3 thisPos))
             {
+                initialBallPositions.Remove(obj);
                 gatoradeOrbs.Remove(obj);
                 Destroy(obj);
             }
             else
             {
+                obj.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                obj.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                 obj.transform.position = thisPos;
             }
+
+            if (!initialLiquidStates.TryGetValue(obj, out LiquidType liquidType))
+            {
+                initialLiquidStates.Remove(obj);
+                gatoradeOrbs.Remove(obj);
+                Destroy(obj);
+            }
+            else
+            {
+                Liquid thisLiquid = obj.GetComponent<Liquid>();
+
+                if (liquidType == LiquidType.Peak)
+                {
+                    thisLiquid.canConvert = false;
+                }
+
+                thisLiquid.UpdateState(liquidType);
+
+                thisLiquid.EnablePhysics(true);
+            }
+            
                 
         }
-        //gatoradeOrbs.Clear();
+        gatoradeOrbs.Clear();
         successfulOrbs.Clear();
         
 
@@ -269,7 +311,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void FreezeAllLiquids()
     {
-        foreach (GameObject obj in gatoradeOrbs)
+        foreach (GameObject obj in GetAllLiquidObjects())
         {
             Rigidbody thisRb = obj.GetComponent<Rigidbody>();
 
@@ -283,7 +325,7 @@ public class GameManager : MonoBehaviour
 
     public void UnfreezeLiquids()
     {
-        foreach (GameObject obj in gatoradeOrbs)
+        foreach (GameObject obj in GetAllLiquidObjects())
         {
             Rigidbody thisRb = obj.GetComponent<Rigidbody>();
 
@@ -300,6 +342,9 @@ public class GameManager : MonoBehaviour
                 thisRb.angularVelocity = angularVelocity;
             }
         }
+
+        objectVelocities.Clear();
+        angularVelocities.Clear();
         Time.timeScale = 1;
     }
 

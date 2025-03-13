@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3959407163888835389}
   - component: {fileID: 1793391638063999444}
   - component: {fileID: -8389750089338557406}
+  - component: {fileID: 3413306753877922751}
   m_Layer: 0
   m_Name: Test Liquid
   m_TagString: Gatorade
@@ -148,3 +149,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: -876546973899608171, guid: 2b201a8c969cca848af938a7a9a59d53,
     type: 3}
+--- !u!114 &3413306753877922751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221251552390813859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64094cc33d102ec498e6f265648574f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  gatorade: {fileID: 2100000, guid: c33123fc93425f2488729b9c8007eb90, type: 2}
+  peak: {fileID: 2100000, guid: 96072b619a4900c4c92688582690fdd0, type: 2}
+  powerade: {fileID: 2100000, guid: 1315c6ccf7a9c7f498f17334f3f36de8, type: 2}
+  meshRenderer: {fileID: 0}
+  sphereCollider: {fileID: 0}

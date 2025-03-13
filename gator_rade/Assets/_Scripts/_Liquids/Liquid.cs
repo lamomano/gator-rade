@@ -22,25 +22,38 @@ public class Liquid : MonoBehaviour
     public Material powerade;
 
 
-    
+    public bool canConvert = false; // so peak doens't convert as soon as it spawns and touche something
 
 
 
-    public MeshRenderer meshRenderer;
-    public SphereCollider sphereCollider;
+    private MeshRenderer meshRenderer;
+    private SphereCollider sphereCollider;
     private GameManager gameManager;
+
+    
 
     private void Awake()
     {
-        gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+        // have to wait for gamemanager to load for some reason XDDDDDDDDD?
+        StartCoroutine(DelayStart());
+    }
+    private IEnumerator DelayStart()
+    {
+        yield return new WaitForSeconds(0.05f);
+        gameManager = (GameManager)FindObjectOfType<GameManager>();
         meshRenderer = GetComponent<MeshRenderer>();
         sphereCollider = GetComponent<SphereCollider>();
 
-        if (type == LiquidType.Gatorade)
+        UpdateState(type);
+    }
+
+    public void UpdateState(LiquidType targetState)
+    {
+        if (targetState == LiquidType.Gatorade)
             Gatorade();
-        if (type == LiquidType.Peak)
+        if (targetState == LiquidType.Peak)
             Peak();
-        if (type == LiquidType.Powerade)
+        if (targetState == LiquidType.Powerade)
             Powerade();
     }
 
@@ -76,7 +89,15 @@ public class Liquid : MonoBehaviour
         gameObject.tag = "Gatorade";
         meshRenderer.material = gatorade;
 
-        gameManager.RegisterGatorade(gameObject);
+        var thisType =  gameManager.GetType();
+        if (gameManager != null && thisType.GetMethod("RegisterGatorade") != null)
+            gameManager.RegisterGatorade(gameObject);
+        else
+        {
+            gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+            gameManager.RegisterGatorade(gameObject);
+        }
+           
     }
 
     public void Powerade()
@@ -95,6 +116,19 @@ public class Liquid : MonoBehaviour
         meshRenderer.material = peak;
 
         gameManager.UnregisterGatorade(gameObject);
+        canConvert = false;
+        StartCoroutine(DelayConversion());
+    }
+
+
+    /// <summary>
+    /// called when peak is made,
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator DelayConversion()
+    {
+        yield return new WaitForSeconds(1);
+        canConvert = true;
     }
 
 
@@ -112,19 +146,20 @@ public class Liquid : MonoBehaviour
     /// </summary>
     public void DeleteSelf()
     {
-        EnablePhysics(true);
+        EnablePhysics(false);
         
         gameManager.UnregisterGatorade(gameObject);
     }
 
-
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Gatorade")
         {
             if (type == LiquidType.Peak)
             {
-                collision.gameObject.GetComponent<Liquid>().Peak();
+                if (canConvert)
+                    collision.gameObject.GetComponent<Liquid>().Peak();
             }
 
             // powerade should delete both itself and the other liquid
@@ -133,6 +168,26 @@ public class Liquid : MonoBehaviour
                 //collision.gameObject.GetComponent<Liquid>().Powerade();
                 EnablePhysics(false);
                 collision.gameObject.GetComponent<Liquid>().EnablePhysics(false);
+            }
+        }
+    }
+    */
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Gatorade")
+        {
+            if (type == LiquidType.Peak)
+            {
+                if (canConvert)
+                    collision.gameObject.GetComponent<Liquid>().Peak();
+            }
+
+            // powerade should delete both itself and the other liquid
+            if (type == LiquidType.Powerade)
+            {
+                //collision.gameObject.GetComponent<Liquid>().Powerade();
+                DeleteSelf();
+                collision.gameObject.GetComponent<Liquid>().DeleteSelf();
             }
         }
     }
