@@ -45,7 +45,7 @@ Material:
     - _FresnelPower: 17.1
     - _QueueControl: 1
     - _QueueOffset: 0
-    - _RefractionStrength: 314.5
+    - _RefractionStrength: 114.01
     - _Smoothness: 5.27
     - _vertex_displacement: 0.08
     m_Colors:

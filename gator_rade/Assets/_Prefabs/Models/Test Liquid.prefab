@@ -162,8 +162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  gatorade: {fileID: 2100000, guid: c33123fc93425f2488729b9c8007eb90, type: 2}
+  gatorade: {fileID: -876546973899608171, guid: 2b201a8c969cca848af938a7a9a59d53,
+    type: 3}
   peak: {fileID: 2100000, guid: 96072b619a4900c4c92688582690fdd0, type: 2}
   powerade: {fileID: 2100000, guid: 1315c6ccf7a9c7f498f17334f3f36de8, type: 2}
-  meshRenderer: {fileID: 0}
-  sphereCollider: {fileID: 0}
+  canConvert: 0

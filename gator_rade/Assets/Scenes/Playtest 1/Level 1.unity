@@ -1015,12 +1015,12 @@ PrefabInstance:
     - target: {fileID: 994405381352463397, guid: 7ea83429066053541b4e343ab019865c,
         type: 3}
       propertyPath: far clip plane
-      value: 1000.56
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 994405381352463397, guid: 7ea83429066053541b4e343ab019865c,
         type: 3}
       propertyPath: near clip plane
-      value: 3.01
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 994405381352463397, guid: 7ea83429066053541b4e343ab019865c,
         type: 3}
@@ -1125,6 +1125,11 @@ PrefabInstance:
     - target: {fileID: 7062368290364002540, guid: 7ea83429066053541b4e343ab019865c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506852616448703736, guid: 7ea83429066053541b4e343ab019865c,
+        type: 3}
+      propertyPath: m_DynamicOccludee
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8506852616448703736, guid: 7ea83429066053541b4e343ab019865c,
