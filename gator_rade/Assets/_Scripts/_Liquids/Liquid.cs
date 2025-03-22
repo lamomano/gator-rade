@@ -34,15 +34,17 @@ public class Liquid : MonoBehaviour
 
     private void Awake()
     {
+        
+        meshRenderer = GetComponent<MeshRenderer>();
+        sphereCollider = GetComponent<SphereCollider>();
+
         // have to wait for gamemanager to load for some reason XDDDDDDDDD?
         StartCoroutine(DelayStart());
     }
     private IEnumerator DelayStart()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.01f);
         gameManager = (GameManager)FindObjectOfType<GameManager>();
-        meshRenderer = GetComponent<MeshRenderer>();
-        sphereCollider = GetComponent<SphereCollider>();
 
         UpdateState(type);
     }
