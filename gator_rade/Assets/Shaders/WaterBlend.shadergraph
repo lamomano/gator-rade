@@ -19,6 +19,9 @@
             "m_Id": "8e3515f8d4db49d9b7f88fe33c055853"
         },
         {
+            "m_Id": "00207b91749b4798a1d9007a538b0896"
+        },
+        {
             "m_Id": "0fca8619045d4fd69c2226e14bb65a20"
         },
         {
@@ -598,6 +601,34 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "00207b91749b4798a1d9007a538b0896",
+    "m_Guid": {
+        "m_GuidSerialized": "b116973b-b449-4079-b29c-a45dc764f253"
+    },
+    "m_Name": "vertex displacement (1)",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "vertex displacement (1)",
+    "m_DefaultReferenceName": "_vertex_displacement_1",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.07999999821186066,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "06f7e1ca59c44eb2b4f83b807620630c",
@@ -656,6 +687,9 @@
         },
         {
             "m_Id": "0fca8619045d4fd69c2226e14bb65a20"
+        },
+        {
+            "m_Id": "00207b91749b4798a1d9007a538b0896"
         },
         {
             "m_Id": "2452b83ac0b94307b4cab91ba8a024fb"
@@ -864,7 +898,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.029999999329447748,
+    "m_Value": 0.07999999821186066,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -911,9 +945,9 @@
     "m_DismissedVersion": 0,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
+    "hlslDeclarationOverride": 2,
     "m_Hidden": false,
-    "m_Value": 0.6499999761581421,
+    "m_Value": 60.5,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -1108,9 +1142,9 @@
     "m_DismissedVersion": 0,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
+    "hlslDeclarationOverride": 2,
     "m_Hidden": false,
-    "m_Value": 0.6399999856948853,
+    "m_Value": 5.269999980926514,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -1205,7 +1239,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.28999999165534975,
+    "m_Value": 100.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -1255,9 +1289,9 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 0.20440244674682618,
-        "g": 1.0,
-        "b": 0.3662233054637909,
+        "r": 1.0,
+        "g": 0.9960784316062927,
+        "b": 0.3176470696926117,
         "a": 0.0
     },
     "isMainColor": false,
@@ -2746,7 +2780,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 4.699999809265137,
+    "m_Value": 17.100000381469728,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -2953,7 +2987,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 35.099998474121097,
+    "m_Value": 59.29999923706055,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -3090,7 +3124,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.10000000149011612,
+    "m_Value": -0.8999999761581421,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -3712,8 +3746,8 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "x": 3.0,
-        "y": 3.0,
+        "x": 20.0,
+        "y": 20.0,
         "z": 0.0,
         "w": 0.0
     }
@@ -3982,7 +4016,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.5,
+    "m_Value": 4.5,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
