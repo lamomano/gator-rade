@@ -29,9 +29,9 @@ public class UIManager : MonoBehaviour
         mainMenu = transform.Find("MainMenu").GetComponent<Canvas>();
         levelSelect = transform.Find("LevelSelect").GetComponent<Canvas>();
         helpScreen = transform.Find("HelpScreen").GetComponent<Canvas>();
-
-
-        ShowMainMenu();
+        mainMenu.enabled = true;
+        levelSelect.enabled = false;
+        helpScreen.enabled = false;
     }
 
 
@@ -41,9 +41,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ShowMainMenu()
     {
-        mainMenu.enabled = true;
-        levelSelect.enabled = false;
-        helpScreen.enabled = false;
+        SceneManager.LoadScene("Main Menu");
     }
 
 

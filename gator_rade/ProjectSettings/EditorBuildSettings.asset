@@ -5,27 +5,27 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Playtest 2/TitleScreen.unity
     guid: 2e8ea575576a7ad468187d80241ca2c4
   - enabled: 1
+    path: Assets/Scenes/Testing/Main Menu.unity
+    guid: d3087ff62a057384e8348205e9024f42
+  - enabled: 0
     path: Assets/Scenes/Playtest 2/TutorialStuff.unity
     guid: d09d277353f36144a98914748de8a68e
   - enabled: 1
     path: Assets/Scenes/Playtest 2/Playtest1Tutorial.unity
     guid: c687222b4a4605b4b80cfb7100270e8c
   - enabled: 1
-    path: Assets/Scenes/Playtest 2/WinScene.unity
-    guid: 8658dd4825fa30f4aac73529304633e5
-  - enabled: 1
     path: Assets/Scenes/Playtest 2/Level 1.unity
     guid: fd0de0d5061783f4db9d34e6a9a58598
   - enabled: 1
     path: Assets/Scenes/Playtest 2/Level 2.unity
     guid: ea6d17db76236c845a1006cecc7d3a2f
-  - enabled: 0
-    path: Assets/Scenes/Testing/Main Menu.unity
-    guid: d3087ff62a057384e8348205e9024f42
+  - enabled: 1
+    path: Assets/Scenes/Playtest 2/WinScene.unity
+    guid: 8658dd4825fa30f4aac73529304633e5
   - enabled: 0
     path: Assets/Scenes/Playtest 1/RNGesus.unity
     guid: 6e797801ce1975f4688c85c963140dea
