@@ -223,11 +223,12 @@ public class GameManager : MonoBehaviour
                 thisLiquid.UpdateState(liquidType);
 
                 thisLiquid.EnablePhysics(true);
-            }
-            
-                
+            }  
         }
         gatoradeOrbs.Clear();
+
+        gatoradeOrbs.AddRange(GameObject.FindGameObjectsWithTag("Gatorade"));
+
         successfulOrbs.Clear();
         
 
