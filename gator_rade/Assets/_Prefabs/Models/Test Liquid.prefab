@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1793391638063999444}
   - component: {fileID: -8389750089338557406}
   - component: {fileID: 3413306753877922751}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Test Liquid
   m_TagString: Gatorade
   m_Icon: {fileID: 0}
