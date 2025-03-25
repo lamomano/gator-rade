@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour
         if (gatoradeCollected > gatoradeNeeded)
         {
             print("You win! you had " + gatoradeCollected);
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene("WinScene");
         }
         else
         {
@@ -350,21 +350,34 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void Pause()
+    {
+        FreezeAllLiquids();
+    }
+
+    public void Unpause()
+    {
+        UnfreezeLiquids();
+    }
+
+
     public void OnGUI()
     {
+        /*
         if (GUILayout.Button("Check win"))
         {
             CheckForWin();
         }
-        /*
+        
         if (GUILayout.Button("New Game"))
         {
             NewRound();
         }
-        */
+        
         if (GUILayout.Button("Generate Grid"))
         {
             gameGrid.GenerateGrid();
         }
+        */
     }
 }
