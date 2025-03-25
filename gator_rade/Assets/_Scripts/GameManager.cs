@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     public float shootingPower = 1f;
 
 
-    
+
+    public bool isPaused = false;
 
 
     public GameGrid gameGrid;
@@ -261,10 +262,11 @@ public class GameManager : MonoBehaviour
     public void CheckForWin()
     {
         
-        if (gatoradeCollected > gatoradeNeeded)
+        if (gatoradeCollected >= gatoradeNeeded)
         {
             print("You win! you had " + gatoradeCollected);
-            SceneManager.LoadScene("WinScene");
+            //SceneManager.LoadScene("WinScene");
+            playerUI.ShowWinScreen();
         }
         else
         {
@@ -352,11 +354,13 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
+        isPaused = true;
         FreezeAllLiquids();
     }
 
     public void Unpause()
     {
+        isPaused = false;
         UnfreezeLiquids();
     }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8946,7 +8946,7 @@ PrefabInstance:
     - target: {fileID: 8568331542352353488, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
       propertyPath: PERCENTAGE_TO_WIN
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8971,68 +8971,50 @@ PrefabInstance:
       propertyPath: m_margin.y
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4501219646116549493, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947266871304202609, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947266871304202609, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947266871304202609, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 424.40002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947266871304202609, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -212.20001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947266871304202609, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -299.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4959176684938500734, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+    - target: {fileID: 5374360797921444373, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
-      propertyPath: m_MoveAction
-      value: 
+      propertyPath: m_ReferenceResolution.x
+      value: 1080
       objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+    - target: {fileID: 5374360797921444373, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
-      propertyPath: m_PointAction
-      value: 
-      objectReference: {fileID: 4810614262982873646, guid: 18a5e5627777da649be49a7ab9276b20,
-        type: 3}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_ActionsAsset
-      value: 
-      objectReference: {fileID: -944628639613478452, guid: 18a5e5627777da649be49a7ab9276b20,
-        type: 3}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_CancelAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_SubmitAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_LeftClickAction
-      value: 
-      objectReference: {fileID: 3192567094450312638, guid: 18a5e5627777da649be49a7ab9276b20,
-        type: 3}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_RightClickAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_MiddleClickAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_ScrollWheelAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_TrackedDevicePositionAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6065270397844758749, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_TrackedDeviceOrientationAction
-      value: 
+      propertyPath: m_ReferenceResolution.y
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 8877793303341428370, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}

@@ -112,6 +112,8 @@ public class InputHandler : MonoBehaviour
     {
         get
         {
+            if (gameManager.isPaused) return false;
+
             Ray ray = mainCamera.ScreenPointToRay(currentScreenPos);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
