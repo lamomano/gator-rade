@@ -62,6 +62,33 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrimaryFingerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""592bfc7d-b990-47af-b198-aa18af34a9f2"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SecondaryFingerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""c872fae3-3c6e-48f8-854d-51a169ac6735"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SecondaryTouchContact"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb76e1ee-8774-4929-9004-57a3635c4807"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -130,6 +157,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Press"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a24c3499-16ef-4ccc-b3b5-4ba4c753afe3"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryFingerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0377efeb-bd5d-4d45-a7b9-3dca7461c45c"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryFingerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10159d55-667a-4a7f-8ca8-b4afa5ded0b4"",
+                    ""path"": ""<Touchscreen>/touch1/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryTouchContact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -154,6 +214,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Controls_TouchPress = m_Controls.FindAction("TouchPress", throwIfNotFound: true);
         m_Controls_ScreenPos = m_Controls.FindAction("ScreenPos", throwIfNotFound: true);
         m_Controls_Press = m_Controls.FindAction("Press", throwIfNotFound: true);
+        m_Controls_PrimaryFingerPosition = m_Controls.FindAction("PrimaryFingerPosition", throwIfNotFound: true);
+        m_Controls_SecondaryFingerPosition = m_Controls.FindAction("SecondaryFingerPosition", throwIfNotFound: true);
+        m_Controls_SecondaryTouchContact = m_Controls.FindAction("SecondaryTouchContact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -219,6 +282,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_TouchPress;
     private readonly InputAction m_Controls_ScreenPos;
     private readonly InputAction m_Controls_Press;
+    private readonly InputAction m_Controls_PrimaryFingerPosition;
+    private readonly InputAction m_Controls_SecondaryFingerPosition;
+    private readonly InputAction m_Controls_SecondaryTouchContact;
     public struct ControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -227,6 +293,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @TouchPress => m_Wrapper.m_Controls_TouchPress;
         public InputAction @ScreenPos => m_Wrapper.m_Controls_ScreenPos;
         public InputAction @Press => m_Wrapper.m_Controls_Press;
+        public InputAction @PrimaryFingerPosition => m_Wrapper.m_Controls_PrimaryFingerPosition;
+        public InputAction @SecondaryFingerPosition => m_Wrapper.m_Controls_SecondaryFingerPosition;
+        public InputAction @SecondaryTouchContact => m_Wrapper.m_Controls_SecondaryTouchContact;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -248,6 +317,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Press.started += instance.OnPress;
             @Press.performed += instance.OnPress;
             @Press.canceled += instance.OnPress;
+            @PrimaryFingerPosition.started += instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.performed += instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.canceled += instance.OnPrimaryFingerPosition;
+            @SecondaryFingerPosition.started += instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.performed += instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.canceled += instance.OnSecondaryFingerPosition;
+            @SecondaryTouchContact.started += instance.OnSecondaryTouchContact;
+            @SecondaryTouchContact.performed += instance.OnSecondaryTouchContact;
+            @SecondaryTouchContact.canceled += instance.OnSecondaryTouchContact;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -264,6 +342,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Press.started -= instance.OnPress;
             @Press.performed -= instance.OnPress;
             @Press.canceled -= instance.OnPress;
+            @PrimaryFingerPosition.started -= instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.performed -= instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.canceled -= instance.OnPrimaryFingerPosition;
+            @SecondaryFingerPosition.started -= instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.performed -= instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.canceled -= instance.OnSecondaryFingerPosition;
+            @SecondaryTouchContact.started -= instance.OnSecondaryTouchContact;
+            @SecondaryTouchContact.performed -= instance.OnSecondaryTouchContact;
+            @SecondaryTouchContact.canceled -= instance.OnSecondaryTouchContact;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -296,5 +383,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnTouchPress(InputAction.CallbackContext context);
         void OnScreenPos(InputAction.CallbackContext context);
         void OnPress(InputAction.CallbackContext context);
+        void OnPrimaryFingerPosition(InputAction.CallbackContext context);
+        void OnSecondaryFingerPosition(InputAction.CallbackContext context);
+        void OnSecondaryTouchContact(InputAction.CallbackContext context);
     }
 }
