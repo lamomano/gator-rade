@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: bff009f6ed1429048b2dc348abbe500e, type: 3}
+  - {fileID: -876546973899608171, guid: bc434959ae928114f83bdea328ef995b, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7062368290364002540}
   m_Layer: 0
-  m_Name: WaterRenderer
+  m_Name: GatoradeRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 64
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: fcd1e0bbd1494664aabb76c52b94ee56, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: bc43c834204c0a44dbed279b91f7fb6e, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1

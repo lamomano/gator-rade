@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4249948694500017436}
   - component: {fileID: 3959407163888835389}
   - component: {fileID: 1793391638063999444}
-  - component: {fileID: -8389750089338557406}
   - component: {fileID: 3413306753877922751}
   m_Layer: 2
   m_Name: Test Liquid
@@ -65,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 2b201a8c969cca848af938a7a9a59d53, type: 3}
+  - {fileID: -876546973899608171, guid: 12105c66052a9bf46b8aa5a26e12fbc5, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,20 +134,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &-8389750089338557406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3221251552390813859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77ed46b567bbdd745ab110996e85f4d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: -876546973899608171, guid: 2b201a8c969cca848af938a7a9a59d53,
-    type: 3}
 --- !u!114 &3413306753877922751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  gatorade: {fileID: -876546973899608171, guid: 2b201a8c969cca848af938a7a9a59d53,
+  gatorade: {fileID: -876546973899608171, guid: 12105c66052a9bf46b8aa5a26e12fbc5,
     type: 3}
-  peak: {fileID: 2100000, guid: 96072b619a4900c4c92688582690fdd0, type: 2}
-  powerade: {fileID: 2100000, guid: 1315c6ccf7a9c7f498f17334f3f36de8, type: 2}
+  peak: {fileID: -876546973899608171, guid: d1ff392bf69b3414d85e879fe5bd3a06, type: 3}
+  powerade: {fileID: -876546973899608171, guid: 70e14d4d1676d2a4699b1fd17730e74d,
+    type: 3}
   canConvert: 0
