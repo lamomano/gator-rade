@@ -27,7 +27,7 @@ public class GravitateLiquid : MonoBehaviour
         foreach (Collider collider in hitColliders)
         {
             if (liquidRb != null)
-                liquidRb.AddExplosionForce(power, transform.position, radius);
+                liquidRb.AddExplosionForce(power, transform.position, radius); 
         }
     }
 }
