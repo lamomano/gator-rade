@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 592910238819564335}
   - component: {fileID: 7989535075212169357}
   - component: {fileID: 6156313301886666389}
+  - component: {fileID: -8635740524609799943}
   m_Layer: 2
   m_Name: Peak
   m_TagString: Gatorade
@@ -153,3 +154,20 @@ MonoBehaviour:
   powerade: {fileID: -876546973899608171, guid: 70e14d4d1676d2a4699b1fd17730e74d,
     type: 3}
   canConvert: 0
+--- !u!114 &-8635740524609799943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5807283412702389060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0281d78f064dad2459fb9b3f156a66e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  moveSpeed: 0.05
+  radius: 1
+  deadZone: 0
+  power: 2
