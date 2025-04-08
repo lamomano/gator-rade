@@ -14,6 +14,7 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    private bool DebugMode = true;
     public InputActionAsset inputActions;
     private InputAction press, screenPos;
     
@@ -29,6 +30,7 @@ public class InputHandler : MonoBehaviour
     private GameManager gameManager;
     private GameGrid gameGrid;
     private MoveTracker moveTracker;
+    private Powerups powerupManager;
 
     private Vector3 currentScreenPos;
     private float gridSpacing;
@@ -37,7 +39,7 @@ public class InputHandler : MonoBehaviour
     public Tile currentTile;
     public Transform currentTransform;
 
-    private bool isDragging;
+    public bool isDragging;
    
 
 
@@ -50,6 +52,7 @@ public class InputHandler : MonoBehaviour
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
         gameManager = (GameManager)FindObjectOfType<GameManager>();
         moveTracker = (MoveTracker)FindObjectOfType<MoveTracker>();
+        powerupManager = (Powerups)FindObjectOfType<Powerups>();
 
         //print(gameGrid.gridSizeX);
 
@@ -79,7 +82,7 @@ public class InputHandler : MonoBehaviour
     /// for getting the position of the click and whatnot
     /// don't need z value cause we are working with a 2D plane
     /// </summary>
-    private Vector3 currentWorldPos
+    public Vector3 currentWorldPos
     {
         get
         {
@@ -112,13 +115,25 @@ public class InputHandler : MonoBehaviour
     {
         get
         {
+            if (powerupManager.isDragging) return false;
             if (gameManager.isPaused) return false;
+            if (isDragging) return false;
+            
 
             Ray ray = mainCamera.ScreenPointToRay(currentScreenPos);
             RaycastHit hit;
+
+            
+
             if (Physics.Raycast(ray, out hit))
             {
                 Tile thisTile = hit.transform.gameObject.GetComponent<Tile>();
+
+                if (DebugMode == true)
+                {
+                    Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 0.5f);
+                }
+
                 if (thisTile != null)
                 {
                     //print(hit.transform.name);

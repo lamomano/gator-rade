@@ -7,6 +7,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 
 
@@ -18,12 +19,14 @@ public class GameGrid : MonoBehaviour
     public int gridSizeX;
     public int gridSizeY;
 
+    public int wallHeight = 3;
     public float tileSizePercentage = .9f;
     public float gridSpacing = 1.5f;
     private int minimumTilesForMatch = 3;
 
 
     public GameObject tilePrefab;
+    public GameObject wallPrefab;
 
     public List<GameObject> tiles = new List<GameObject>();
     public List<Vector3> DESIGNATED_TILES = new List<Vector3>();
@@ -33,6 +36,7 @@ public class GameGrid : MonoBehaviour
     void Start()
     {
         GenerateGrid();
+        GenerateWalls();
     }
 
 
@@ -91,6 +95,64 @@ public class GameGrid : MonoBehaviour
 
         return null;
     }
+
+
+
+
+
+    public void GenerateWalls()
+    {
+        // generate sides first
+
+        for (int i = 0; i < gridSizeY; i++)
+        {
+            Vector3 left = CalculateGridPosition(-1, i);
+            Vector3 right = CalculateGridPosition(gridSizeX, i);
+
+            GameObject block1 = Instantiate(wallPrefab, left, Quaternion.identity);
+            GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
+
+            block1.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            block2.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+
+            //block1.transform.localScale = new Vector3(tileSizePercentage, tileSizePercentage, tileSizePercentage);
+            //block2.transform.localScale = new Vector3(tileSizePercentage, tileSizePercentage, tileSizePercentage);
+
+        }
+
+        // make the walls a lil higher
+
+        for (int i = 0; i < wallHeight; i++)
+        {
+            Vector3 left = CalculateGridPosition(-1, i + gridSizeY);
+            Vector3 right = CalculateGridPosition(gridSizeX, i + gridSizeY);
+
+            GameObject block1 = Instantiate(wallPrefab, left, Quaternion.identity);
+            GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
+
+            block1.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            block2.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+        }
+
+        // then bottom corners
+        Vector3 leftpos = CalculateGridPosition(-1, -1);
+        Vector3 rightpos = CalculateGridPosition(gridSizeX, -1);
+
+        GameObject leftCorner = Instantiate(wallPrefab, leftpos, Quaternion.identity);
+        GameObject rightCorner = Instantiate(wallPrefab, rightpos, Quaternion.identity);
+
+        leftCorner.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+        rightCorner.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+
+        // then floor
+        for (int i = 0; i < gridSizeX; i++)
+        {
+            Vector3 targetPos = CalculateGridPosition(i, -1);
+            GameObject floorBlock = Instantiate(wallPrefab, targetPos, Quaternion.identity);
+            floorBlock.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+        }
+    }
+
 
     public void GenerateGrid()
     {
