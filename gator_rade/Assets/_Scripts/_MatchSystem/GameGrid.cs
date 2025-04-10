@@ -27,6 +27,7 @@ public class GameGrid : MonoBehaviour
 
     public GameObject tilePrefab;
     public GameObject wallPrefab;
+    public GameObject backgroundPrefab;
 
     public List<GameObject> tiles = new List<GameObject>();
     public List<Vector3> DESIGNATED_TILES = new List<Vector3>();
@@ -220,6 +221,11 @@ public class GameGrid : MonoBehaviour
         {
             for (int row = 0; row < gridSizeX; row++)
             {
+                Vector3 targetPosition = CalculateGridPosition(row, col);
+                Vector3 backgrondPos = new Vector3(targetPosition.x, targetPosition.y, -0.1f);
+
+                // add a background
+                GameObject backgroundObject = Instantiate(backgroundPrefab, backgrondPos, new Quaternion(0f, 180f, 0f, 1f));
 
                 Vector2 nonoPosition = new Vector2(row, col);
                 if (nonoList.Contains(nonoPosition))
@@ -227,7 +233,7 @@ public class GameGrid : MonoBehaviour
                     continue;
                 }
 
-                Vector3 targetPosition = CalculateGridPosition(row, col);
+                
 
                 GameObject tileObject = Instantiate(tilePrefab, targetPosition, Quaternion.identity);
                 

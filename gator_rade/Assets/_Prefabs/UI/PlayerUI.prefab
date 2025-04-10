@@ -387,7 +387,6 @@ GameObject:
   - component: {fileID: 2735584121857317855}
   - component: {fileID: 1052965777358710101}
   - component: {fileID: 2343939656691540126}
-  - component: {fileID: 2121140923272376795}
   m_Layer: 5
   m_Name: Hotbar
   m_TagString: Untagged
@@ -478,22 +477,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2121140923272376795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 450658368676056588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e09dc9aa8e302d4d84a26809b020d41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bombAmount: 5
-  bombPrefab: {fileID: 6079793998476821753, guid: ade4059767708dd429aab6d1e0065cb7,
-    type: 3}
-  isDragging: 0
 --- !u!1 &773158017410609505
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,6 +2015,7 @@ GameObject:
   - component: {fileID: 5374360797921444373}
   - component: {fileID: 3461275672118335326}
   - component: {fileID: 8945939376361741772}
+  - component: {fileID: 8727200697113936456}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -2145,6 +2129,22 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   pauseCanvas: {fileID: 0}
   winCanvas: {fileID: 0}
+--- !u!114 &8727200697113936456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4959176684938500734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e09dc9aa8e302d4d84a26809b020d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombAmount: 5
+  bombPrefab: {fileID: 6079793998476821753, guid: ade4059767708dd429aab6d1e0065cb7,
+    type: 3}
+  isDragging: 0
 --- !u!1 &5296858082342693735
 GameObject:
   m_ObjectHideFlags: 0
@@ -2770,7 +2770,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2121140923272376795}
+        - m_Target: {fileID: 8727200697113936456}
           m_TargetAssemblyTypeName: Powerups, Assembly-CSharp
           m_MethodName: OnButtonPress
           m_Mode: 5

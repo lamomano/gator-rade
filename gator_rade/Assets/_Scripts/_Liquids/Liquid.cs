@@ -87,6 +87,8 @@ public class Liquid : MonoBehaviour
 
     public void Gatorade()
     {
+        if (gameManager == null)
+            gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
         type = LiquidType.Gatorade;
         gameObject.tag = "Gatorade";
         meshRenderer.material = gatorade;
@@ -104,6 +106,8 @@ public class Liquid : MonoBehaviour
 
     public void Powerade()
     {
+        if (gameManager == null)
+            gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
         type = LiquidType.Powerade;
         gameObject.tag = "Powerade";
         meshRenderer.material = powerade;
@@ -113,6 +117,8 @@ public class Liquid : MonoBehaviour
 
     public void Peak()
     {
+        if (gameManager == null)
+            gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
         type = LiquidType.Peak;
         gameObject.tag = "Peak";
         meshRenderer.material = peak;

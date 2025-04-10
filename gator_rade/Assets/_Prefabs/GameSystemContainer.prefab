@@ -49,9 +49,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSizeX: 8
   gridSizeY: 9
+  wallHeight: 3
   tileSizePercentage: 0.375
   gridSpacing: 1
   tilePrefab: {fileID: 2220322617299367199, guid: a5fc1b81bb8c36646b3a2571c20268aa,
+    type: 3}
+  wallPrefab: {fileID: 0}
+  backgroundPrefab: {fileID: 4720887842202068634, guid: 32d54b7e25267bc44bbddabd68d10a89,
     type: 3}
   tiles: []
   DESIGNATED_TILES: []
@@ -73,11 +77,13 @@ MonoBehaviour:
   amountOfMoves: 10
   delay: 3
   shootingPower: 1
-  MOVES_LEFT: 0
+  isPaused: 0
   gameGrid: {fileID: 0}
   playerData: {fileID: 0}
   spewer: {fileID: 0}
   playerUI: {fileID: 0}
+  moveTracker: {fileID: 0}
+  powerups: {fileID: 0}
 --- !u!114 &4706204629066914986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +100,7 @@ MonoBehaviour:
     type: 3}
   currentTile: {fileID: 0}
   currentTransform: {fileID: 0}
+  isDragging: 0
 --- !u!114 &7621111747997325381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,3 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddadfca9560a589438fe3c56c30d0045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tokenDestroyed: 0
+  currentMovesLeft: {fileID: 0}
+  MOVES_LEFT: 10
+  StartMoves: 10

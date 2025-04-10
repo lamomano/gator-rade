@@ -56,7 +56,8 @@ public class Powerups : MonoBehaviour
         gameGrid = (GameGrid)FindObjectOfType(typeof(GameGrid));
 
 
-        bombText = transform.Find("Powerup1").Find("Text").GetComponent<TMP_Text>();
+
+        bombText = transform.Find("Hotbar").Find("Powerup1").Find("Text").GetComponent<TMP_Text>();
 
 
 

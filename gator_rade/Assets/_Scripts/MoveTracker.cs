@@ -10,7 +10,7 @@ public class MoveTracker : MonoBehaviour
 
     private GameGrid gameGrid;
     private GameManager gameManager;
-    //private PlayerUI playerUI;
+    private PlayerUI playerUI;
 
     public bool tokenDestroyed;
     
@@ -24,7 +24,13 @@ public class MoveTracker : MonoBehaviour
     {
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
         gameManager = (GameManager)FindObjectOfType<GameManager>();
-        currentMovesLeft.text = MOVES_LEFT.ToString();
+
+        playerUI = (PlayerUI)FindObjectOfType<PlayerUI>();
+        if (currentMovesLeft == null)
+        {
+            currentMovesLeft = playerUI.gameObject.transform.Find("MovesLeft").gameObject.GetComponent<TMP_Text>();
+        }
+        currentMovesLeft.text = "Moves Left: " + MOVES_LEFT.ToString();
         tokenDestroyed = true;
         
         
