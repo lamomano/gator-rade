@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/* Ihejirika, Chijioke/Iversen-Krampitz, Ian 
+ * 4/10/2025
+ * Controls the liquid adhesion and pooling. 
+ */
 
 public class GravitateLiquid : MonoBehaviour
 {
@@ -10,6 +14,7 @@ public class GravitateLiquid : MonoBehaviour
     public float radius;
     public float deadZone;
     public float power;
+    public float gravityForce;
 
 
     private void Update()
@@ -24,13 +29,13 @@ public class GravitateLiquid : MonoBehaviour
     /// <summary>
     /// for debug so you can see sphere radius
     /// </summary>
-   /* void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.green; // Set the color of the sphere
         Gizmos.DrawWireSphere(transform.position, radius); // Draw the wireframe sphere
         Gizmos.DrawWireSphere(transform.position, deadZone); // Draw the wireframe sphere
     }
-   */
+ 
    
     void MoveBack()
     {
@@ -47,6 +52,13 @@ public class GravitateLiquid : MonoBehaviour
                 target = collider.gameObject;
                 break;
            }
+           //this dont work.. idk y
+           /*if (transform.position.y > collider.transform.position.y + .01f)
+           {
+                this.GetComponent<Rigidbody>().AddForce(gravityForce * Time.deltaTime * Vector3.down);
+                Debug.Log("pushing downward");
+                break;
+           }*/
         }
     }
 }
