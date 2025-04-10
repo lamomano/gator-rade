@@ -36,7 +36,7 @@ public class GameGrid : MonoBehaviour
     void Start()
     {
         GenerateGrid();
-        GenerateWalls();
+        //GenerateWalls();
     }
 
 

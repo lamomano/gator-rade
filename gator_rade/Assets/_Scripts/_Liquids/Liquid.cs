@@ -43,7 +43,7 @@ public class Liquid : MonoBehaviour
     }
     private IEnumerator DelayStart()
     {
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.02f);
         gameManager = (GameManager)FindObjectOfType<GameManager>();
 
         UpdateState(type);
