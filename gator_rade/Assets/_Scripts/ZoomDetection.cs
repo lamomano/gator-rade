@@ -4,6 +4,8 @@ using UnityEngine;
 public class ZoomDetection : MonoBehaviour
 {
     public float camSpeed = 4f;
+    public float minZ = -50f;
+    public float maxZ = -25f;
 
     private PlayerInputs _playerInputs;
     private Coroutine _zoomCoroutine;
@@ -53,14 +55,14 @@ public class ZoomDetection : MonoBehaviour
             if(distance > previousDistance )
             {
                 Vector3 targetPosition = _camPos.position;
-                targetPosition.z -= 1;
+                targetPosition.z += 1;
                 _camPos.position = Vector3.Slerp(_camPos.position, targetPosition, camSpeed * Time.deltaTime);
             }
 
             else if ( distance < previousDistance)
             {
                 Vector3 targetPosition = _camPos.position;
-                targetPosition.z += 1;
+                targetPosition.z -= 1;
                 _camPos.position = Vector3.Slerp(_camPos.position, targetPosition, camSpeed * Time.deltaTime);
             }
             //keep track of previous distance
@@ -68,5 +70,14 @@ public class ZoomDetection : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private void LateUpdate()
+    {
+        Vector3 currentPosition = _camPos.position;
+        currentPosition.z = Mathf.Clamp(currentPosition.z, minZ, maxZ); 
+
+        _camPos.position = currentPosition;
+
     }
 }
