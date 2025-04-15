@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ZoomDetection : MonoBehaviour
 {
     public float camSpeed = 4f;
+    public float panSpeed;
     public float minZ = -50f;
     public float maxZ = -25f;
 
@@ -31,6 +33,9 @@ public class ZoomDetection : MonoBehaviour
     {
         _playerInputs.Controls.SecondaryTouchContact.started += _ => ZoomStart();
         _playerInputs.Controls.SecondaryTouchContact.canceled += _ => ZoomEnd();
+
+        _playerInputs.Controls.PrimaryFingerPosition.started += _ => PanDetect();
+
     }
 
     private void ZoomStart()
@@ -80,4 +85,18 @@ public class ZoomDetection : MonoBehaviour
         _camPos.position = currentPosition;
 
     }
+
+    private void PanDetect() {
+        
+        Vector3 currentPositon = _camPos.position;
+        Vector2 fingerPos = _playerInputs.Controls.PrimaryFingerPosition.ReadValue<Vector2>();
+
+        if (fingerPos.x <= -1)
+        {
+            currentPositon.x = fingerPos.x; 
+        }
+
+    }
+
+
 }
