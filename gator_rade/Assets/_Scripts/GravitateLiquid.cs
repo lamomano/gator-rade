@@ -29,12 +29,12 @@ public class GravitateLiquid : MonoBehaviour
     /// <summary>
     /// for debug so you can see sphere radius
     /// </summary>
-    void OnDrawGizmos()
+  /*  void OnDrawGizmos()
     {
         Gizmos.color = Color.green; // Set the color of the sphere
         Gizmos.DrawWireSphere(transform.position, radius); // Draw the wireframe sphere
         Gizmos.DrawWireSphere(transform.position, deadZone); // Draw the wireframe sphere
-    }
+    } */
  
    
     void MoveBack()
