@@ -24,8 +24,8 @@ public class MoveTracker : MonoBehaviour
     {
         gameGrid = (GameGrid)FindObjectOfType<GameGrid>();
         gameManager = (GameManager)FindObjectOfType<GameManager>();
-
         playerUI = (PlayerUI)FindObjectOfType<PlayerUI>();
+
         if (currentMovesLeft == null)
         {
             currentMovesLeft = playerUI.gameObject.transform.Find("MovesLeft").gameObject.GetComponent<TMP_Text>();
@@ -41,7 +41,8 @@ public class MoveTracker : MonoBehaviour
 
     public void ResetMoves()
     {
-        MOVES_LEFT = StartMoves;
+        MOVES_LEFT = gameManager.amountOfMoves;
+        currentMovesLeft.color = Color.black;
         currentMovesLeft.text = "Moves Left: " + MOVES_LEFT.ToString();
         
     }
@@ -61,8 +62,11 @@ public class MoveTracker : MonoBehaviour
 
             if(MOVES_LEFT == 0)
             {
-                Debug.Log("You lose");
-            } 
+                //Debug.Log("You lose");
+                //playerUI.ShowLoseScreen();
+                currentMovesLeft.color = Color.red;
+                currentMovesLeft.text = "Out of moves";
+            }
 
 
         }

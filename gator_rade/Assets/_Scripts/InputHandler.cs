@@ -118,7 +118,8 @@ public class InputHandler : MonoBehaviour
             if (powerupManager.isDragging) return false;
             if (gameManager.isPaused) return false;
             if (isDragging) return false;
-            
+
+            if (moveTracker.MOVES_LEFT == 0) return false;
 
             Ray ray = mainCamera.ScreenPointToRay(currentScreenPos);
             RaycastHit hit;

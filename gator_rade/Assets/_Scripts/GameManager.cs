@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> gatoradeOrbs = new List<GameObject>();
     private List<GameObject> successfulOrbs = new List<GameObject>();
+    private List<GameObject> outOfBoundsOrbs = new List<GameObject>();
 
     public float gatoradeCollected
     {
@@ -88,11 +89,19 @@ public class GameManager : MonoBehaviour
             initialLiquidStates[obj] = liquid.type;
         }
 
+
+        // hitbox for detecting when gatorade falls off the screen
+        gameObject.transform.position = new Vector3(0, 0, 0);
+        BoxCollider bottomBox = gameObject.AddComponent<BoxCollider>();
+        bottomBox.size = new Vector3(10, 1, 50);
+        bottomBox.center = new Vector3(0, -gameGrid.GetMaxPosY() - 5, 0);
+        bottomBox.isTrigger = true;
+
         NewRound();
 
 
-        
 
+        /*
         bool success = true;
         if (gameGrid == null)
         {
@@ -104,14 +113,9 @@ public class GameManager : MonoBehaviour
             print("missing playerdata gg");
             success = false;
         }
-        if (spewer == null)
-        {
-            print("missing spewer gg");
-            success = false;
-        }
         if (!success)
             return;
-
+        */
     }
 
 
@@ -226,14 +230,15 @@ public class GameManager : MonoBehaviour
                 thisLiquid.UpdateState(liquidType);
 
                 thisLiquid.EnablePhysics(true);
-            }  
+            }
         }
         gatoradeOrbs.Clear();
 
         gatoradeOrbs.AddRange(GameObject.FindGameObjectsWithTag("Gatorade"));
 
         successfulOrbs.Clear();
-        
+        outOfBoundsOrbs.Clear();
+
 
         // now just start periodically checking for orb moving status
 
@@ -264,7 +269,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void CheckForWin()
     {
-        
+
         if (gatoradeCollected >= gatoradeNeeded)
         {
             print("You win! you had " + gatoradeCollected);
@@ -365,6 +370,23 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         UnfreezeLiquids();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Gatorade")
+        {
+            if (!outOfBoundsOrbs.Contains(other.gameObject))
+            {
+                outOfBoundsOrbs.Add(other.gameObject);
+            }
+
+            print(totalGatorade - outOfBoundsOrbs.Count);
+            if (totalGatorade - outOfBoundsOrbs.Count < gatoradeNeeded)
+            {
+                playerUI.ShowLoseScreen();
+            }
+        }
     }
 
 

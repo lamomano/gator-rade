@@ -12,6 +12,7 @@ public class PlayerUI : MonoBehaviour
     public GameManager gameManager;
     public Canvas pauseCanvas;
     public Canvas winCanvas;
+    public Canvas loseCanvas;
 
     void Awake()
     {
@@ -21,9 +22,11 @@ public class PlayerUI : MonoBehaviour
 
         pauseCanvas = gameObject.transform.Find("PauseMenu").GetComponent <Canvas>();
         winCanvas = gameObject.transform.Find("WinScreen").GetComponent<Canvas>();
+        loseCanvas = gameObject.transform.Find("LoseScreen").GetComponent<Canvas>();
 
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
+        loseCanvas.enabled = false;
     }
 
 
@@ -41,6 +44,7 @@ public class PlayerUI : MonoBehaviour
 
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
+        loseCanvas.enabled = false;
     }
 
     public void MainMenu()
@@ -51,6 +55,7 @@ public class PlayerUI : MonoBehaviour
     public void TogglePause()
     {
         if (winCanvas.enabled) return;
+        if (loseCanvas.enabled) return;
 
         pauseCanvas.enabled = !pauseCanvas.enabled;
 
@@ -66,7 +71,19 @@ public class PlayerUI : MonoBehaviour
 
     public void ShowWinScreen()
     {
+        pauseCanvas.enabled = false;
+        loseCanvas.enabled = false;
+
         winCanvas.enabled = true;
+    }
+
+
+    public void ShowLoseScreen()
+    {
+        pauseCanvas.enabled = false;
+        winCanvas.enabled = false;
+
+        loseCanvas.enabled = true;
     }
 
 

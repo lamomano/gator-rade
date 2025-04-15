@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7707287792917686889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.053101197, y: 5.324701, z: -17.95081}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52,13 +52,19 @@ MonoBehaviour:
   wallHeight: 3
   tileSizePercentage: 0.375
   gridSpacing: 1
+  bathTub_x_position: 0
+  DESIGNATED_TILES: []
+  LEFT_WALL_Y_CUSTOM: []
+  RIGHT_WALL_Y_CUSTOM: []
+  BOTTOM_WALL_X_CUSTOM: []
   tilePrefab: {fileID: 2220322617299367199, guid: a5fc1b81bb8c36646b3a2571c20268aa,
     type: 3}
-  wallPrefab: {fileID: 0}
+  wallPrefab: {fileID: 6326434886994043567, guid: 1301b832f1cd0974ea03cd74fca6b9ba,
+    type: 3}
   backgroundPrefab: {fileID: 4720887842202068634, guid: 32d54b7e25267bc44bbddabd68d10a89,
     type: 3}
-  tiles: []
-  DESIGNATED_TILES: []
+  fanPrefab: {fileID: 7211356559947584809, guid: 8023867822791c44fb1aee912b53585a,
+    type: 3}
 --- !u!114 &8568331542352353488
 MonoBehaviour:
   m_ObjectHideFlags: 0

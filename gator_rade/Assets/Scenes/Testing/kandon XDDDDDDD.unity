@@ -3276,7 +3276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &785359223
 Transform:
   m_ObjectHideFlags: 0
@@ -8948,6 +8948,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GatoradeSpewer
       objectReference: {fileID: 0}
+    - target: {fileID: 6662281326422412511, guid: e14156652e36a73489d77e274a793599,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8967,6 +8972,86 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6326434886994043567, guid: 1301b832f1cd0974ea03cd74fca6b9ba,
         type: 3}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: LEFT_WALL_Y_EXCLUDE.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: RIGHT_WALL_Y_CUSTOM.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: RIGHT_WALL_Y_EXCLUDE.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: LEFT_WALL_Y_EXCLUDE.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: RIGHT_WALL_Y_EXCLUDE.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[4]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[5]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[6]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[7]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_EXCLUDE.Array.data[8]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: RIGHT_WALL_Y_CUSTOM.Array.data[0].x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: RIGHT_WALL_Y_CUSTOM.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6956887113999681022, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9024,6 +9109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8568331542352353488, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
+      propertyPath: amountOfMoves
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568331542352353488, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
       propertyPath: PERCENTAGE_TO_WIN
       value: 0.2
       objectReference: {fileID: 0}
@@ -9040,45 +9130,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 455340554974177693, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2357065607610077316, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422015934128773968, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3279357797705825051, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3656328541324914316, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4959176684938500734, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
       propertyPath: m_Name
       value: PlayerUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5374360797921444373, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_ScreenMatchMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6941533386914510209, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8877793303341428370, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
@@ -9180,11 +9235,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9133100793957576210, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9267,6 +9317,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bathtub
+      objectReference: {fileID: 0}
+    - target: {fileID: 7439771498704901104, guid: f4e009e02305db745894969074da6965,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

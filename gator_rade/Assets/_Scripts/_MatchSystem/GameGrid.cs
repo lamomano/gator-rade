@@ -11,6 +11,14 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 
 
+public enum WallType
+{ 
+    Wall = -1,
+    Blank = 0,
+    Fan = 1,
+    Locked = 2,
+}
+
 
 
 public class GameGrid : MonoBehaviour
@@ -25,19 +33,28 @@ public class GameGrid : MonoBehaviour
     private int minimumTilesForMatch = 3;
 
 
+    
+
+    private List<GameObject> tiles = new List<GameObject>();
+
+
+    public int bathTub_x_position;
+    public List<Vector3> DESIGNATED_TILES = new List<Vector3>();
+
+    public List<Vector2> LEFT_WALL_Y_CUSTOM = new List<Vector2>();
+    public List<Vector2> RIGHT_WALL_Y_CUSTOM = new List<Vector2>();
+    public List<Vector2> BOTTOM_WALL_X_CUSTOM = new List<Vector2>();
+
     public GameObject tilePrefab;
     public GameObject wallPrefab;
     public GameObject backgroundPrefab;
-
-    public List<GameObject> tiles = new List<GameObject>();
-    public List<Vector3> DESIGNATED_TILES = new List<Vector3>();
-
+    public GameObject fanPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         GenerateGrid();
-        //GenerateWalls();
+        GenerateWalls();
     }
 
 
@@ -101,20 +118,80 @@ public class GameGrid : MonoBehaviour
 
 
 
+    /// <summary>
+    /// since we are using vector2 values, where x represents the coordinate of the affected wall position and y the type
+    /// we need to check if the x coordinate of the vector2 is the same as the target coordinate position
+    /// </summary>
+    /// <param name="thisList"></param>
+    /// <param name="coord"></param>
+    /// <returns></returns>
+    private int ContainsCoordinate(List<Vector2> thisList, int coord)
+    {
+        foreach (Vector2 thisVec in thisList)
+        {
+            if (thisVec.x == coord)
+            {
+                //return the type of wall given by the y value
+                return (int)thisVec.y;
+            }
+        }
+
+
+        return -1;
+    }
+
+
+
+
+
     public void GenerateWalls()
     {
         // generate sides first
 
         for (int i = 0; i < gridSizeY; i++)
         {
+            int leftType = ContainsCoordinate(LEFT_WALL_Y_CUSTOM, i);
+            int rightType = ContainsCoordinate(RIGHT_WALL_Y_CUSTOM, i);
+
             Vector3 left = CalculateGridPosition(-1, i);
+            if (leftType == -1)
+            {
+                GameObject block1 = Instantiate(wallPrefab, left, Quaternion.identity);
+                block1.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            }
+            else
+            {
+                if (leftType == (int)WallType.Fan)
+                {
+                    GameObject thisFan = Instantiate(fanPrefab, left, Quaternion.identity);
+                    thisFan.transform.Rotate(0, 0, -90f);
+                }
+                else if (leftType == (int)WallType.Locked)
+                {
+                    // generate locked block
+                }
+            }
+
+
             Vector3 right = CalculateGridPosition(gridSizeX, i);
-
-            GameObject block1 = Instantiate(wallPrefab, left, Quaternion.identity);
-            GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
-
-            block1.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
-            block2.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            if (rightType == -1)
+            {
+                GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
+                block2.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            }
+            else
+            {
+                if (rightType == (int)WallType.Fan)
+                {
+                    GameObject thisFan = Instantiate(fanPrefab, right, Quaternion.identity);
+                    thisFan.transform.Rotate(0, 0, 90f);
+                }
+                else if (rightType == (int)WallType.Locked)
+                {
+                    // generate locked block
+                }
+            }
+            
 
             //block1.transform.localScale = new Vector3(tileSizePercentage, tileSizePercentage, tileSizePercentage);
             //block2.transform.localScale = new Vector3(tileSizePercentage, tileSizePercentage, tileSizePercentage);
@@ -126,12 +203,12 @@ public class GameGrid : MonoBehaviour
         for (int i = 0; i < wallHeight; i++)
         {
             Vector3 left = CalculateGridPosition(-1, i + gridSizeY);
-            Vector3 right = CalculateGridPosition(gridSizeX, i + gridSizeY);
-
             GameObject block1 = Instantiate(wallPrefab, left, Quaternion.identity);
-            GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
-
             block1.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+
+
+            Vector3 right = CalculateGridPosition(gridSizeX, i + gridSizeY);
+            GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
             block2.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
         }
 
@@ -148,6 +225,7 @@ public class GameGrid : MonoBehaviour
         // then floor
         for (int i = 0; i < gridSizeX; i++)
         {
+            //if (BOTTOM_WALL_X_EXCLUDE.Contains(i)) continue;
             Vector3 targetPos = CalculateGridPosition(i, -1);
             GameObject floorBlock = Instantiate(wallPrefab, targetPos, Quaternion.identity);
             floorBlock.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
