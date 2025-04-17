@@ -34,7 +34,7 @@ public class ZoomDetection : MonoBehaviour
         _playerInputs.Controls.SecondaryTouchContact.started += _ => ZoomStart();
         _playerInputs.Controls.SecondaryTouchContact.canceled += _ => ZoomEnd();
 
-        _playerInputs.Controls.PrimaryFingerPosition.started += _ => PanDetect();
+     //   _playerInputs.Controls.PrimaryFingerPosition.started += _ => PanDetect();
 
     }
 
@@ -85,7 +85,7 @@ public class ZoomDetection : MonoBehaviour
         _camPos.position = currentPosition;
 
     }
-
+/*
     private void PanDetect() {
         
         Vector3 currentPositon = _camPos.position;
@@ -98,5 +98,5 @@ public class ZoomDetection : MonoBehaviour
 
     }
 
-
+    */
 }
