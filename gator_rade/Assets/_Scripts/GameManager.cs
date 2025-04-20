@@ -389,7 +389,7 @@ public class GameManager : MonoBehaviour
                 outOfBoundsOrbs.Add(other.gameObject);
             }
 
-            print(totalGatorade - outOfBoundsOrbs.Count);
+            //print(totalGatorade - outOfBoundsOrbs.Count);
             if (totalGatorade - outOfBoundsOrbs.Count < gatoradeNeeded)
             {
                 playerUI.ShowLoseScreen();
