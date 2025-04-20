@@ -11,6 +11,7 @@ public class Fans : MonoBehaviour
     public bool isEnabled = false;
 
     private BoxCollider thisCollider;
+    private ParticleSystem ps;
     private GameGrid gameGrid;
 
     public LayerMask tileLayer;
@@ -23,6 +24,8 @@ public class Fans : MonoBehaviour
         //BoxCollider thisCollider = gameObject.AddComponent<BoxCollider>();
         //thisCollider.isTrigger = true;
         gameGrid = (GameGrid)FindObjectOfType(typeof(GameGrid));
+        ps = transform.Find("Particle System").gameObject.GetComponent<ParticleSystem>();
+
         thisCollider = GetComponent<BoxCollider>();
         maxDistance = gameGrid.gridSizeX > gameGrid.gridSizeY ? gameGrid.gridSizeX : gameGrid.gridSizeY;
 
@@ -55,6 +58,21 @@ public class Fans : MonoBehaviour
         thisCollider.size = new Vector3(0.95f, newDistance + 1, 1);
         thisCollider.center = new Vector3(0, (newDistance / 2), 0);
 
+
+
+        // --- particle system ---
+
+        var main = ps.main;
+        // only update if distance is significant
+        if (Mathf.Abs(main.duration - newDistance) > 0.01f)
+        {
+            // fully stop and clear
+            //ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            main.startLifetime = newDistance/2;
+
+            ps.Play();
+        }
         //Debug.DrawRay(origin, direction * newDistance, Color.red, 1.0f);
     }
 
