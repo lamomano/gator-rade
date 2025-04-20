@@ -17,6 +17,7 @@ public enum WallType
     Blank = 0,
     Fan = 1,
     Locked = 2,
+    Brown = 3,
 }
 
 
@@ -31,11 +32,13 @@ public class GameGrid : MonoBehaviour
     public float tileSizePercentage = .9f;
     public float gridSpacing = 1.5f;
     private int minimumTilesForMatch = 3;
+    private Vector3 wallOffset = new Vector3(0.5f, -0.5f, -0.5f);
 
 
     
 
     private List<GameObject> tiles = new List<GameObject>();
+    private List<GameObject> walls = new List<GameObject>();
 
 
     public int bathTub_x_position;
@@ -49,6 +52,11 @@ public class GameGrid : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject backgroundPrefab;
     public GameObject fanPrefab;
+    public GameObject blankWallPrefab;
+    public GameObject lockedWallPrefab;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -143,9 +151,64 @@ public class GameGrid : MonoBehaviour
 
 
 
+    private void CreateWall(Vector3 position, int wallType, Vector3 offset, float rotationZ = 0f)
+    {
+        GameObject wallObject = null;
 
+        if (wallType == (int)WallType.Fan)
+        {
+            wallObject = Instantiate(fanPrefab, position, Quaternion.identity);
+            wallObject.transform.Rotate(0, 0, rotationZ);
+
+            GameObject backgroundObject = Instantiate(backgroundPrefab, position, Quaternion.identity);
+            backgroundObject.transform.Rotate(0, 180, 0);
+            walls.Add(backgroundObject);
+        }
+        else if (wallType == (int)WallType.Locked)
+        {
+            wallObject = Instantiate(lockedWallPrefab, position, Quaternion.identity);
+        }
+        else if (wallType == (int)WallType.Blank)
+        {
+            wallObject = Instantiate(blankWallPrefab, position, Quaternion.identity);
+            wallObject.transform.Translate(new Vector3(0, 0, 1));
+        }
+        else if (wallType == (int)WallType.Brown)
+        {
+            wallObject = Instantiate(backgroundPrefab, position, Quaternion.identity);
+        }
+        else
+        {
+            wallObject = Instantiate(wallPrefab, position, Quaternion.identity);
+        }
+
+        if (wallObject != null)
+        {
+            if (wallType == (int)WallType.Wall)
+                wallObject.transform.localPosition += offset;
+            else
+            {
+                wallObject.transform.Rotate(0, 180, 0);
+            }
+
+
+            walls.Add(wallObject);
+        }
+    }
+
+
+
+    /// <summary>
+    /// do not speak of this spaghetti madness please
+    /// </summary>
     public void GenerateWalls()
     {
+        foreach (GameObject obj in walls)
+        {
+            Destroy(obj);
+        }
+        walls.Clear();
+
         // generate sides first
 
         for (int i = 0; i < gridSizeY; i++)
@@ -153,45 +216,14 @@ public class GameGrid : MonoBehaviour
             int leftType = ContainsCoordinate(LEFT_WALL_Y_CUSTOM, i);
             int rightType = ContainsCoordinate(RIGHT_WALL_Y_CUSTOM, i);
 
-            Vector3 left = CalculateGridPosition(-1, i);
-            if (leftType == -1)
-            {
-                GameObject block1 = Instantiate(wallPrefab, left, Quaternion.identity);
-                block1.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
-            }
-            else
-            {
-                if (leftType == (int)WallType.Fan)
-                {
-                    GameObject thisFan = Instantiate(fanPrefab, left, Quaternion.identity);
-                    thisFan.transform.Rotate(0, 0, -90f);
-                }
-                else if (leftType == (int)WallType.Locked)
-                {
-                    // generate locked block
-                }
-            }
+            // new super cool trick i picked up on using booleans within the prebuilt parameterof rotationZ
+            // so if fan, rotate it accordingly
+            Vector3 leftPos = CalculateGridPosition(-1, i);
+            CreateWall(leftPos, leftType, wallOffset, rotationZ: leftType == (int)WallType.Fan ? -90f : 0f);
 
+            Vector3 rightPos = CalculateGridPosition(gridSizeX, i);
+            CreateWall(rightPos, rightType, wallOffset, rotationZ: rightType == (int)WallType.Fan ? 90f : 0f);
 
-            Vector3 right = CalculateGridPosition(gridSizeX, i);
-            if (rightType == -1)
-            {
-                GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
-                block2.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
-            }
-            else
-            {
-                if (rightType == (int)WallType.Fan)
-                {
-                    GameObject thisFan = Instantiate(fanPrefab, right, Quaternion.identity);
-                    thisFan.transform.Rotate(0, 0, 90f);
-                }
-                else if (rightType == (int)WallType.Locked)
-                {
-                    // generate locked block
-                }
-            }
-            
 
             //block1.transform.localScale = new Vector3(tileSizePercentage, tileSizePercentage, tileSizePercentage);
             //block2.transform.localScale = new Vector3(tileSizePercentage, tileSizePercentage, tileSizePercentage);
@@ -202,33 +234,26 @@ public class GameGrid : MonoBehaviour
 
         for (int i = 0; i < wallHeight; i++)
         {
-            Vector3 left = CalculateGridPosition(-1, i + gridSizeY);
-            GameObject block1 = Instantiate(wallPrefab, left, Quaternion.identity);
-            block1.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            Vector3 leftPos = CalculateGridPosition(-1, i + gridSizeY);
+            CreateWall(leftPos, (int)WallType.Wall, wallOffset);
 
-
-            Vector3 right = CalculateGridPosition(gridSizeX, i + gridSizeY);
-            GameObject block2 = Instantiate(wallPrefab, right, Quaternion.identity);
-            block2.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            Vector3 rightPos = CalculateGridPosition(gridSizeX, i + gridSizeY);
+            CreateWall(rightPos, (int)WallType.Wall, wallOffset);
         }
 
         // then bottom corners
-        Vector3 leftpos = CalculateGridPosition(-1, -1);
-        Vector3 rightpos = CalculateGridPosition(gridSizeX, -1);
+        Vector3 bottomLeft = CalculateGridPosition(-1, -1);
+        Vector3 bottomRight = CalculateGridPosition(gridSizeX, -1);
 
-        GameObject leftCorner = Instantiate(wallPrefab, leftpos, Quaternion.identity);
-        GameObject rightCorner = Instantiate(wallPrefab, rightpos, Quaternion.identity);
-
-        leftCorner.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
-        rightCorner.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+        CreateWall(bottomLeft, (int)WallType.Wall, wallOffset);
+        CreateWall(bottomRight, (int)WallType.Wall, wallOffset);
 
         // then floor
         for (int i = 0; i < gridSizeX; i++)
         {
-            //if (BOTTOM_WALL_X_EXCLUDE.Contains(i)) continue;
-            Vector3 targetPos = CalculateGridPosition(i, -1);
-            GameObject floorBlock = Instantiate(wallPrefab, targetPos, Quaternion.identity);
-            floorBlock.transform.localPosition += new Vector3(0.5f, -0.5f, 0);
+            int floorType = ContainsCoordinate(BOTTOM_WALL_X_CUSTOM, i);
+            Vector3 bottomPos = CalculateGridPosition(i, -1);
+            CreateWall(bottomPos, floorType, wallOffset);
         }
     }
 
@@ -300,10 +325,10 @@ public class GameGrid : MonoBehaviour
             for (int row = 0; row < gridSizeX; row++)
             {
                 Vector3 targetPosition = CalculateGridPosition(row, col);
-                Vector3 backgrondPos = new Vector3(targetPosition.x, targetPosition.y, -0.1f);
+                Vector3 backgroundPos = new Vector3(targetPosition.x, targetPosition.y, 0);
 
                 // add a background
-                GameObject backgroundObject = Instantiate(backgroundPrefab, backgrondPos, new Quaternion(0f, 180f, 0f, 1f));
+                GameObject backgroundObject = Instantiate(backgroundPrefab, backgroundPos, new Quaternion(0f, 180f, 0f, 1f));
 
                 Vector2 nonoPosition = new Vector2(row, col);
                 if (nonoList.Contains(nonoPosition))

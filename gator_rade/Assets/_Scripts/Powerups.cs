@@ -22,7 +22,9 @@ public class Powerups : MonoBehaviour
 
     private InputHandler inputHandler;
     private GameGrid gameGrid;
+    private PlayerUI playerUI;
     private InputAction press;
+   
 
     private TMP_Text bombText;
 
@@ -54,6 +56,7 @@ public class Powerups : MonoBehaviour
     {
         inputHandler = (InputHandler)FindObjectOfType(typeof(InputHandler));
         gameGrid = (GameGrid)FindObjectOfType(typeof(GameGrid));
+        playerUI = (PlayerUI)FindObjectOfType(typeof(PlayerUI));
 
 
 
@@ -99,7 +102,8 @@ public class Powerups : MonoBehaviour
 
     public void OnButtonPress(string actionName)
     {
-        
+        if (playerUI.pauseCanvas.enabled) return;
+
         // roblox tech
         if (powerups.TryGetValue(actionName, out Powerup thisPowerup))
         {

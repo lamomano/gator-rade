@@ -65,6 +65,10 @@ MonoBehaviour:
     type: 3}
   fanPrefab: {fileID: 7211356559947584809, guid: 8023867822791c44fb1aee912b53585a,
     type: 3}
+  blankWallPrefab: {fileID: 6797857180025504649, guid: dff9ac9c1b1ee26449243a497e38fce2,
+    type: 3}
+  lockedWallPrefab: {fileID: 3202955098969783022, guid: ffe7221ffaeefd74f80791476ff6e73d,
+    type: 3}
 --- !u!114 &8568331542352353488
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,6 +39,7 @@ public class PlayerUI : MonoBehaviour
 
     public void RestartLevel()
     {
+        if (pauseCanvas.enabled) return;
         gameManager.Unpause();
         gameManager.NewRound();
 

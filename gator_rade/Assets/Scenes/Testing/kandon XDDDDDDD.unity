@@ -3256,6 +3256,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fan
       objectReference: {fileID: 0}
+    - target: {fileID: 7211356559947584809, guid: 8023867822791c44fb1aee912b53585a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8974,6 +8979,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
+      propertyPath: LEFT_WALL_Y_CUSTOM.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
       propertyPath: LEFT_WALL_Y_EXCLUDE.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -8981,6 +8991,11 @@ PrefabInstance:
         type: 3}
       propertyPath: RIGHT_WALL_Y_CUSTOM.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_CUSTOM.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
@@ -8996,6 +9011,16 @@ PrefabInstance:
         type: 3}
       propertyPath: LEFT_WALL_Y_EXCLUDE.Array.data[0]
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: LEFT_WALL_Y_CUSTOM.Array.data[0].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: LEFT_WALL_Y_CUSTOM.Array.data[0].y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
@@ -9051,6 +9076,36 @@ PrefabInstance:
         type: 3}
       propertyPath: RIGHT_WALL_Y_CUSTOM.Array.data[0].y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_CUSTOM.Array.data[0].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_CUSTOM.Array.data[1].x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_CUSTOM.Array.data[2].x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_CUSTOM.Array.data[2].y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_CUSTOM.Array.data[3].x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803917919736763266, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
+        type: 3}
+      propertyPath: BOTTOM_WALL_X_CUSTOM.Array.data[3].y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6956887113999681022, guid: 73cb5a2cc8a08bc41bd570b4489cef55,
         type: 3}
