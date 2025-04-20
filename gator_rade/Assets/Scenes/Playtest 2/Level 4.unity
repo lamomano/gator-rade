@@ -9997,6 +9997,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288370758768968688, guid: 1093aa05870034c49923774d0c89141f,
         type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288370758768968688, guid: 1093aa05870034c49923774d0c89141f,
+        type: 3}
       propertyPath: orthographic size
       value: 14
       objectReference: {fileID: 0}
