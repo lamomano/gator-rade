@@ -418,6 +418,20 @@ public class GameManager : MonoBehaviour
 
 
 
+
+    public void DestroyLocks()
+    {
+        GameObject[] lockedWalls = GameObject.FindGameObjectsWithTag("Lock");
+
+        foreach (GameObject obj in lockedWalls)
+        {
+            Destroy(obj);
+        }
+    }
+
+
+
+
     public void OnGUI()
     {
         /*

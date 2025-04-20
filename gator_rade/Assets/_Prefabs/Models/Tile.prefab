@@ -131,5 +131,7 @@ MonoBehaviour:
     type: 3}
   deadToken: {fileID: 1906380542987133363, guid: 343f231bebd92d948bbefe796b8fa4fe,
     type: 3}
+  keyPrefab: {fileID: 4923007783567891924, guid: 75f2f095e1492c3408f4563d3c85d740,
+    type: 3}
   type: 2
   currentToken: {fileID: 0}

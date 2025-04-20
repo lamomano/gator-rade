@@ -7,7 +7,7 @@ public class Fans : MonoBehaviour
 
     public float power = 5f;
 
-    public int maxDistance = 8;
+    private int maxDistance;
     public bool isEnabled = false;
 
     private BoxCollider thisCollider;
@@ -24,6 +24,7 @@ public class Fans : MonoBehaviour
         //thisCollider.isTrigger = true;
         gameGrid = (GameGrid)FindObjectOfType(typeof(GameGrid));
         thisCollider = GetComponent<BoxCollider>();
+        maxDistance = gameGrid.gridSizeX > gameGrid.gridSizeY ? gameGrid.gridSizeX : gameGrid.gridSizeY;
 
         UpdateAoe();
     }
@@ -54,7 +55,7 @@ public class Fans : MonoBehaviour
         thisCollider.size = new Vector3(0.95f, newDistance + 1, 1);
         thisCollider.center = new Vector3(0, (newDistance / 2), 0);
 
-        Debug.DrawRay(origin, direction * newDistance, Color.red, 1.0f);
+        //Debug.DrawRay(origin, direction * newDistance, Color.red, 1.0f);
     }
 
 

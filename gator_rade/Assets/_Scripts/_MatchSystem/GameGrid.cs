@@ -174,6 +174,10 @@ public class GameGrid : MonoBehaviour
         else if (wallType == (int)WallType.Locked)
         {
             wallObject = Instantiate(lockedWallPrefab, position, Quaternion.identity);
+
+            GameObject backgroundObject = Instantiate(backgroundPrefab, position, Quaternion.identity);
+            backgroundObject.transform.Rotate(0, 180, 0);
+            walls.Add(backgroundObject);
         }
         else if (wallType == (int)WallType.Blank)
         {

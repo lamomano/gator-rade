@@ -15,7 +15,8 @@ public enum TileType
     yellow = 3,
     green = 4,
     blank = -1,
-    immovable = 10
+    immovable = 10,
+    key = 20,
 }
 
 public class Tile : MonoBehaviour
@@ -43,6 +44,7 @@ public class Tile : MonoBehaviour
     public GameObject yellowToken;
     public GameObject redToken;
     public GameObject deadToken;
+    public GameObject keyPrefab;
 
     
 
@@ -101,9 +103,13 @@ public class Tile : MonoBehaviour
         currentToken.transform.position = transform.position - new Vector3(0,0, tokenZOffset);
         currentToken.transform.parent = transform;
 
-        if (type != 10)
+        if (type != (int)TileType.immovable && type != (int)TileType.key)
         {
             currentToken.transform.localScale = new Vector3(gameGrid.tileSizePercentage, currentToken.transform.localScale.y, gameGrid.tileSizePercentage);
+        }
+        else if (type == (int)TileType.key)
+        {
+            currentToken.transform.Rotate(0, 180, 0);
         }
     }
 
@@ -119,44 +125,50 @@ public class Tile : MonoBehaviour
         }
 
         boxCollider.enabled = true;
+        boxCollider.isTrigger = false;
         switch (type)
         {
-            case 1:
+            case (int)TileType.red:
 
                 ChangeColor(Color.red);
                 SetToken(redToken);
 
                 break;
-            case 2:
+            case (int)TileType.blue:
 
                 ChangeColor(Color.blue);
                 SetToken(blueToken);
 
                 break;
-            case 3:
+            case (int)TileType.yellow:
 
                 ChangeColor(Color.yellow);
                 SetToken(yellowToken);
 
 
                 break;
-            case 4:
+            case (int)TileType.green:
 
                 ChangeColor(Color.green);
                 SetToken(greenToken);
 
                 break;
-            case -1:
+            case (int)TileType.blank:
 
                 boxCollider.enabled = false;
                 gameObject.GetComponent<Renderer>().enabled = false;
                 break;
 
-            case 10:
+            case (int)TileType.immovable:
 
                 ChangeColor(Color.grey);
                 SetToken(deadToken);
 
+                break;
+
+            case (int)TileType.key:
+                SetToken(keyPrefab);
+                boxCollider.isTrigger = true;
                 break;
             default:
                 print("not a valid type");
@@ -233,4 +245,21 @@ public class Tile : MonoBehaviour
         }
     }
 
+
+    public void OnTriggerEnter(Collider other)
+    {
+        Liquid thisLiquid = other.gameObject.GetComponent<Liquid>();
+        if (thisLiquid != null)
+        {
+            thisLiquid.DeleteSelf();
+            type = (int)TileType.blank;
+            GameObject[] lockedWalls = GameObject.FindGameObjectsWithTag("Lock");
+
+            foreach (GameObject obj in lockedWalls)
+            {
+                Destroy(obj);
+            }
+            UpdateAppearance();
+        }
+    }
 }
