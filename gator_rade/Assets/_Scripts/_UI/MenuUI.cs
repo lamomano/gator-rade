@@ -29,9 +29,16 @@ public class MenuUI : MonoBehaviour
         mainMenu = transform.Find("MainMenu").GetComponent<Canvas>();
         levelSelect = transform.Find("LevelSelect").GetComponent<Canvas>();
         helpScreen = transform.Find("HelpScreen").GetComponent<Canvas>();
+
+        
         mainMenu.enabled = true;
-        levelSelect.enabled = false;
-        helpScreen.enabled = false;
+        levelSelect.enabled = true;
+        helpScreen.enabled = true;
+        
+        EventSystem.current.SetSelectedGameObject(null);
+        mainMenu.gameObject.SetActive(true);
+        levelSelect.gameObject.SetActive(false);
+        helpScreen.gameObject.SetActive(false);
     }
 
 
@@ -42,9 +49,15 @@ public class MenuUI : MonoBehaviour
     public void ShowMainMenu()
     {
         //SceneManager.LoadScene("Main Menu");
+        /*
         mainMenu.enabled = true;
         levelSelect.enabled = false;
         helpScreen.enabled = false;
+        */
+        EventSystem.current.SetSelectedGameObject(null);
+        mainMenu.gameObject.SetActive(true);
+        levelSelect.gameObject.SetActive(false);
+        helpScreen.gameObject.SetActive(false);
     }
 
 
@@ -53,9 +66,15 @@ public class MenuUI : MonoBehaviour
     /// </summary>
     public void ShowLevelSelect()
     {
+        /*
         mainMenu.enabled = false;
         levelSelect.enabled = true;
         helpScreen.enabled = false;
+        */
+        EventSystem.current.SetSelectedGameObject(null);
+        mainMenu.gameObject.SetActive(false);
+        levelSelect.gameObject.SetActive(true);
+        helpScreen.gameObject.SetActive(false);
     }
 
 
@@ -64,9 +83,15 @@ public class MenuUI : MonoBehaviour
     /// </summary>
     public void ShowHelpScreen()
     {
+        /*
         mainMenu.enabled = false;
         levelSelect.enabled = false;
         helpScreen.enabled = true;
+        */
+        EventSystem.current.SetSelectedGameObject(null);
+        mainMenu.gameObject.SetActive(false);
+        levelSelect.gameObject.SetActive(false);
+        helpScreen.gameObject.SetActive(true);
     }
 
 
