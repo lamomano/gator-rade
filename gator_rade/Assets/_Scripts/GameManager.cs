@@ -273,7 +273,7 @@ public class GameManager : MonoBehaviour
 
         if (gatoradeCollected >= gatoradeNeeded)
         {
-            print("You win! you had " + gatoradeCollected);
+            //print("You win! you had " + gatoradeCollected);
             //SceneManager.LoadScene("WinScene");
             playerUI.ShowWinScreen();
         }
