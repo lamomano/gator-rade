@@ -13,6 +13,11 @@ public class PlayerUI : MonoBehaviour
     public Canvas pauseCanvas;
     public Canvas winCanvas;
     public Canvas loseCanvas;
+    private GameObject restartButton;
+
+
+    private float restartCooldown = 1f;
+    private bool debounce = false;
 
     void Awake()
     {
@@ -23,6 +28,8 @@ public class PlayerUI : MonoBehaviour
         pauseCanvas = gameObject.transform.Find("PauseMenu").GetComponent <Canvas>();
         winCanvas = gameObject.transform.Find("WinScreen").GetComponent<Canvas>();
         loseCanvas = gameObject.transform.Find("LoseScreen").GetComponent<Canvas>();
+
+        restartButton = gameObject.transform.Find("Restart").gameObject;
 
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
@@ -37,15 +44,27 @@ public class PlayerUI : MonoBehaviour
     }
 
 
+
+    private IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(restartCooldown);
+        debounce = false;
+    }
+
     public void RestartLevel()
     {
-        if (pauseCanvas.enabled) return;
+        //if (pauseCanvas.enabled) return;
+        if (debounce) return;
+
+        debounce = true;
+        StartCoroutine(Cooldown());
         gameManager.Unpause();
         gameManager.NewRound();
 
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
         loseCanvas.enabled = false;
+        restartButton.SetActive(true);
     }
 
     public void MainMenu()
@@ -59,6 +78,7 @@ public class PlayerUI : MonoBehaviour
         if (loseCanvas.enabled) return;
 
         pauseCanvas.enabled = !pauseCanvas.enabled;
+        restartButton.SetActive(!pauseCanvas.enabled);
 
         if (pauseCanvas.enabled)
         {
