@@ -333,9 +333,9 @@ public class GameManager : MonoBehaviour
             thisRb.constraints = RigidbodyConstraints.FreezeAll;
             thisRb.velocity = Vector3.zero;
         }
-        
-        Time.timeScale = 0;
         */
+        Time.timeScale = 0;
+        
     }
 
     public void UnfreezeLiquids()
@@ -360,23 +360,23 @@ public class GameManager : MonoBehaviour
         }
         objectVelocities.Clear();
         angularVelocities.Clear();
-        
-        Time.timeScale = 1;
         */
+        Time.timeScale = 1;
+        
     }
 
 
     public void Pause()
     {
         isPaused = true;
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         FreezeAllLiquids();
     }
 
     public void Unpause()
     {
         isPaused = false;
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         UnfreezeLiquids();
     }
 
