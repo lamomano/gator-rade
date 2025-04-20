@@ -214,8 +214,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 20
-  distance: 8
+  maxDistance: 8
   isEnabled: 1
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!65 &5044631936579609198
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class Powerups : MonoBehaviour
 
     private InputHandler inputHandler;
     private GameGrid gameGrid;
+    private GameManager gameManager;
     private PlayerUI playerUI;
     private InputAction press;
    
@@ -57,7 +58,7 @@ public class Powerups : MonoBehaviour
         inputHandler = (InputHandler)FindObjectOfType(typeof(InputHandler));
         gameGrid = (GameGrid)FindObjectOfType(typeof(GameGrid));
         playerUI = (PlayerUI)FindObjectOfType(typeof(PlayerUI));
-
+        gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
 
 
         bombText = transform.Find("Hotbar").Find("Powerup1").Find("Text").GetComponent<TMP_Text>();
@@ -170,6 +171,7 @@ public class Powerups : MonoBehaviour
 
         remainingUses["Bomb"] -= 1;
         UpdateButtonTexts();
+        gameManager.UpdateFans();
     }
 
 

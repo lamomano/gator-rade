@@ -355,7 +355,7 @@ public class InputHandler : MonoBehaviour
             }
 
             // successful tile swap
-
+            gameManager.UpdateFans();
             moveTracker.OnMove();
         }
         else

@@ -246,6 +246,7 @@ public class GameManager : MonoBehaviour
             StopCoroutine(gameLoopThread);
 
         gameGrid.GenerateGrid();
+        gameGrid.GenerateWalls();
 
         //MOVES_LEFT = amountOfMoves;
 
@@ -322,6 +323,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void FreezeAllLiquids()
     {
+        /*
         foreach (GameObject obj in GetAllLiquidObjects())
         {
             Rigidbody thisRb = obj.GetComponent<Rigidbody>();
@@ -331,11 +333,14 @@ public class GameManager : MonoBehaviour
             thisRb.constraints = RigidbodyConstraints.FreezeAll;
             thisRb.velocity = Vector3.zero;
         }
+        
         Time.timeScale = 0;
+        */
     }
 
     public void UnfreezeLiquids()
     {
+        /*
         foreach (GameObject obj in GetAllLiquidObjects())
         {
             Rigidbody thisRb = obj.GetComponent<Rigidbody>();
@@ -353,22 +358,25 @@ public class GameManager : MonoBehaviour
                 thisRb.angularVelocity = angularVelocity;
             }
         }
-
         objectVelocities.Clear();
         angularVelocities.Clear();
+        
         Time.timeScale = 1;
+        */
     }
 
 
     public void Pause()
     {
         isPaused = true;
+        Time.timeScale = 0;
         FreezeAllLiquids();
     }
 
     public void Unpause()
     {
         isPaused = false;
+        Time.timeScale = 1;
         UnfreezeLiquids();
     }
 
@@ -388,6 +396,26 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+
+
+
+
+
+
+    /// <summary>
+    /// whenever tiles are broken, update fan things
+    /// </summary>
+    public void UpdateFans()
+    {
+        Fans[] fanObjects = FindObjectsOfType<Fans>();
+
+        foreach (Fans fanObject in fanObjects)
+        {
+            fanObject.UpdateAoe();
+        }
+    }
+
 
 
     public void OnGUI()

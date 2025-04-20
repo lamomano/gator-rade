@@ -58,6 +58,7 @@ public class GameGrid : MonoBehaviour
 
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +88,8 @@ public class GameGrid : MonoBehaviour
 
 
 
+
+
     /// <summary>
     /// returns the position of where the tile would be given the coordinates
     /// </summary>
@@ -104,6 +107,9 @@ public class GameGrid : MonoBehaviour
              0
         );
     }
+
+
+
 
 
     public Tile GetTileFromCoordinates(int row, int col)
@@ -151,6 +157,7 @@ public class GameGrid : MonoBehaviour
 
 
 
+
     private void CreateWall(Vector3 position, int wallType, Vector3 offset, float rotationZ = 0f)
     {
         GameObject wallObject = null;
@@ -189,12 +196,18 @@ public class GameGrid : MonoBehaviour
             else
             {
                 wallObject.transform.Rotate(0, 180, 0);
+                if (wallType == (int)WallType.Fan)
+                {
+                    wallObject.GetComponent<Fans>().UpdateAoe();
+                }
             }
 
 
             walls.Add(wallObject);
         }
     }
+
+
 
 
 
@@ -256,6 +269,9 @@ public class GameGrid : MonoBehaviour
             CreateWall(bottomPos, floorType, wallOffset);
         }
     }
+
+
+
 
 
     public void GenerateGrid()

@@ -7,8 +7,13 @@ public class Fans : MonoBehaviour
 
     public float power = 5f;
 
-    public int distance = 8;
+    public int maxDistance = 8;
     public bool isEnabled = false;
+
+    private BoxCollider thisCollider;
+    private GameGrid gameGrid;
+
+    public LayerMask tileLayer;
 
 
 
@@ -17,11 +22,43 @@ public class Fans : MonoBehaviour
         // apply distance
         //BoxCollider thisCollider = gameObject.AddComponent<BoxCollider>();
         //thisCollider.isTrigger = true;
-        BoxCollider thisCollider = GetComponent<BoxCollider>();
-        // adding +1 so that it covers itself as well
-        thisCollider.size = new Vector3(0.95f, distance+1, 1);
-        thisCollider.center = new Vector3(0, (distance / 2) , 0);
+        gameGrid = (GameGrid)FindObjectOfType(typeof(GameGrid));
+        thisCollider = GetComponent<BoxCollider>();
+
+        UpdateAoe();
     }
+
+
+    /// <summary>
+    /// shoots a raycast and changes the size of the boxcollider accordingly
+    /// </summary>
+    public void UpdateAoe()
+    {
+        
+        Vector3 direction = transform.up;
+        Vector3 origin = transform.position - (transform.up * 0.5f);
+
+
+
+        RaycastHit hit;
+        // this either equals the max distance or the distance returned by the raycast
+        float newDistance = maxDistance;
+
+        if (Physics.Raycast(origin, direction, out hit, maxDistance, tileLayer))
+        {
+            // calculate new distance based off of transform.position to hit.point
+            newDistance = Vector3.Distance(transform.position, hit.point);
+        }
+
+        // adding +1 so that it covers its own tile space as well
+        thisCollider.size = new Vector3(0.95f, newDistance + 1, 1);
+        thisCollider.center = new Vector3(0, (newDistance / 2), 0);
+
+        Debug.DrawRay(origin, direction * newDistance, Color.red, 1.0f);
+    }
+
+
+
 
     private void OnTriggerStay(Collider other)
     {
