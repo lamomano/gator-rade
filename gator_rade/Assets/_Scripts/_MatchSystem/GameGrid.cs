@@ -206,7 +206,7 @@ public class GameGrid : MonoBehaviour
                 }
             }
 
-
+            
             walls.Add(wallObject);
         }
     }
@@ -334,6 +334,7 @@ public class GameGrid : MonoBehaviour
             {
                 tiles.Add(tileObject);
             }
+            tileObject.name = tile.ToString();
         }
 
 
@@ -404,6 +405,7 @@ public class GameGrid : MonoBehaviour
                 tile.UpdateAppearance();
 
                 tiles.Add(tileObject);
+                tileObject.name = tile.ToString();
             }
         }
     }
