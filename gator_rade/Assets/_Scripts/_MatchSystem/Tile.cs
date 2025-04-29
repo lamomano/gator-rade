@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-
+using Random = UnityEngine.Random;
 
 
 public enum TileType
@@ -26,6 +26,7 @@ public class Tile : MonoBehaviour
     public int y;
 
     public float tokenZOffset = 0.1f;
+    private float BREAK_TIME = 0.25f;
 
 
     /*
@@ -57,6 +58,7 @@ public class Tile : MonoBehaviour
     private BoxCollider boxCollider;
 
     public GameObject currentToken = null;
+    private Vector3 originalSize = Vector3.zero;
 
 
     public void Awake()
@@ -98,6 +100,11 @@ public class Tile : MonoBehaviour
     /// </summary>
     private void SetToken(GameObject givenToken)
     {
+        // remove any tokens beforehand if it is not null
+        if (currentToken != null)
+        {
+            Destroy(currentToken);
+        }
         currentToken = Instantiate(givenToken);
 
         currentToken.transform.position = transform.position - new Vector3(0,0, tokenZOffset);
@@ -111,20 +118,14 @@ public class Tile : MonoBehaviour
         {
             currentToken.transform.Rotate(0, 180, 0);
         }
+        originalSize = currentToken.transform.localScale;
     }
 
 
 
-    public void UpdateAppearance()
+    public void UpdateAppearance(bool KEEP_COLLIDER_ON = true)
     {
-        // remove any tokens beforehand if it is not null
-        if (currentToken != null)
-        {
-            Destroy(currentToken);
-            currentToken = null;
-        }
-
-        boxCollider.enabled = true;
+        boxCollider.enabled = KEEP_COLLIDER_ON;
         boxCollider.isTrigger = false;
         switch (type)
         {
@@ -156,7 +157,11 @@ public class Tile : MonoBehaviour
             case (int)TileType.blank:
 
                 boxCollider.enabled = false;
-                gameObject.GetComponent<Renderer>().enabled = false;
+                //gameObject.GetComponent<Renderer>().enabled = false;
+                if (currentToken != null)
+                {
+                    StartCoroutine(BreakAnimation());
+                }
                 break;
 
             case (int)TileType.immovable:
@@ -175,6 +180,74 @@ public class Tile : MonoBehaviour
                 break;
         }
     }
+
+
+
+    private IEnumerator BreakAnimation(GameObject targetBlock = null)
+    {
+        if (targetBlock == null)
+            targetBlock = currentToken;
+        float startTime = Time.time;
+
+
+        //Vector3 targetSize = originalSize * 1.25f;
+        Vector3 targetSize = targetBlock.transform.localScale * 1.25f;
+
+        float growDuration = BREAK_TIME * 0.6f;
+        float shrinkDuration = BREAK_TIME * 0.4f;
+
+        float maxRotation = Random.Range(20f, 30f);
+        float rotationSpeed = 4f;
+        float lastRotationAngle = 0f;
+
+
+        while (true)
+        {
+            yield return new();
+
+            if (targetBlock == null)
+                break;
+            float elapsed = Time.time - startTime;
+            float percentage = elapsed / BREAK_TIME;
+
+            float newRotationAngle = Mathf.Sin(elapsed * rotationSpeed * Mathf.PI * 2f) * maxRotation;
+            float deltaRotation = newRotationAngle - lastRotationAngle;
+            targetBlock.transform.Rotate(0f, deltaRotation, 0f);
+            lastRotationAngle = newRotationAngle;
+
+
+
+            //targetBlock.transform.localScale = Vector3.Lerp(originalSize, originalSize * targetSize, percentage);
+
+            if (elapsed < growDuration)
+            {
+                float growPercent = elapsed / growDuration;
+                targetBlock.transform.localScale = Vector3.Lerp(originalSize, targetSize, growPercent);
+            }
+            else
+            {
+                float shrinkElapsed = elapsed - growDuration;
+                float shrinkPercent = shrinkElapsed / shrinkDuration;
+                targetBlock.transform.localScale = Vector3.Lerp(targetSize, Vector3.zero, shrinkPercent);
+            }
+
+
+            if (percentage > 1)
+            {
+                boxCollider.enabled = false;
+                break;
+            }
+        }
+        
+
+        Destroy(targetBlock);
+        currentToken = null;
+
+        boxCollider.enabled = false;
+        gameObject.GetComponent<Renderer>().enabled = false;
+    }
+
+
 
 
     /// <summary>
@@ -246,6 +319,10 @@ public class Tile : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// for the key
+    /// </summary>
+    /// <param name="other"></param>
     public void OnTriggerEnter(Collider other)
     {
         Liquid thisLiquid = other.gameObject.GetComponent<Liquid>();
@@ -255,11 +332,14 @@ public class Tile : MonoBehaviour
             type = (int)TileType.blank;
             GameObject[] lockedWalls = GameObject.FindGameObjectsWithTag("Lock");
 
+            // break locked walls
             foreach (GameObject obj in lockedWalls)
             {
-                Destroy(obj);
+                //Destroy(obj);
+                StartCoroutine(BreakAnimation(obj));
             }
-            UpdateAppearance();
+            UpdateAppearance(false);
+             
         }
     }
 }

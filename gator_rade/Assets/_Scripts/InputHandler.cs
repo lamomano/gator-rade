@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.Controls.AxisControl;
 
 
 /*
@@ -33,6 +34,8 @@ public class InputHandler : MonoBehaviour
     private Powerups powerupManager;
 
     private Vector3 currentScreenPos;
+    private float maxX;
+    private float maxY;
     private float gridSpacing;
 
 
@@ -57,6 +60,8 @@ public class InputHandler : MonoBehaviour
         //print(gameGrid.gridSizeX);
 
         gridSpacing = gameGrid.gridSpacing;
+        maxX = gameGrid.GetMaxPosX();
+        maxY = gameGrid.GetMaxPosY();
 
         mainCamera = Camera.main;
 
@@ -201,6 +206,10 @@ public class InputHandler : MonoBehaviour
         isDragging = true;
         Vector3 offset = currentTransform.position - currentWorldPos;
 
+        if (currentTile.currentToken == null)
+        {
+            yield return null;
+        }
         Transform tokenTransform = currentTile.currentToken.transform;
         gameManager.FreezeAllLiquids();
 
@@ -224,8 +233,11 @@ public class InputHandler : MonoBehaviour
                 float xClamp = Mathf.Clamp(localTargetPosition.x, 
                     -dragMultiplier * gridSpacing, 
                     dragMultiplier * gridSpacing);
+                //wall clamp
+                float finalClamp = Mathf.Clamp(xClamp, -maxX, maxX);
+                
 
-                tokenTransform.localPosition = new Vector3(xClamp, 0, currentTile.GetGridPosition().z - zFighting);
+                tokenTransform.localPosition = new Vector3(finalClamp, 0, currentTile.GetGridPosition().z - zFighting);
             }
             else
             {
@@ -233,8 +245,10 @@ public class InputHandler : MonoBehaviour
                 float yClamp = Mathf.Clamp(localTargetPosition.y, 
                     -dragMultiplier * gridSpacing, 
                     dragMultiplier * gridSpacing);
+                float finalClamp = Mathf.Clamp(yClamp, -maxY, maxY);
 
-                tokenTransform.localPosition = new Vector3(0, yClamp, currentTile.GetGridPosition().z - zFighting);
+
+                tokenTransform.localPosition = new Vector3(0, finalClamp, currentTile.GetGridPosition().z - zFighting);
             }
 
             //print(GetTokenDragDirection());
