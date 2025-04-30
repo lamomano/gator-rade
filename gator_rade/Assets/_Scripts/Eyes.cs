@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Eyes : MonoBehaviour
 {
-    public MeshRenderer eyeRenderer;
+    public SkinnedMeshRenderer eyeRenderer;
     private int frameCount;
     public float sadTime;
     public float happyTime;
