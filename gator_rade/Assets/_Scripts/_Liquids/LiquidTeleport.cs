@@ -13,13 +13,12 @@ public class LiquidTeleport : MonoBehaviour
     public GameObject end;
     public PlayerUI playerUI;
     private float waitTime;
-    private bool isActive;
+    private bool isActive = false;
 
     private void Start()
     {
         waitTime = 2f;
-        isActive = true;
-        StartCoroutine(StartDelay());
+        //StartCoroutine(StartDelay());
         playerUI = FindObjectOfType<PlayerUI>();
     }
     private void Update()
