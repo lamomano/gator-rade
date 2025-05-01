@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    public Sprite tutorialImage;
+    private Image imageimageimageimage; // this is where the image will be placed
 
-    
     public TMP_Text scoreText;
     public GameManager gameManager;
     public Canvas pauseCanvas;
     public Canvas winCanvas;
     public Canvas loseCanvas;
+    private Canvas tutorialCanvas;
     private GameObject restartButton;
+    private GameObject helpButton;
 
+    
+    
 
     private float restartCooldown = 1f;
     private bool debounce = false;
@@ -28,14 +34,30 @@ public class PlayerUI : MonoBehaviour
         pauseCanvas = gameObject.transform.Find("PauseMenu").GetComponent <Canvas>();
         winCanvas = gameObject.transform.Find("WinScreen").GetComponent<Canvas>();
         loseCanvas = gameObject.transform.Find("LoseScreen").GetComponent<Canvas>();
+        tutorialCanvas = gameObject.transform.Find("Tutorial").GetComponent<Canvas>();
+        imageimageimageimage = tutorialCanvas.gameObject.transform.Find("Image").GetComponent<Image>();
 
         restartButton = gameObject.transform.Find("Restart").gameObject;
+        helpButton = pauseCanvas.gameObject.transform.Find("Help").gameObject;
 
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
         loseCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
     }
 
+    private void Start()
+    {
+        if (tutorialImage != null)
+        {
+            imageimageimageimage.sprite = tutorialImage;
+            ShowTutorial();
+        }
+        else
+        {
+            helpButton.gameObject.SetActive(false);
+        }
+    }
 
 
     public void UpdateUI()
@@ -55,6 +77,7 @@ public class PlayerUI : MonoBehaviour
     {
         //if (pauseCanvas.enabled) return;
         if (debounce) return;
+        if (tutorialCanvas.enabled) return;
 
         debounce = true;
         StartCoroutine(Cooldown());
@@ -64,7 +87,30 @@ public class PlayerUI : MonoBehaviour
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
         loseCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
         restartButton.SetActive(true);
+    }
+
+    public void ShowTutorial()
+    {
+        pauseCanvas.enabled = false;
+        winCanvas.enabled = false;
+        loseCanvas.enabled = false;
+        restartButton.SetActive(false);
+        tutorialCanvas.enabled = true;
+
+        gameManager.Pause();
+    }
+
+    public void HideTutorial()
+    {
+        pauseCanvas.enabled = false;
+        winCanvas.enabled = false;
+        loseCanvas.enabled = false;
+        restartButton.SetActive(true);
+        tutorialCanvas.enabled = false;
+
+        gameManager.Unpause();
     }
 
     public void MainMenu()
@@ -76,6 +122,7 @@ public class PlayerUI : MonoBehaviour
     {
         if (winCanvas.enabled) return;
         if (loseCanvas.enabled) return;
+        if (tutorialCanvas.enabled) return;
 
         pauseCanvas.enabled = !pauseCanvas.enabled;
         restartButton.SetActive(!pauseCanvas.enabled);
@@ -94,6 +141,7 @@ public class PlayerUI : MonoBehaviour
     {
         pauseCanvas.enabled = false;
         loseCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
 
         winCanvas.enabled = true;
     }
@@ -103,6 +151,7 @@ public class PlayerUI : MonoBehaviour
     {
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
 
         loseCanvas.enabled = true;
     }
