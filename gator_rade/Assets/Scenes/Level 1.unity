@@ -3137,7 +3137,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tutorialImage
       value: 
-      objectReference: {fileID: 21300000, guid: 235eaaba2d71c6749832673152dfe00a,
+      objectReference: {fileID: 21300000, guid: 3532c496bb3dde54d89a3770c4f61e11,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
