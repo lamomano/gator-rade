@@ -17,7 +17,7 @@ public class LiquidTeleport : MonoBehaviour
     public InputHandler inputHandler;
     private float waitTime;
     public float timeSinceTouch;
-    private bool isActive = false;
+    public bool isActive = false;
 
     private void Start()
     {
@@ -28,18 +28,16 @@ public class LiquidTeleport : MonoBehaviour
     }
     private void Update()
     {
-        if (inputHandler.isDragging)
+        timeSinceTouch += Time.deltaTime;
+
+        if (timeSinceTouch >= Time.deltaTime + 10f)
         {
-            ResetWaitDelay();
-        }
-        if (timeSinceTouch >= Time.time + 10f && !isActive)
-        {
-            Camera.SetActive(isActive);
+            isActive = true;
         }
 
         if (playerUI.winCanvas.enabled)
         {
-            Camera.SetActive(true);
+            isActive = true;
         }
         else
         {
@@ -81,7 +79,8 @@ public class LiquidTeleport : MonoBehaviour
 
     public void ResetWaitDelay()
     {
-        timeSinceTouch = Time.time;
+        timeSinceTouch = 0;
+        isActive = false;
     }
 
     /// <summary>
