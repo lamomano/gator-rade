@@ -12,17 +12,31 @@ public class LiquidTeleport : MonoBehaviour
     public GameObject start;
     public GameObject end;
     public PlayerUI playerUI;
+    public Animator teleportAnim; //reference to animator for Alligator
+    public Eyes eyes;
+    public InputHandler inputHandler;
     private float waitTime;
+    public float timeSinceTouch;
     private bool isActive = false;
 
     private void Start()
     {
-        waitTime = 2f;
-        //StartCoroutine(StartDelay());
+        waitTime = 4f;
+        StartCoroutine(StartDelay());
         playerUI = FindObjectOfType<PlayerUI>();
+        inputHandler = FindObjectOfType<InputHandler>();
     }
     private void Update()
     {
+        if (inputHandler.isDragging)
+        {
+            ResetWaitDelay();
+        }
+        if (timeSinceTouch >= Time.time + 10f && !isActive)
+        {
+            Camera.SetActive(isActive);
+        }
+
         if (playerUI.winCanvas.enabled)
         {
             Camera.SetActive(true);
@@ -43,9 +57,20 @@ public class LiquidTeleport : MonoBehaviour
                 StartCoroutine(BallLogic());
                 other.transform.position = end.transform.position;
                 other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                if (!teleportAnim.GetBool("Happy"))
+                {
+                    eyes.isHappy = true;
+                }
+                    
             }
         }
     }
+    public void StartBallLogic()
+    {
+        StopAllCoroutines();
+        StartCoroutine(BallLogic());
+    }
+
     public IEnumerator StartDelay()
     {
        //print("started delay");
@@ -54,8 +79,13 @@ public class LiquidTeleport : MonoBehaviour
         isActive = false;
     }
 
+    public void ResetWaitDelay()
+    {
+        timeSinceTouch = Time.time;
+    }
+
     /// <summary>
-    /// fuck
+    /// fucks
     /// </summary>
     /// <returns></returns>
     public IEnumerator BallLogic()

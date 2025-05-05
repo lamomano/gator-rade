@@ -10191,11 +10191,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bathroom
       objectReference: {fileID: 0}
-    - target: {fileID: 4639958887510287147, guid: 17b0f8431900e374e99d2811b50289d2,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 4664195191120893878, guid: 17b0f8431900e374e99d2811b50289d2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10300,11 +10295,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5860716637052618642, guid: 17b0f8431900e374e99d2811b50289d2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6062587540560720837, guid: 17b0f8431900e374e99d2811b50289d2,
         type: 3}
