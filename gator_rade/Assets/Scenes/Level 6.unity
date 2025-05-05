@@ -2368,6 +2368,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 6b2487c3f48ee7446960e333466e067f,
         type: 3}
+    - target: {fileID: 6067531360745512103, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7028441950633942664, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
       propertyPath: m_fontColor.b
@@ -6489,7 +6494,7 @@ PrefabInstance:
     - target: {fileID: 5288370758768968688, guid: 1093aa05870034c49923774d0c89141f,
         type: 3}
       propertyPath: orthographic size
-      value: 11.5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8183497157266069197, guid: 1093aa05870034c49923774d0c89141f,
         type: 3}

@@ -2533,6 +2533,56 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 672
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5832
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5832
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560667564747089165, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5832
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067531360745512103, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6863315319637747723, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
       propertyPath: m_fontColor.b
@@ -2584,6 +2634,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: fd6edcc8e62466746814e72c34b822b2,
         type: 3}
+    - target: {fileID: 8393799607537385469, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 235eaaba2d71c6749832673152dfe00a, type: 3}
     - target: {fileID: 8673892351110903124, guid: b4020d451a6f3ce4fa8b977e5dd8df3a,
         type: 3}
       propertyPath: m_Type
