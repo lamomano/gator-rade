@@ -2749,6 +2749,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 7914796966058871064, guid: 17b0f8431900e374e99d2811b50289d2,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 247
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 469785937215120673, guid: 17b0f8431900e374e99d2811b50289d2, type: 3}

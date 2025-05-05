@@ -71,7 +71,8 @@ public class LiquidTeleport : MonoBehaviour
 
     public IEnumerator StartDelay()
     {
-       //print("started delay");
+        //print("started delay");
+        yield return new WaitForSeconds(.1f);
         isActive = true;
         yield return new WaitForSeconds(waitTime);
         isActive = false;
