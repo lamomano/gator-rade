@@ -55,7 +55,6 @@ public class PlayerUI : MonoBehaviour
         }
         else
         {
-            print("no image gg");
             helpButton.gameObject.SetActive(false);
         }
     }

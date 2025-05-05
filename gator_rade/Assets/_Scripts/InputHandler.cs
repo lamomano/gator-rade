@@ -120,12 +120,14 @@ public class InputHandler : MonoBehaviour
     {
         get
         {
+            liquidTeleport.ResetWaitDelay(); //resets gatorcam delay and turns it off when you press
+
             if (powerupManager.isDragging) return false;
             if (gameManager.isPaused) return false;
             if (isDragging) return false;
 
             if (moveTracker.MOVES_LEFT == 0) return false;
-            liquidTeleport.ResetWaitDelay();
+            
 
             Ray ray = mainCamera.ScreenPointToRay(currentScreenPos);
             RaycastHit hit;

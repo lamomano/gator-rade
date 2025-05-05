@@ -10,15 +10,12 @@ public class Eyes : MonoBehaviour
 {
     public SkinnedMeshRenderer eyeRenderer;
     public Animator animator;
-    private int frameCount;
     private float sadTime = 1.417f;
     private float happyTime = 1f;
     public bool isHappy;
     public bool isSad;
     public bool isBlinking;
     public bool canBlink;
-    public bool isBored; //should be called in another script
-                         //if the player hasnt made a move in a while
 
    
     // Start is called before the first frame update
@@ -26,7 +23,6 @@ public class Eyes : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         canBlink = true;
-        isBored = false;
     }
 
     // Update is called once per frame
@@ -39,11 +35,6 @@ public class Eyes : MonoBehaviour
             animator.SetBool("Idle", true);
             StartCoroutine(Blink(Random.Range(.01f, 2f)));
         }
-        else if (isBored)
-        {
-            //do code here for sleeping/bored eyes  
-        }
-        //for testing the anims 
         if (isSad)
         {
             isSad = false;
@@ -61,7 +52,7 @@ public class Eyes : MonoBehaviour
         }
     }
 
-    //do blink animation
+    //do blink animation (this code is disgusting)
     private IEnumerator Blink(float blinkTime)
     {
         canBlink = false;

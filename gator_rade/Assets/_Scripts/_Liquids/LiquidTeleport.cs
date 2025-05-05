@@ -84,10 +84,6 @@ public class LiquidTeleport : MonoBehaviour
         isActive = false;
     }
 
-    /// <summary>
-    /// fucks
-    /// </summary>
-    /// <returns></returns>
     public IEnumerator BallLogic()
     {
        //print("started ball logic");
