@@ -121,7 +121,7 @@ public class MenuUI : MonoBehaviour
     /// </summary>
     public void PlayButtonPressed()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Playtest1Tutorial");
     }
 
 
