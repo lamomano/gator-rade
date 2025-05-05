@@ -149,6 +149,7 @@ public class PlayerUI : MonoBehaviour
 
     public void ShowLoseScreen()
     {
+        if (winCanvas.enabled) return;
         pauseCanvas.enabled = false;
         winCanvas.enabled = false;
         tutorialCanvas.enabled = false;

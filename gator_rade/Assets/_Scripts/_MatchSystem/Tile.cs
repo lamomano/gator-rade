@@ -17,6 +17,7 @@ public enum TileType
     blank = -1,
     immovable = 10,
     key = 20,
+    lockblock = 30,
 }
 
 public class Tile : MonoBehaviour
@@ -46,7 +47,7 @@ public class Tile : MonoBehaviour
     public GameObject redToken;
     public GameObject deadToken;
     public GameObject keyPrefab;
-
+    public GameObject lockblockPrefab;
     
 
 
@@ -110,11 +111,11 @@ public class Tile : MonoBehaviour
         currentToken.transform.position = transform.position - new Vector3(0,0, tokenZOffset);
         currentToken.transform.parent = transform;
 
-        if (type != (int)TileType.immovable && type != (int)TileType.key)
+        if (type != (int)TileType.immovable && type != (int)TileType.key && type != (int)TileType.lockblock)
         {
             currentToken.transform.localScale = new Vector3(gameGrid.tileSizePercentage, currentToken.transform.localScale.y, gameGrid.tileSizePercentage);
         }
-        else if (type == (int)TileType.key)
+        else if (type == (int)TileType.key || type == (int)TileType.lockblock)
         {
             currentToken.transform.Rotate(0, 180, 0);
         }
@@ -175,6 +176,12 @@ public class Tile : MonoBehaviour
                 SetToken(keyPrefab);
                 boxCollider.isTrigger = true;
                 break;
+
+            case (int)TileType.lockblock:
+                SetToken(lockblockPrefab);
+                boxCollider.enabled = false;
+                break;
+
             default:
                 print("not a valid type");
                 break;
@@ -241,6 +248,11 @@ public class Tile : MonoBehaviour
         
 
         Destroy(targetBlock);
+        if (type == (int)TileType.lockblock)
+        {
+            GameManager gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+            gameManager.UpdateFans();
+        }
         currentToken = null;
 
         boxCollider.enabled = false;
@@ -337,9 +349,12 @@ public class Tile : MonoBehaviour
             {
                 //Destroy(obj);
                 StartCoroutine(BreakAnimation(obj));
+                obj.GetComponent<BoxCollider>().enabled = false;
             }
+
+            GameManager gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+            gameManager.UpdateFans();
             UpdateAppearance(false);
-             
         }
     }
 }

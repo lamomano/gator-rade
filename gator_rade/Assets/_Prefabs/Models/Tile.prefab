@@ -133,5 +133,7 @@ MonoBehaviour:
     type: 3}
   keyPrefab: {fileID: 4923007783567891924, guid: 75f2f095e1492c3408f4563d3c85d740,
     type: 3}
+  lockblockPrefab: {fileID: 3202955098969783022, guid: ffe7221ffaeefd74f80791476ff6e73d,
+    type: 3}
   type: 2
   currentToken: {fileID: 0}

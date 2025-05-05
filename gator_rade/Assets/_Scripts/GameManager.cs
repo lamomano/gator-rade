@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
             successfulOrbs.Add(obj);
             playerUI.UpdateUI();
         }
-        CheckForWin();
+        CheckWinOrLose();
 
     }
 
@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         gameLoopThread = null;
-        CheckForWin();
+        CheckWinOrLose();
     }
 
 
@@ -268,9 +268,9 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// calculates the total orbs collected and figures out if the player won or not
     /// </summary>
-    public void CheckForWin()
+    public void CheckWinOrLose()
     {
-
+        /*
         if (gatoradeCollected >= gatoradeNeeded)
         {
             //print("You win! you had " + gatoradeCollected);
@@ -280,6 +280,18 @@ public class GameManager : MonoBehaviour
         else
         {
             //print("you lose! you had " + gatoradeCollected);
+        }
+        */
+        int gatoradeInPlay = (int)(totalGatorade - outOfBoundsOrbs.Count);
+        int remainingNeeded = gatoradeNeeded - (int)gatoradeCollected;
+
+        if (gatoradeCollected >= gatoradeNeeded)
+        {
+            playerUI.ShowWinScreen();
+        }
+        else if (gatoradeInPlay < remainingNeeded)
+        {
+            playerUI.ShowLoseScreen();
         }
     }
 
@@ -389,11 +401,7 @@ public class GameManager : MonoBehaviour
                 outOfBoundsOrbs.Add(other.gameObject);
             }
 
-            //print(totalGatorade - outOfBoundsOrbs.Count);
-            if (totalGatorade - outOfBoundsOrbs.Count < gatoradeNeeded)
-            {
-                playerUI.ShowLoseScreen();
-            }
+            CheckWinOrLose();
         }
     }
 
