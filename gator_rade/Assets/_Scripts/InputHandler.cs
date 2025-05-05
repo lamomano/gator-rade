@@ -32,7 +32,7 @@ public class InputHandler : MonoBehaviour
     private GameGrid gameGrid;
     private MoveTracker moveTracker;
     private Powerups powerupManager;
-
+    private LiquidTeleport liquidTeleport;
     private Vector3 currentScreenPos;
     private float maxX;
     private float maxY;
@@ -56,7 +56,7 @@ public class InputHandler : MonoBehaviour
         gameManager = (GameManager)FindObjectOfType<GameManager>();
         moveTracker = (MoveTracker)FindObjectOfType<MoveTracker>();
         powerupManager = (Powerups)FindObjectOfType<Powerups>();
-
+        liquidTeleport = (LiquidTeleport)FindObjectOfType<LiquidTeleport>();    
         //print(gameGrid.gridSizeX);
 
         gridSpacing = gameGrid.gridSpacing;
@@ -125,6 +125,7 @@ public class InputHandler : MonoBehaviour
             if (isDragging) return false;
 
             if (moveTracker.MOVES_LEFT == 0) return false;
+            liquidTeleport.ResetWaitDelay();
 
             Ray ray = mainCamera.ScreenPointToRay(currentScreenPos);
             RaycastHit hit;

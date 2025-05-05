@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    public Sprite tutorialImage;
-    private Image imageimageimageimage; // this is where the image will be placed
+    public Texture tutorialImage;
+    private RawImage imageimageimageimage; // this is where the image will be placed
 
     public TMP_Text scoreText;
     public GameManager gameManager;
@@ -35,7 +35,7 @@ public class PlayerUI : MonoBehaviour
         winCanvas = gameObject.transform.Find("WinScreen").GetComponent<Canvas>();
         loseCanvas = gameObject.transform.Find("LoseScreen").GetComponent<Canvas>();
         tutorialCanvas = gameObject.transform.Find("Tutorial").GetComponent<Canvas>();
-        imageimageimageimage = tutorialCanvas.gameObject.transform.Find("Image").GetComponent<Image>();
+        imageimageimageimage = tutorialCanvas.gameObject.transform.Find("Image").GetComponent<RawImage>();
 
         restartButton = gameObject.transform.Find("Restart").gameObject;
         helpButton = pauseCanvas.gameObject.transform.Find("Help").gameObject;
@@ -50,11 +50,12 @@ public class PlayerUI : MonoBehaviour
     {
         if (tutorialImage != null)
         {
-            imageimageimageimage.sprite = tutorialImage;
+            imageimageimageimage.texture = tutorialImage;
             ShowTutorial();
         }
         else
         {
+            print("no image gg");
             helpButton.gameObject.SetActive(false);
         }
     }

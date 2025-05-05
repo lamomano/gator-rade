@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 /* Iversen-Krampitz, Ian 
  * 4/26/2025
- * Controls the alligators eye animation + might control full animations later
+ * Controls the alligators animations
  */
 
 public class Eyes : MonoBehaviour
 {
     public SkinnedMeshRenderer eyeRenderer;
+    public Animator animator;
     private int frameCount;
-    public float sadTime;
-    public float happyTime;
+    private float sadTime = 1.417f;
+    private float happyTime = 1f;
     public bool isHappy;
     public bool isSad;
     public bool isBlinking;
     public bool canBlink;
     public bool isBored; //should be called in another script
                          //if the player hasnt made a move in a while
+
    
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         canBlink = true;
         isBored = false;
     }
@@ -32,7 +35,8 @@ public class Eyes : MonoBehaviour
         //if not blinking and can blink, start random blink timer
         if (canBlink)
         {
-           //Debug.Log("blinking start");
+            //Debug.Log("blinking start");
+            animator.SetBool("Idle", true);
             StartCoroutine(Blink(Random.Range(.01f, 2f)));
         }
         else if (isBored)
@@ -43,6 +47,7 @@ public class Eyes : MonoBehaviour
         if (isSad)
         {
             isSad = false;
+            animator.SetBool("Sad", true);
             //Debug.Log("start sad");
             StopAllCoroutines();
             StartCoroutine(Sad());
@@ -50,6 +55,7 @@ public class Eyes : MonoBehaviour
         if (isHappy)
         {
             isHappy = false;
+            animator.SetBool("Happy", true);
             StopAllCoroutines();
             StartCoroutine(Happy());
         }
@@ -86,6 +92,7 @@ public class Eyes : MonoBehaviour
         canBlink = false;
         eyeRenderer.material.SetTextureOffset("_MainTex", new Vector2(.3333f, 0));
         yield return new WaitForSeconds(sadTime);
+        animator.SetBool("Sad", false);
         canBlink = true;
     }
 
@@ -94,6 +101,7 @@ public class Eyes : MonoBehaviour
         canBlink = false;
         eyeRenderer.material.SetTextureOffset("_MainTex", new Vector2(.7777f, 0));
         yield return new WaitForSeconds(happyTime);
+        animator.SetBool("Happy", false);
         canBlink = true;
     }
 }

@@ -29,7 +29,8 @@ public class GameManager : MonoBehaviour
     public PlayerUI playerUI;
     public MoveTracker moveTracker;
     public Powerups powerups;
-
+    public Eyes eyes;
+    public LiquidTeleport teleporter;
 
     private List<GameObject> gatoradeOrbs = new List<GameObject>();
     private List<GameObject> successfulOrbs = new List<GameObject>();
@@ -69,6 +70,8 @@ public class GameManager : MonoBehaviour
         playerUI = (PlayerUI)FindObjectOfType<PlayerUI>();
         moveTracker = (MoveTracker)FindObjectOfType<MoveTracker>();
         powerups = (Powerups)FindObjectOfType<Powerups>();
+        eyes = (Eyes)FindObjectOfType<Eyes>();
+        teleporter = (LiquidTeleport)FindObjectOfType<LiquidTeleport>();
 
         //spewer.StartSpawning();
         //playerUI.UpdateUI();
@@ -93,8 +96,8 @@ public class GameManager : MonoBehaviour
         // hitbox for detecting when gatorade falls off the screen
         gameObject.transform.position = new Vector3(0, 0, 0);
         BoxCollider bottomBox = gameObject.AddComponent<BoxCollider>();
-        bottomBox.size = new Vector3(10, 1, 50);
-        bottomBox.center = new Vector3(0, -gameGrid.GetMaxPosY() - 5, 0);
+        bottomBox.size = new Vector3(50, 1, 50);
+        bottomBox.center = new Vector3(0, -gameGrid.GetMaxPosY() - 15, 0);
         bottomBox.isTrigger = true;
 
         NewRound();
@@ -399,8 +402,13 @@ public class GameManager : MonoBehaviour
             if (!outOfBoundsOrbs.Contains(other.gameObject))
             {
                 outOfBoundsOrbs.Add(other.gameObject);
-            }
 
+                if (!eyes.gameObject.GetComponent<Animator>().GetBool("Sad"))
+                {
+                    eyes.isSad = true;
+                    teleporter.StartBallLogic();
+                }
+            }
             CheckWinOrLose();
         }
     }
